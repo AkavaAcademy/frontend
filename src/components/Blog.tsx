@@ -12,7 +12,7 @@ interface Blog {
   image_url?: string;
 }
 
-const Blog: React.FC = () => {
+const BlogComponent: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -97,4 +97,4 @@ const Blog: React.FC = () => {
   );
 };
 
-export default Blog; 
+export default BlogComponent; 
