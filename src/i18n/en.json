@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "courses": "Courses",
+    "blog": "Blog",
+    "testimonials": "Testimonials",
+    "contact": "Contact",
+    "getStarted": "Get Started",
+    "logout": "Logout"
+  },
+  "hero": {
+    "headline": "Learn to Code, Build the Future",
+    "subtitle": "Empowering the next generation of tech innovators",
+    "description": "Join Akava IT Academy and discover the exciting world of programming. Our interactive courses are designed specifically for children aged 8-16, making learning fun and engaging.",
+    "startLearning": "Start Learning",
+    "watchDemo": "Watch Demo"
+  },
+  "features": {
+    "title": "Why Choose Akava Academy?",
+    "desc": "We combine cutting-edge technology with proven educational methods to create an engaging learning experience that prepares children for the digital future.",
+    "cta": "Ready to Start Your Coding Journey?",
+    "ctaBtn": "Start Free Trial"
+  },
+  "courses": {
+    "title": "Explore Our Courses",
+    "desc": "From beginner to advanced, our courses are designed to grow with your child's programming skills and interests.",
+    "notSure": "Not Sure Which Course to Choose?",
+    "takeQuiz": "Take Free Assessment"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "desc": "Ready to start your child's coding journey? Contact us today for a free consultation and discover how Akava Academy can help shape their future.",
+    "sendMessage": "Send us a Message",
+    "parentName": "Parent's Name *",
+    "email": "Email Address *",
+    "phone": "Phone Number",
+    "childAge": "Child's Age *",
+    "interestedCourse": "Interested Course",
+    "message": "Message",
+    "send": "Send Message",
+    "thankYou": "Thank You!",
+    "received": "We've received your message and will get back to you within 24 hours."
+  }
+} 
