@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
             scale: [1, 1.1, 1],
           }}
           transition={{
-            duration: 20,
+            duration:  20,
             repeat: Infinity,
             ease: "linear"
           }}
@@ -40,118 +40,63 @@ const Hero: React.FC = () => {
           className="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary-500/20 rounded-full blur-3xl"
         />
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-left"
+            className="text-left lg:max-w-2xl"
           >
-            {/* <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-6"
-            >
-              <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-              Empowering the next generation of tech innovators
-            </motion.div>
+         
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-8 leading-tight"
             >
-              Learn to Code,
-              <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                Build the Future
-              </span>
+              <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">IT АКАДЕМИЯ</span> ЗА ДЕЦА И УЧЕНИЦИ
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-xl text-white/90 mb-8 leading-relaxed"
+              className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-white/95 mb-10 leading-relaxed"
             >
-              Join Akava IT Academy and discover the exciting world of programming. 
-              Our interactive courses are designed specifically for children aged 8-16, 
-              making learning fun and engaging.
+              Роботика, програмиране, дизайн, киберсигурност и AI за ученици от 6 до 18 г.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-4 lg:gap-6"
             >
-              <motion.button
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn-primary flex items-center justify-center group"
+                className="flex-1 sm:flex-none"
               >
-                Start Learning
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
+                <a
+                  href="/courses"
+                  className="btn-primary flex items-center justify-center group w-full sm:w-auto px-8 py-4 text-lg font-semibold"
+                >
+                  Виж всички курсове
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </motion.div>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white rounded-lg font-semibold hover:bg-white/30 transition-all duration-300"
+                className="flex-1 sm:flex-none flex items-center justify-center px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-lg font-semibold hover:bg-white/30 transition-all duration-300 text-lg whitespace-nowrap"
               >
                 <Play className="w-5 h-5 mr-2" />
-                Watch Demo
+                <span className="hidden sm:inline">Запиши се за безплатен пробен курс</span>
+                <span className="sm:hidden">Безплатен пробен курс</span>
               </motion.button>
-            </motion.div> */}
-          </motion.div>
-          {/* Right Content - Stats */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + index * 0.1, duration: 0.8 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300"
-                >
-                  <stat.icon className="w-8 h-8 text-cyan-700 mx-auto mb-3" />
-                  <div className="text-3xl font-bold text-cyan-700 mb-1">{stat.value}</div>
-                  <div className="text-cyan-700/80 text-sm">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
-            >
-              <h3 className="text-xl font-semibold text-cyan-700 mb-3">Why Choose Akava?</h3>
-              <ul className="space-y-2 text-cyan-700/90">
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-cyan-700 rounded-full mr-3"></span>
-                  Age-appropriate curriculum (8-16 years)
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-cyan-700 rounded-full mr-3"></span>
-                  Interactive, project-based learning
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-cyan-700 rounded-full mr-3"></span>
-                  Certified instructors and mentors
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-cyan-700 rounded-full mr-3"></span>
-                  Flexible online and in-person classes
-                </li>
-              </ul>
             </motion.div>
           </motion.div>
+
         </div>
       </div>
       {/* Scroll Indicator */}
@@ -164,12 +109,12 @@ const Hero: React.FC = () => {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-cyan-700/50 rounded-full flex justify-center"
+          className="w-6 h-10 border-2 border-white/80 rounded-full flex justify-center bg-white/10"
         >
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-3 bg-cyan-700 rounded-full mt-2"
+            className="w-1 h-3 bg-white rounded-full mt-2"
           />
         </motion.div>
       </motion.div>

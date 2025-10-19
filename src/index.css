@@ -35,8 +35,28 @@
 }
 
 section.hero {
-  background-image: url('../src/assets/akava-header.png');
+  background-image: url('../src/assets/akava-header.jpg');
+  background-attachment: fixed;
   background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  background-size: cover;
+  background-position: 50% 50%;
+  position: relative;
+}
+
+section.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(1px);
+  z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  section.hero {
+    background-size: cover;
+  }
 }

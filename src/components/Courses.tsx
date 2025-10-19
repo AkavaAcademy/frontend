@@ -35,26 +35,60 @@ const Courses: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const categories = [
-    { id: 'all', name: 'All Courses' },
-    { id: 'beginner', name: 'Beginner' },
-    { id: 'intermediate', name: 'Intermediate' },
-    { id: 'advanced', name: 'Advanced' },
+    { id: 'all', name: 'Всички курсове' },
+    { id: 'beginner', name: 'Начинаещи' },
+    { id: 'intermediate', name: 'Напреднали' },
+    { id: 'advanced', name: 'Експерти' },
   ];
 
   const getIconForCategory = (category: string) => {
     switch (category) {
+      case 'robotics':
+        return Gamepad2;
       case 'programming':
         return Code;
-      case 'web':
+      case 'future-tech':
         return Globe;
-      case 'gaming':
-        return Gamepad2;
-      case 'mobile':
-        return Smartphone;
-      case 'data':
+      case 'design':
         return BookOpen;
+      case 'security':
+        return Smartphone;
       default:
         return Code;
+    }
+  };
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'robotics':
+        return 'from-blue-500 to-cyan-500';
+      case 'programming':
+        return 'from-green-500 to-emerald-500';
+      case 'future-tech':
+        return 'from-purple-500 to-pink-500';
+      case 'design':
+        return 'from-orange-500 to-red-500';
+      case 'security':
+        return 'from-red-500 to-rose-500';
+      default:
+        return 'from-gray-500 to-slate-500';
+    }
+  };
+
+  const getCategoryBadge = (category: string) => {
+    switch (category) {
+      case 'robotics':
+        return { text: 'Роботика', color: 'bg-blue-100 text-blue-800' };
+      case 'programming':
+        return { text: 'Програмиране', color: 'bg-green-100 text-green-800' };
+      case 'future-tech':
+        return { text: 'Бъдещи технологии', color: 'bg-purple-100 text-purple-800' };
+      case 'design':
+        return { text: 'Дизайн', color: 'bg-orange-100 text-orange-800' };
+      case 'security':
+        return { text: 'Киберсигурност', color: 'bg-red-100 text-red-800' };
+      default:
+        return { text: 'Други', color: 'bg-gray-100 text-gray-800' };
     }
   };
 
@@ -65,8 +99,185 @@ const Courses: React.FC = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      const response = await coursesAPI.getAll();
-      setCourses(response.data);
+      // Static course data based on Akava Academy website
+      const staticCourses: Course[] = [
+        // BEGINNER COURSES
+        {
+          id: 1,
+          title: 'LEGO роботика и разработване на игри',
+          description: 'Научете децата да строят и програмират роботи с LEGO, като развиват логическо мислене и творчески умения.',
+          duration: '12 седмици',
+          price: 280,
+          difficulty: 'beginner',
+          category: 'robotics',
+          features: [
+            'LEGO Mindstorms програмиране',
+            'Строене на роботи',
+            'Разработване на игри',
+            'Групови проекти',
+            'Сертификат за завършване'
+          ],
+          formatted_price: '280 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 2,
+          title: 'Основи на програмирането',
+          description: 'Въвеждане в света на програмирането с подходящи за възрастта езици и платформи.',
+          duration: '16 седмици',
+          price: 320,
+          difficulty: 'beginner',
+          category: 'programming',
+          features: [
+            'Scratch и Blockly',
+            'Python за начинаещи',
+            'Веб дизайн основи',
+            'Алгоритмично мислене',
+            'Практически проекти'
+          ],
+          formatted_price: '320 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 3,
+          title: 'Дизайн и креативност',
+          description: 'Развиване на креативните умения чрез дигитален дизайн и изкуство.',
+          duration: '10 седмици',
+          price: 240,
+          difficulty: 'beginner',
+          category: 'design',
+          features: [
+            'Adobe Creative Suite',
+            'Цветова теория',
+            'Типография',
+            'Дигитално рисуване',
+            'Портфолио проекти'
+          ],
+          formatted_price: '240 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        // INTERMEDIATE COURSES
+        {
+          id: 4,
+          title: 'Технологии на бъдещето',
+          description: 'Разглеждане на AI, киберсигурност, дизайн и други модерни технологии.',
+          duration: '20 седмици',
+          price: 400,
+          difficulty: 'intermediate',
+          category: 'future-tech',
+          features: [
+            'Изкуствен интелект основи',
+            'Киберсигурност',
+            'UI/UX дизайн',
+            '3D моделиране',
+            'Индивидуални проекти'
+          ],
+          formatted_price: '400 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 5,
+          title: 'Разширено програмиране',
+          description: 'Задълбочено изучаване на програмни езици и софтуерно инженерство.',
+          duration: '24 седмици',
+          price: 480,
+          difficulty: 'intermediate',
+          category: 'programming',
+          features: [
+            'JavaScript и React',
+            'Бази данни',
+            'API разработка',
+            'Git и версиониране',
+            'Екипни проекти'
+          ],
+          formatted_price: '480 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 6,
+          title: 'Роботика и автоматизация',
+          description: 'Напреднали техники за роботика, автоматизация и IoT устройства.',
+          duration: '18 седмици',
+          price: 360,
+          difficulty: 'intermediate',
+          category: 'robotics',
+          features: [
+            'Arduino програмиране',
+            'Сензори и актуатори',
+            'IoT интеграция',
+            'Автоматизация',
+            'Реални проекти'
+          ],
+          formatted_price: '360 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        // ADVANCED COURSES
+        {
+          id: 7,
+          title: 'Машинно обучение и AI',
+          description: 'Експертни техники за изкуствен интелект и машинно обучение.',
+          duration: '30 седмици',
+          price: 600,
+          difficulty: 'advanced',
+          category: 'future-tech',
+          features: [
+            'TensorFlow и PyTorch',
+            'Нейронни мрежи',
+            'Обработка на данни',
+            'Исследователски проекти',
+            'Менторство'
+          ],
+          formatted_price: '600 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 8,
+          title: 'Киберсигурност и етично хакерство',
+          description: 'Защита на дигитални системи и етични техники за тестване на сигурността.',
+          duration: '28 седмици',
+          price: 560,
+          difficulty: 'advanced',
+          category: 'security',
+          features: [
+            'Етично хакерство',
+            'Пенетрационно тестване',
+            'Криптография',
+            'Форензика',
+            'Сертификация'
+          ],
+          formatted_price: '560 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 9,
+          title: 'Индивидуални уроци и консултации',
+          description: 'Персонализирано обучение според нуждите и интересите на детето.',
+          duration: 'По заявка',
+          price: 50,
+          difficulty: 'all',
+          category: 'programming',
+          features: [
+            '1-на-1 обучение',
+            'Гъвкаво време',
+            'Персонализирана програма',
+            'Онлайн или присъствено',
+            'Експертни ментори'
+          ],
+          formatted_price: '50 лв./час',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        }
+      ];
+      
+      setCourses(staticCourses);
       setError(null);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch courses');
@@ -122,14 +333,14 @@ const Courses: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Explore Our{' '}
+            Нашите{' '}
             <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              Courses
+              Курсове
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            From beginner to advanced, our courses are designed to grow with your child's 
-            programming skills and interests.
+            Разгледайте курсовете, които предлагаме за ученици от 6 до 18 г. Всяка категория е внимателно структурирана, 
+            за да отговаря на възрастта и интересите на учениците.
           </p>
         </motion.div>
 
@@ -166,6 +377,8 @@ const Courses: React.FC = () => {
         >
           {filteredCourses.map((course, index) => {
             const IconComponent = getIconForCategory(course.category);
+            const categoryColor = getCategoryColor(course.category);
+            const categoryBadge = getCategoryBadge(course.category);
             return (
               <motion.div
                 key={course.id}
@@ -176,15 +389,18 @@ const Courses: React.FC = () => {
                 whileHover={{ y: -10 }}
                 className="group relative"
               >
-                <div className="card p-6 h-full">
-                  {/* Index and ID */}
+                <div className="card p-6 h-full border-l-4 border-l-transparent hover:border-l-primary-500 transition-all duration-300">
+                  {/* Category Badge */}
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-primary-600 bg-primary-50 rounded-full px-3 py-1">
-                      Course #{index + 1} (ID: {course.id})
+                    <span className={`text-xs font-semibold rounded-full px-3 py-1 ${categoryBadge.color}`}>
+                      {categoryBadge.text}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      #{course.id}
                     </span>
                   </div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+                    <div className={`w-12 h-12 bg-gradient-to-br ${categoryColor} rounded-lg flex items-center justify-center`}>
                       <IconComponent className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex items-center space-x-1">
@@ -231,7 +447,7 @@ const Courses: React.FC = () => {
                       whileTap={{ scale: 0.95 }}
                       className="btn-primary"
                     >
-                      Enroll Now
+                      Запиши се
                     </motion.button>
                   </div>
                 </div>
@@ -246,96 +462,115 @@ const Courses: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mt-20 bg-[#1a2736] rounded-2xl p-8 shadow-xl text-white max-w-4xl mx-auto"
+          className="mt-20 bg-white rounded-2xl p-8 lg:p-12 shadow-xl border border-gray-100 max-w-6xl mx-auto"
         >
-          <h3 className="text-3xl font-bold mb-2 text-center">Възможности за отстъпки</h3>
-          <p className="text-lg text-blue-100 mb-8 text-center">
-            Спестете повече, когато инвестирате в повече знания!<br />
-            Възползвайте се от нашите гъвкави условия и запишете вашето дете с преференциална цена.
-          </p>
-          <div className="overflow-x-auto">
-            <table className="min-w-full border-separate border-spacing-y-2">
-              <thead className="sticky top-0 z-10">
-                <tr className="text-blue-100 text-lg bg-[#1a2736]">
-                  <th className="px-4 py-2 font-semibold text-left">Вид отстъпка</th>
-                  <th className="px-4 py-2 font-semibold text-left">Размер</th>
-                  <th className="px-4 py-2 font-semibold text-left">Условия за получаване</th>
-                  <th className="px-4 py-2 font-semibold text-left">Може ли да се комбинира?</th>
-                </tr>
-              </thead>
-              <motion.tbody
-                initial="hidden"
-                whileInView="visible"
+          <div className="text-center mb-12">
+            <h3 className="text-4xl font-bold text-gray-900 mb-4">Възможности за отстъпки</h3>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Спестете повече, когато инвестирате в повече знания!<br />
+              Възползвайте се от нашите гъвкави условия и запишете вашето дете с преференциална цена.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {[
+              {
+                type: 'Ранно записване',
+                size: '10%',
+                condition: 'Записване до един месец преди началото',
+                combinable: true,
+                note: 'Да, само със семейната отстъпка',
+                icon: '⏰',
+                color: 'from-green-500 to-emerald-500',
+                bgColor: 'bg-green-50',
+                textColor: 'text-green-800',
+                borderColor: 'border-green-200'
+              },
+              {
+                type: 'Семейна отстъпка',
+                size: '5%',
+                condition: 'Две или повече деца от едно семейство',
+                combinable: true,
+                note: 'Да, само с ранното записване',
+                icon: '👨‍👩‍👧‍👦',
+                color: 'from-blue-500 to-cyan-500',
+                bgColor: 'bg-blue-50',
+                textColor: 'text-blue-800',
+                borderColor: 'border-blue-200'
+              },
+              {
+                type: 'Записване на целия курс',
+                size: '8%',
+                condition: 'Записване на всички модули от курса последователно',
+                combinable: false,
+                note: 'Не, фиксирана цена, не се комбинира',
+                icon: '📚',
+                color: 'from-purple-500 to-pink-500',
+                bgColor: 'bg-purple-50',
+                textColor: 'text-purple-800',
+                borderColor: 'border-purple-200'
+              },
+              {
+                type: 'За повече от един модул',
+                size: '8%',
+                condition: 'Записване за повече от един модул в рамките на учебната година',
+                combinable: false,
+                note: 'Не, не се комбинира с други отстъпки',
+                icon: '🎯',
+                color: 'from-orange-500 to-red-500',
+                bgColor: 'bg-orange-50',
+                textColor: 'text-orange-800',
+                borderColor: 'border-orange-200'
+              },
+            ].map((row, idx) => (
+              <motion.div
+                key={row.type}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
                 viewport={{ once: true }}
-                variants={{
-                  hidden: {},
-                  visible: {
-                    transition: { staggerChildren: 0.15 }
-                  }
-                }}
+                whileHover={{ y: -5, scale: 1.02 }}
+                className={`${row.bgColor} ${row.borderColor} border-2 rounded-xl p-6 hover:shadow-lg transition-all duration-300 cursor-pointer`}
               >
-                {[
-                  {
-                    type: 'Ранно записване',
-                    size: '10%',
-                    condition: 'Записване до <span class="font-bold">един месец преди началото</span>',
-                    combinable: true,
-                    note: 'Да, само със семейната отстъпка',
-                  },
-                  {
-                    type: 'Семейна отстъпка',
-                    size: '5%',
-                    condition: 'Две или повече деца от едно семейство',
-                    combinable: true,
-                    note: 'Да, само с ранното записване',
-                  },
-                  {
-                    type: 'Записване на целия курс',
-                    size: '8%',
-                    condition: 'Записване на всички модули от курса последователно',
-                    combinable: false,
-                    note: 'Не, фиксирана цена, не се комбинира',
-                  },
-                  {
-                    type: 'За повече от един модул',
-                    size: '8%',
-                    condition: 'Записване за <span class="font-bold">повече от един модул</span> в рамките на учебната година',
-                    combinable: false,
-                    note: 'Не, не се комбинира с други отстъпки',
-                  },
-                ].map((row, idx) => (
-                  <motion.tr
-                    key={row.type}
-                    variants={{
-                      hidden: { opacity: 0, y: 30 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-                    }}
-                    whileHover={{ scale: 1.03, boxShadow: '0 8px 32px 0 rgba(0,0,0,0.18)' }}
-                    className="bg-[#22344a] rounded-xl transition-transform cursor-pointer"
-                  >
-                    <td className="px-4 py-3 font-medium">{row.type}</td>
-                    <td className="px-4 py-3 font-bold">{row.size}</td>
-                    <td className="px-4 py-3" dangerouslySetInnerHTML={{ __html: row.condition }} />
-                    <td className="px-4 py-3 flex items-center gap-2">
-                      <span className="inline-block align-middle">
-                        {row.combinable ? (
-                          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="2" y="2" width="24" height="24" rx="6" fill="#1a2736" stroke="#4ade80" strokeWidth="2.5"/>
-                            <path d="M8 14.5L12 18L20 10" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                        ) : (
-                          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="2" y="2" width="24" height="24" rx="6" fill="#1a2736" stroke="#f87171" strokeWidth="2.5"/>
-                            <path d="M9 9L19 19M19 9L9 19" stroke="#f87171" strokeWidth="2.5" strokeLinecap="round"/>
-                          </svg>
-                        )}
-                      </span>
-                      {row.note}
-                    </td>
-                  </motion.tr>
-                ))}
-              </motion.tbody>
-            </table>
+                <div className="mb-6">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className={`w-12 h-12 bg-gradient-to-r ${row.color} rounded-lg flex items-center justify-center text-white text-xl`}>
+                      {row.icon}
+                    </div>
+                    <div>
+                      <h4 className={`text-xl font-bold ${row.textColor}`}>{row.type}</h4>
+                      <div className={`text-3xl font-bold ${row.textColor}`}>{row.size} отстъпка</div>
+                    </div>
+                  </div>
+                  
+                  <div className={`${row.bgColor} ${row.borderColor} border rounded-lg p-4 mb-4`}>
+                    <p className="text-gray-700 font-medium leading-relaxed">{row.condition}</p>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-start space-x-3">
+                      <div className={`w-6 h-6 rounded-full ${row.combinable ? 'bg-green-100' : 'bg-gray-100'} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                        <div className={`w-3 h-3 rounded-full ${row.combinable ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900 mb-1">
+                          {row.combinable ? 'Може да се комбинира' : 'Не може да се комбинира'}
+                        </p>
+                        <p className="text-sm text-gray-600">{row.note}</p>
+                      </div>
+                    </div>
+                    
+                    {row.combinable && (
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                        <p className="text-sm text-green-800 font-medium">
+                          💡 Съвет: Комбинирайте с други отстъпки за максимални спестявания!
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.section>
 
@@ -349,17 +584,17 @@ const Courses: React.FC = () => {
         >
           <div className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-2xl p-8 lg:p-12 text-white">
             <h3 className="text-3xl font-bold mb-4">
-              Not Sure Which Course to Choose?
+              Не сте сигурни кой курс да изберете?
             </h3>
             <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Take our free assessment quiz to find the perfect course for your child's skill level and interests.
+              Направете нашия безплатен тест, за да намерите перфектния курс за нивото и интересите на вашето дете.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white text-primary-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors duration-300"
             >
-              Take Free Assessment
+              Направете безплатен тест
             </motion.button>
           </div>
         </motion.div>
