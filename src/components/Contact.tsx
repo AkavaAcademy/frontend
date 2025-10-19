@@ -70,38 +70,41 @@ const Contact: React.FC = () => {
   const contactInfo = [
     {
       icon: Mail,
-      title: 'Email Us',
+      title: 'Имейл',
       content: 'info@akavaacademy.com',
-      description: 'We\'ll respond within 24 hours'
+      description: 'Отговаряме в рамките на 24 часа'
     },
     {
       icon: Phone,
-      title: 'Call Us',
-      content: '+1 (555) 123-4567',
-      description: 'Mon-Fri 9AM-6PM EST'
+      title: 'Телефон',
+      content: '0895 30 20 74',
+      description: 'Свържете се с нас за консултация'
     },
     {
       icon: MapPin,
-      title: 'Visit Us',
-      content: '123 Tech Street, Innovation City',
-      description: 'Book a free consultation'
+      title: 'Адрес',
+      content: 'бул. "6-ти Септември" 144а, Пловдив',
+      description: 'Запишете се за безплатна консултация'
     },
     {
       icon: Clock,
-      title: 'Office Hours',
-      content: 'Monday - Friday',
-      description: '9:00 AM - 6:00 PM EST'
+      title: 'Работно време',
+      content: 'Понеделник - Петък',
+      description: '9:00 - 18:00'
     }
   ];
 
   const courses = [
-    'Python for Kids',
-    'Web Development Basics',
-    'Game Development with Scratch',
-    'Mobile App Development',
-    'Data Science for Teens',
-    'Advanced Python Projects',
-    'Not Sure - Need Guidance'
+    'LEGO роботика и разработване на игри',
+    'Основи на програмирането',
+    'Дизайн и креативност',
+    'Технологии на бъдещето',
+    'Разширено програмиране',
+    'Роботика и автоматизация',
+    'Машинно обучение и AI',
+    'Киберсигурност и етично хакерство',
+    'Индивидуални уроци и консултации',
+    'Не съм сигурен - имам нужда от съвет'
   ];
 
   return (
@@ -116,14 +119,15 @@ const Contact: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Get in{' '}
+            Свържете се с{' '}
             <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              Touch
+              нас
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Ready to start your child's coding journey? Contact us today for a free 
-            consultation and discover how Akava Academy can help shape their future.
+            Готови да започнете пътешествието на вашето дете в света на програмирането? 
+            Свържете се с нас днес за безплатна консултация и открийте как Акава Академия 
+            може да помогне за формирането на бъдещето им.
           </p>
         </motion.div>
 
@@ -137,7 +141,7 @@ const Contact: React.FC = () => {
           >
             <div className="card p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Send us a Message
+                Изпратете ни съобщение
               </h3>
 
               {isSubmitted ? (
@@ -148,10 +152,10 @@ const Contact: React.FC = () => {
                 >
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                    Thank You!
+                    Благодарим ви!
                   </h4>
                   <p className="text-gray-600">
-                    We've received your message and will get back to you within 24 hours.
+                    Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.
                   </p>
                 </motion.div>
               ) : (
@@ -165,7 +169,7 @@ const Contact: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                        Parent's Name *
+                        Име на родителя *
                       </label>
                       <input
                         type="text"
@@ -175,12 +179,12 @@ const Contact: React.FC = () => {
                         onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="Your full name"
+                        placeholder="Вашето пълно име"
                       />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address *
+                        Имейл адрес *
                       </label>
                       <input
                         type="email"
@@ -190,7 +194,7 @@ const Contact: React.FC = () => {
                         onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="your@email.com"
+                        placeholder="ваш@имейл.com"
                       />
                     </div>
                   </div>
@@ -198,7 +202,7 @@ const Contact: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number
+                        Телефонен номер
                       </label>
                       <input
                         type="tel"
@@ -207,12 +211,12 @@ const Contact: React.FC = () => {
                         value={formData.phone}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="(555) 123-4567"
+                        placeholder="0895 30 20 74"
                       />
                     </div>
                     <div>
                       <label htmlFor="childAge" className="block text-sm font-medium text-gray-700 mb-2">
-                        Child's Age *
+                        Възраст на детето *
                       </label>
                       <input
                         type="number"
@@ -221,17 +225,17 @@ const Contact: React.FC = () => {
                         value={formData.childAge}
                         onChange={handleInputChange}
                         required
-                        min="8"
-                        max="16"
+                        min="6"
+                        max="18"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="Age (8-16)"
+                        placeholder="Възраст (6-18)"
                       />
                     </div>
                   </div>
 
                   <div>
                     <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-2">
-                      Interested Course
+                      Интересен курс
                     </label>
                     <select
                       id="course"
@@ -240,7 +244,7 @@ const Contact: React.FC = () => {
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
                     >
-                      <option value="">Select a course</option>
+                      <option value="">Изберете курс</option>
                       {courses.map((course) => (
                         <option key={course} value={course}>
                           {course}
@@ -251,7 +255,7 @@ const Contact: React.FC = () => {
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                      Message
+                      Съобщение
                     </label>
                     <textarea
                       id="message"
@@ -260,7 +264,7 @@ const Contact: React.FC = () => {
                       onChange={handleInputChange}
                       rows={4}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
-                      placeholder="Tell us about your child's interests and any questions you have..."
+                      placeholder="Разкажете ни за интересите на вашето дете и въпросите, които имате..."
                     />
                   </div>
 
@@ -274,12 +278,12 @@ const Contact: React.FC = () => {
                     {isSubmitting ? (
                       <>
                         <Loader className="w-5 h-5 mr-2 animate-spin" />
-                        Sending...
+                        Изпращане...
                       </>
                     ) : (
                       <>
                         <Send className="w-5 h-5 mr-2" />
-                        Send Message
+                        Изпрати съобщение
                       </>
                     )}
                   </motion.button>
@@ -298,11 +302,11 @@ const Contact: React.FC = () => {
           >
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Contact Information
+                Информация за контакт
               </h3>
               <p className="text-gray-600 mb-8">
-                We're here to help you and your child get started on their coding journey. 
-                Reach out to us through any of the channels below.
+                Тук сме, за да ви помогнем и на вашето дете да започне пътешествието си в света на програмирането. 
+                Свържете се с нас чрез някой от каналите по-долу.
               </p>
             </div>
 
@@ -343,20 +347,24 @@ const Contact: React.FC = () => {
               className="bg-white rounded-xl p-6 shadow-lg"
             >
               <h4 className="text-lg font-semibold text-gray-900 mb-4">
-                Frequently Asked Questions
+                Често задавани въпроси
               </h4>
               <div className="space-y-3">
                 <div>
-                  <h5 className="font-medium text-gray-900">What age groups do you teach?</h5>
-                  <p className="text-sm text-gray-600">We offer courses for children aged 8-16 years old.</p>
+                  <h5 className="font-medium text-gray-900">За какви възрастови групи преподавате?</h5>
+                  <p className="text-sm text-gray-600">Предлагаме курсове за ученици от 6 до 18 години.</p>
                 </div>
                 <div>
-                  <h5 className="font-medium text-gray-900">Do you offer online classes?</h5>
-                  <p className="text-sm text-gray-600">Yes, we offer both online and in-person classes for flexibility.</p>
+                  <h5 className="font-medium text-gray-900">Предлагате ли онлайн класове?</h5>
+                  <p className="text-sm text-gray-600">Да, предлагаме както онлайн, така и присъствени класове за гъвкавост.</p>
                 </div>
                 <div>
-                  <h5 className="font-medium text-gray-900">Is there a free trial available?</h5>
-                  <p className="text-sm text-gray-600">Yes, we offer a free trial class to help you decide.</p>
+                  <h5 className="font-medium text-gray-900">Има ли безплатен пробен курс?</h5>
+                  <p className="text-sm text-gray-600">Да, предлагаме безплатен пробен курс, за да ви помогнем да решите.</p>
+                </div>
+                <div>
+                  <h5 className="font-medium text-gray-900">Къде се намирате?</h5>
+                  <p className="text-sm text-gray-600">Намираме се в Пловдив, бул. "6-ти Септември" 144а.</p>
                 </div>
               </div>
             </motion.div>

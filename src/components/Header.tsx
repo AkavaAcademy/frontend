@@ -22,12 +22,11 @@ const Header: React.FC = () => {
   }, []);
 
   const navItems = [
-    { name: t('nav.home'), href: '#home' },
-    { name: t('nav.features'), href: '#features' },
-    { name: t('nav.courses'), href: '/courses' },
-    { name: t('nav.blog'), href: '/blog' },
-    { name: t('nav.testimonials'), href: '#testimonials' },
-    { name: t('nav.contact'), href: '#contact' },
+    { name: t('nav.home'), href: '/', isRoute: true },
+    { name: t('nav.features'), href: '/features', isRoute: true },
+    { name: t('nav.courses'), href: '/courses', isRoute: true },
+    { name: t('nav.blog'), href: '/blog', isRoute: true },
+    { name: t('nav.contact'), href: '/contact', isRoute: true },
   ];
 
   const handleLogout = () => {
@@ -46,40 +45,30 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2">
           {/* Logo */}
-          <motion.a
-            href="#home"
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-2"
-          >
-            <img
-              src={akavaLogo}
-              alt="Akava IT Academy Logo"
-              className="w-12 h-12 object-contain drop-shadow-md"
-            />
-          </motion.a>
+          <motion.div whileHover={{ scale: 1.05 }}>
+            <Link
+              to="/"
+              className="flex items-center space-x-2"
+            >
+              <img
+                src={akavaLogo}
+                alt="Akava IT Academy Logo"
+                className="w-12 h-12 object-contain drop-shadow-md"
+              />
+            </Link>
+          </motion.div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              item.href.startsWith('/') ? (
-                <motion.div key={item.name} whileHover={{ y: -2 }}>
-                  <Link
-                    to={item.href}
-                    className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
-                  >
-                    {item.name}
-                  </Link>
-                </motion.div>
-              ) : (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  whileHover={{ y: -2 }}
+              <motion.div key={item.name} whileHover={{ y: -2 }}>
+                <Link
+                  to={item.href}
                   className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
                 >
                   {item.name}
-                </motion.a>
-              )
+                </Link>
+              </motion.div>
             ))}
           </nav>
 
@@ -138,14 +127,14 @@ const Header: React.FC = () => {
           >
             <nav className="flex flex-col space-y-4">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
+                  to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
               <div className="flex items-center justify-between mt-4">
                 <LanguageSwitcher />

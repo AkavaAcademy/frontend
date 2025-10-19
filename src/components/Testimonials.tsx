@@ -1,81 +1,87 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BookOpen, Users, Calendar, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const Testimonials: React.FC = () => {
+const News: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const testimonials = [
+  const newsItems = [
     {
       id: 1,
-      name: 'Sarah Johnson',
-      role: 'Student, Age 12',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-      content: 'I never thought coding could be so much fun! The Python course at Akava Academy taught me how to create my own games. Now I want to be a game developer when I grow up!',
-      rating: 5,
-      course: 'Python for Kids'
+      title: 'Полезни статии',
+      category: 'Образование',
+      icon: BookOpen,
+      content: 'Материали, които ще ви помогнат да разширите знанията си в света на технологиите и образованието. Научете най-новите техники за ефективно обучение и развитие на дигитални умения.',
+      date: '2024-01-15',
+      readTime: '5 мин',
+      type: 'Статия'
     },
     {
       id: 2,
-      name: 'Michael Chen',
-      role: 'Parent',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-      content: 'My daughter has been taking classes at Akava for 6 months now. The progress she\'s made is incredible. The instructors are patient and the curriculum is perfectly designed for kids.',
-      rating: 5,
-      course: 'Web Development Basics'
+      title: 'Съвети за родители',
+      category: 'Родителство',
+      icon: Users,
+      content: 'Полезни насоки за родители, които искат да подкрепят дигиталното развитие на своите деца. Теми за безопасност, мотивация и ефективно учене в съвременната дигитална среда.',
+      date: '2024-01-12',
+      readTime: '7 мин',
+      type: 'Съвет'
     },
     {
       id: 3,
-      name: 'Emma Rodriguez',
-      role: 'Student, Age 14',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
-      content: 'The Scratch course was amazing! I created my first game and shared it with my friends. The mentors helped me understand every concept clearly. Highly recommended!',
-      rating: 5,
-      course: 'Game Development with Scratch'
+      title: 'Новини от академията',
+      category: 'Академия',
+      icon: Calendar,
+      content: 'Бъдете в крак с всичко ново в Akava Academy — нови курсове, събития, успехи на учениците и актуални инициативи, които развиваме заедно с нашата общност.',
+      date: '2024-01-10',
+      readTime: '4 мин',
+      type: 'Новина'
     },
     {
       id: 4,
-      name: 'David Thompson',
-      role: 'Parent',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-      content: 'As a software engineer myself, I was impressed by the quality of education at Akava. My son learned real programming concepts through fun projects. The parent dashboard is also very helpful.',
-      rating: 5,
-      course: 'Advanced Python Projects'
+      title: 'Дигитални умения и тенденции',
+      category: 'Технологии',
+      icon: TrendingUp,
+      content: 'Следете най-актуалните тенденции в света на технологиите, програмирането, дизайна и дигиталната безопасност. Научете какви умения са нужни на децата днес, за да успеят утре.',
+      date: '2024-01-08',
+      readTime: '6 мин',
+      type: 'Тенденция'
     },
     {
       id: 5,
-      name: 'Aisha Patel',
-      role: 'Student, Age 16',
-      image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
-      content: 'The mobile app development course opened up a whole new world for me. I built my first app and learned React Native. The instructors are experts and very supportive.',
-      rating: 5,
-      course: 'Mobile App Development'
+      title: 'Нови курсове за 2024',
+      category: 'Образование',
+      icon: BookOpen,
+      content: 'Представяме ви новите курсове за 2024 година! Разширяваме програмата си с курсове по изкуствен интелект, киберсигурност и 3D дизайн за по-голямо разнообразие и възможности за развитие.',
+      date: '2024-01-05',
+      readTime: '3 мин',
+      type: 'Анонс'
     },
     {
       id: 6,
-      name: 'Jennifer Williams',
-      role: 'Parent',
-      image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face',
-      content: 'My twins love the interactive learning approach at Akava. They\'re always excited to show me their new projects. The safe learning environment gives me peace of mind.',
-      rating: 5,
-      course: 'Data Science for Teens'
+      title: 'Успехи на учениците',
+      category: 'Академия',
+      icon: Users,
+      content: 'Гордеем се с постиженията на нашите ученици! Този месец няколко от тях спечелиха награди на национални състезания по програмиране и роботика. Вижте техните проекти и вдъхновете се!',
+      date: '2024-01-03',
+      readTime: '5 мин',
+      type: 'Успех'
     }
   ];
 
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  const nextNews = () => {
+    setCurrentIndex((prev) => (prev + 1) % newsItems.length);
   };
 
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const prevNews = () => {
+    setCurrentIndex((prev) => (prev - 1 + newsItems.length) % newsItems.length);
   };
 
-  const goToTestimonial = (index: number) => {
+  const goToNews = (index: number) => {
     setCurrentIndex(index);
   };
 
   return (
-    <section id="testimonials" className="py-20 bg-white">
+    <section id="news" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -86,19 +92,18 @@ const Testimonials: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            What Our{' '}
+            Новини и{' '}
             <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              Students & Parents
-            </span>{' '}
-            Say
+              Статии
+            </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Don't just take our word for it. Here's what our community has to say about 
-            their experience with Akava Academy.
+            Бъдете в крак с най-новите тенденции в образованието и технологиите. 
+            Полезни статии, съвети за родители и актуални новини от Акава Академия.
           </p>
         </motion.div>
 
-        {/* Testimonials Carousel */}
+        {/* News Carousel */}
         <div className="relative max-w-4xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
@@ -110,42 +115,39 @@ const Testimonials: React.FC = () => {
               className="text-center"
             >
               <div className="card p-8 lg:p-12">
-                {/* Quote Icon */}
+                {/* News Icon */}
                 <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Quote className="w-8 h-8 text-white" />
+                  {React.createElement(newsItems[currentIndex].icon, { className: "w-8 h-8 text-white" })}
                 </div>
 
-                {/* Rating */}
-                <div className="flex justify-center mb-6">
-                  {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                    <Star key={i} className="w-6 h-6 text-yellow-400 fill-current" />
-                  ))}
+                {/* Type Badge */}
+                <div className="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                  {newsItems[currentIndex].type}
                 </div>
+
+                {/* Title */}
+                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+                  {newsItems[currentIndex].title}
+                </h3>
 
                 {/* Content */}
-                <blockquote className="text-xl lg:text-2xl text-gray-700 mb-8 leading-relaxed">
-                  "{testimonials[currentIndex].content}"
-                </blockquote>
+                <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                  {newsItems[currentIndex].content}
+                </p>
 
-                {/* Course Badge */}
-                <div className="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
-                  {testimonials[currentIndex].course}
-                </div>
-
-                {/* Author */}
-                <div className="flex items-center justify-center space-x-4">
-                  <img
-                    src={testimonials[currentIndex].image}
-                    alt={testimonials[currentIndex].name}
-                    className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg"
-                  />
-                  <div className="text-left">
-                    <div className="font-semibold text-gray-900">
-                      {testimonials[currentIndex].name}
-                    </div>
-                    <div className="text-gray-600">
-                      {testimonials[currentIndex].role}
-                    </div>
+                {/* Category and Meta Info */}
+                <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                    <span>{newsItems[currentIndex].category}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4" />
+                    <span>{newsItems[currentIndex].date}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <BookOpen className="w-4 h-4" />
+                    <span>{newsItems[currentIndex].readTime}</span>
                   </div>
                 </div>
               </div>
@@ -154,14 +156,14 @@ const Testimonials: React.FC = () => {
 
           {/* Navigation Buttons */}
           <button
-            onClick={prevTestimonial}
+            onClick={prevNews}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200"
           >
             <ChevronLeft className="w-6 h-6 text-gray-600" />
           </button>
           
           <button
-            onClick={nextTestimonial}
+            onClick={nextNews}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200"
           >
             <ChevronRight className="w-6 h-6 text-gray-600" />
@@ -170,10 +172,10 @@ const Testimonials: React.FC = () => {
 
         {/* Dots Indicator */}
         <div className="flex justify-center mt-8 space-x-2">
-          {testimonials.map((_, index) => (
+          {newsItems.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToTestimonial(index)}
+              onClick={() => goToNews(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentIndex
                   ? 'bg-primary-600 scale-125'
@@ -183,7 +185,7 @@ const Testimonials: React.FC = () => {
           ))}
         </div>
 
-        {/* Stats */}
+        {/* News Categories Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -192,16 +194,16 @@ const Testimonials: React.FC = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
         >
           <div className="text-center">
-            <div className="text-4xl font-bold text-primary-600 mb-2">98%</div>
-            <div className="text-gray-600">Student Satisfaction</div>
+            <div className="text-4xl font-bold text-primary-600 mb-2">50+</div>
+            <div className="text-gray-600">Полезни статии</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-primary-600 mb-2">500+</div>
-            <div className="text-gray-600">Happy Students</div>
+            <div className="text-4xl font-bold text-primary-600 mb-2">1000+</div>
+            <div className="text-gray-600">Читатели</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-primary-600 mb-2">4.9/5</div>
-            <div className="text-gray-600">Average Rating</div>
+            <div className="text-4xl font-bold text-primary-600 mb-2">24/7</div>
+            <div className="text-gray-600">Актуални новини</div>
           </div>
         </motion.div>
       </div>
@@ -209,4 +211,4 @@ const Testimonials: React.FC = () => {
   );
 };
 
-export default Testimonials; 
+export default News; 
