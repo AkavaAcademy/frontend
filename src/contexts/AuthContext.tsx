@@ -13,6 +13,7 @@ interface AuthContextType {
   user: User | null;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
+  loginWithUser: (user: Partial<User>) => void;
   register: (userData: RegisterData) => Promise<void>;
   logout: () => void;
   loading: boolean;
@@ -104,6 +105,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const loginWithUser = (userData: Partial<User>) => {
+    const demoToken = 'demo-token-' + Date.now();
+    const fullUser: User = {
+      id: userData.id as number || 1,
+      name: userData.name || 'Student',
+      email: userData.email || '',
+      role: userData.role || 'student',
+      created_at: new Date().toISOString()
+    };
+    
+    setToken(demoToken);
+    setUser(fullUser);
+    localStorage.setItem('token', demoToken);
+    localStorage.setItem('user', JSON.stringify(fullUser));
+  };
+
   const logout = () => {
     setToken(null);
     setUser(null);
@@ -115,6 +132,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     token,
     login,
+    loginWithUser,
     register,
     logout,
     loading,

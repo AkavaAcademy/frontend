@@ -28,6 +28,19 @@
     "notSure": "Not Sure Which Course to Choose?",
     "takeQuiz": "Take Free Assessment"
   },
+  "quiz": {
+    "title": "Find the Perfect Course",
+    "subtitle": "Answer a few quick questions and we'll recommend the best course based on age, interests, and goals",
+    "question": "Question",
+    "of": "of",
+    "back": "Back",
+    "cancel": "Cancel",
+    "recommendation": "We recommend:",
+    "viewAllCourses": "View All Courses",
+    "retakeQuiz": "Retake Quiz",
+    "contactUs": "Contact Us",
+    "tip": "Tip: You can sign up for a free trial lesson to see if this is the best choice!"
+  },
   "contact": {
     "title": "Get in Touch",
     "desc": "Ready to start your child's coding journey? Contact us today for a free consultation and discover how Akava Academy can help shape their future.",
@@ -41,5 +54,55 @@
     "send": "Send Message",
     "thankYou": "Thank You!",
     "received": "We've received your message and will get back to you within 24 hours."
+  },
+  "footer": {
+    "description": "Empowering the next generation of tech innovators through interactive, project-based learning. Join thousands of students discovering the joy of programming at Akava Academy.",
+    "email": "info@akavaacademy.com",
+    "phone": "0895302074",
+    "address": "Plovdiv, 6-ti Septemvri blvd. 144a",
+    "coursesTitle": "Courses",
+    "courses": {
+      "python": "Python for Kids",
+      "web": "Web Development",
+      "game": "Game Development",
+      "mobile": "Mobile Apps",
+      "data": "Data Science",
+      "advanced": "Advanced Python"
+    },
+    "companyTitle": "Company",
+    "company": {
+      "about": "About Us",
+      "mission": "Our Mission",
+      "team": "Team",
+      "careers": "Careers",
+      "press": "Press",
+      "blog": "Blog"
+    },
+    "supportTitle": "Support",
+    "support": {
+      "help": "Help Center",
+      "contact": "Contact Us",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "studentPortal": "Student Portal",
+      "parentDashboard": "Parent Dashboard"
+    },
+    "resourcesTitle": "Resources",
+    "resources": {
+      "tutorials": "Free Tutorials",
+      "challenges": "Coding Challenges",
+      "projects": "Project Ideas",
+      "paths": "Learning Paths",
+      "stories": "Success Stories",
+      "faq": "FAQ"
+    },
+    "newsletterTitle": "Stay Updated with Akava Academy",
+    "newsletterDesc": "Get the latest updates on new courses, student success stories, and coding tips.",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "copyright": "Akava Academy. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy"
   }
 } 

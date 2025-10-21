@@ -13,6 +13,7 @@ import {
   Loader
 } from 'lucide-react';
 import { coursesAPI } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 interface Course {
   id: number;
@@ -29,6 +30,7 @@ interface Course {
 }
 
 const Courses: React.FC = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -587,11 +589,12 @@ const Courses: React.FC = () => {
               Не сте сигурни кой курс да изберете?
             </h3>
             <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Направете нашия безплатен тест, за да намерите перфектния курс за нивото и интересите на вашето дете.
+              Направете нашия безплатен тест, за да намерите перфектния курс според възрастта, интересите и целите.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/course-quiz')}
               className="bg-white text-primary-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors duration-300"
             >
               Направете безплатен тест

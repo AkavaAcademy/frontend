@@ -1,61 +1,29 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   Code, 
   Facebook, 
-  Twitter, 
   Instagram, 
-  Youtube, 
   Linkedin,
   Mail,
   Phone,
   MapPin
 } from 'lucide-react';
+import { FaTiktok } from 'react-icons/fa';
+import bgTranslations from '../i18n/bg.json';
+import enTranslations from '../i18n/en.json';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-
-  const footerLinks = {
-    courses: [
-      'Python for Kids',
-      'Web Development',
-      'Game Development',
-      'Mobile Apps',
-      'Data Science',
-      'Advanced Python'
-    ],
-    company: [
-      'About Us',
-      'Our Mission',
-      'Team',
-      'Careers',
-      'Press',
-      'Blog'
-    ],
-    support: [
-      'Help Center',
-      'Contact Us',
-      'Privacy Policy',
-      'Terms of Service',
-      'Student Portal',
-      'Parent Dashboard'
-    ],
-    resources: [
-      'Free Tutorials',
-      'Coding Challenges',
-      'Project Ideas',
-      'Learning Paths',
-      'Success Stories',
-      'FAQ'
-    ]
-  };
+  const [language] = React.useState('bg'); // You can integrate with your i18n context
+  const t = language === 'bg' ? bgTranslations : enTranslations;
 
   const socialLinks = [
-    { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
-    { icon: Youtube, href: '#', label: 'YouTube' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' }
+    { icon: Facebook, href: 'https://www.facebook.com/AkavaAcademy/', label: 'Facebook' },
+    { icon: Instagram, href: 'https://www.instagram.com/akavaacademy/', label: 'Instagram' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/%D0%B0%D0%BA%D0%B0%D0%B4%D0%B5%D0%BC%D0%B8%D1%8F-akava/', label: 'LinkedIn' },
+    { icon: FaTiktok, href: 'https://www.tiktok.com/@akavaacademy', label: 'TikTok' }
   ];
 
   return (
@@ -81,9 +49,7 @@ const Footer: React.FC = () => {
                 </span>
               </div>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Empowering the next generation of tech innovators through interactive, 
-                project-based learning. Join thousands of students discovering the joy 
-                of programming at Akava Academy.
+                {t.footer.description}
               </p>
             </motion.div>
 
@@ -97,15 +63,32 @@ const Footer: React.FC = () => {
             >
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-primary-400" />
-                <span className="text-gray-300">info@akavaacademy.com</span>
+                <a 
+                  href="mailto:info@akavaacademy.com" 
+                  className="text-gray-300 hover:text-primary-400 transition-colors"
+                >
+                  info@akavaacademy.com
+                </a>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-primary-400" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <a 
+                  href="tel:0895302074" 
+                  className="text-gray-300 hover:text-primary-400 transition-colors"
+                >
+                  0895302074
+                </a>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-primary-400" />
-                <span className="text-gray-300">123 Tech Street, Innovation City</span>
+                <a 
+                  href="https://www.google.com/maps/place/Level+Center/@42.150511,24.7396242,17z/data=!4m10!1m2!2m1!1z0KbQtdC90YLRitGA0KDQsNC50L7QvSDQptC10L3RgtGA0LDQu9C10L0sINCx0YPQuy4g4oCeNi3RgtC4INCh0LXQv9GC0LXQvNCy0YDQuOKAnCAxNDTQsCwgNDAwMCDQn9C70L7QstC00LjQsg!3m6!1s0x14acd1bdd7395fd1:0xbf880f74b3137a3c!8m2!3d42.150511!4d24.7443878!15sCm3QptC10L3RgtGK0YDQoNCw0LnQvtC9INCm0LXQvdGC0YDQsNC70LXQvSwg0LHRg9C7LiDigJ42LdGC0Lgg0KHQtdC_0YLQtdC80LLRgNC44oCcIDE0NNCwLCA0MDAwINCf0LvQvtCy0LTQuNCyWmYiZNGG0LXQvdGC0YrRgNGA0LDQudC-0L0g0YbQtdC90YLRgNCw0LvQtdC9INCx0YPQuyA2INGC0Lgg0YHQtdC_0YLQtdC80LLRgNC4IDE0NNCwIDQwMDAg0L_Qu9C-0LLQtNC40LKSAQ9idXNpbmVzc19jZW50ZXKaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMjVuTlZGWGJIbGhSMUoyWW13NGVsbHFRbFpqYkZaMFZtNXdTMU5JWXhBQuABAPoBBAgAEBM!16s%2Fg%2F11cjk60ddv?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-primary-400 transition-colors"
+                >
+                  гр. Пловдив, бул. "6-ти септември" 144а
+                </a>
               </div>
             </motion.div>
 
@@ -139,18 +122,38 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-lg font-semibold mb-4">Courses</h3>
+            <h3 className="text-lg font-semibold mb-4">{t.footer.coursesTitle}</h3>
             <ul className="space-y-2">
-              {footerLinks.courses.map((course, index) => (
-                <li key={index}>
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:text-primary-400 transition-colors duration-200"
-                  >
-                    {course}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.courses.python}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.courses.web}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.courses.game}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.courses.mobile}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.courses.data}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.courses.advanced}
+                </a>
+              </li>
             </ul>
           </motion.div>
 
@@ -161,18 +164,38 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-lg font-semibold mb-4">Company</h3>
+            <h3 className="text-lg font-semibold mb-4">{t.footer.companyTitle}</h3>
             <ul className="space-y-2">
-              {footerLinks.company.map((item, index) => (
-                <li key={index}>
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:text-primary-400 transition-colors duration-200"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.company.about}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.company.mission}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.company.team}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.company.careers}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.company.press}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t.footer.company.blog}
+                </a>
+              </li>
             </ul>
           </motion.div>
 
@@ -185,34 +208,74 @@ const Footer: React.FC = () => {
             className="space-y-6"
           >
             <div>
-              <h3 className="text-lg font-semibold mb-4">Support</h3>
+              <h3 className="text-lg font-semibold mb-4">{t.footer.supportTitle}</h3>
               <ul className="space-y-2">
-                {footerLinks.support.map((item, index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:text-primary-400 transition-colors duration-200"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.support.help}
+                  </a>
+                </li>
+                <li>
+                  <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.support.contact}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/privacy-policy" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.support.privacy}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/terms-of-service" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.support.terms}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/student-portal" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.support.studentPortal}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/parent-portal" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.support.parentDashboard}
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4">Resources</h3>
+              <h3 className="text-lg font-semibold mb-4">{t.footer.resourcesTitle}</h3>
               <ul className="space-y-2">
-                {footerLinks.resources.map((item, index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:text-primary-400 transition-colors duration-200"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.resources.tutorials}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.resources.challenges}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.resources.projects}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.resources.paths}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.resources.stories}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                    {t.footer.resources.faq}
+                  </a>
+                </li>
               </ul>
             </div>
           </motion.div>
@@ -230,15 +293,15 @@ const Footer: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="text-xl font-semibold mb-2">
-              Stay Updated with Akava Academy
+              {t.footer.newsletterTitle}
             </h3>
             <p className="text-gray-400 mb-6">
-              Get the latest updates on new courses, student success stories, and coding tips.
+              {t.footer.newsletterDesc}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t.footer.emailPlaceholder}
                 className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-white placeholder-gray-400"
               />
               <motion.button
@@ -246,7 +309,7 @@ const Footer: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
                 className="btn-primary whitespace-nowrap"
               >
-                Subscribe
+                {t.footer.subscribe}
               </motion.button>
             </div>
           </div>
@@ -258,18 +321,15 @@ const Footer: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © {currentYear} Akava Academy. All rights reserved.
+              © {currentYear} {t.footer.copyright}
             </div>
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
-                Cookie Policy
-              </a>
+              <Link to="/privacy-policy" className="text-gray-400 hover:text-primary-400 transition-colors">
+                Политика за поверителност
+              </Link>
+              <Link to="/terms-of-service" className="text-gray-400 hover:text-primary-400 transition-colors">
+                Общи условия
+              </Link>
             </div>
           </div>
         </div>

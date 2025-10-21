@@ -11,12 +11,21 @@ import Contact from './components/Contact';
 import ContactPage from './components/ContactPage';
 import Footer from './components/Footer';
 import Blog from './components/Blog';
+import CourseQuiz from './components/CourseQuiz';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
+import StudentPortal from './components/StudentPortal';
+import StudentDashboard from './components/StudentDashboard';
+import ParentPortal from './components/ParentPortal';
+import ParentDashboard from './components/ParentDashboard';
+import ScrollToTop from './components/ScrollToTop';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <ScrollToTop />
         <div className="App min-h-screen bg-gray-50">
           <Header />
           <Routes>
@@ -31,8 +40,15 @@ function App() {
             } />
             <Route path="/features" element={<FeaturesPage />} />
             <Route path="/courses" element={<Courses />} />
+            <Route path="/course-quiz" element={<CourseQuiz />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/student-portal" element={<StudentPortal />} />
+            <Route path="/student-dashboard" element={<StudentDashboard />} />
+            <Route path="/parent-portal" element={<ParentPortal />} />
+            <Route path="/parent-dashboard" element={<ParentDashboard />} />
           </Routes>
           <Footer />
         </div>
