@@ -77,10 +77,11 @@ export const contactsAPI = {
     name: string;
     email: string;
     phone?: string;
+    child_name?: string;
     child_age: number;
     message?: string;
     course?: string;
-  }) => api.post('/api/contacts', contactData),
+  }) => api.post('/api/contacts', { contact: contactData }),
   
   getAll: () => api.get('/api/contacts'),
   

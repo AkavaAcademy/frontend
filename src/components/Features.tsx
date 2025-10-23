@@ -15,50 +15,50 @@ const Features: React.FC = () => {
   const features = [
     {
       icon: Code,
-      title: 'Interactive Coding',
-      description: 'Learn programming through fun, interactive exercises and real-world projects that make coding exciting.',
+      title: 'Интерактивно програмиране',
+      description: 'Научете програмиране чрез забавни, интерактивни упражнения и реални проекти, които правят кодирането вълнуващо.',
       color: 'from-blue-500 to-cyan-500'
     },
     {
       icon: Users,
-      title: 'Expert Mentors',
-      description: 'Learn from certified instructors who specialize in teaching programming to children and young adults.',
+      title: 'Експертни ментори',
+      description: 'Учете се от сертифицирани инструктори, които са специализирани в преподаването на програмиране на деца и млади хора.',
       color: 'from-purple-500 to-pink-500'
     },
     {
       icon: Trophy,
-      title: 'Achievement System',
-      description: 'Earn badges, certificates, and rewards as you progress through your coding journey.',
+      title: 'Система за постижения',
+      description: 'Печелете значки, сертификати и награди, докато напредвате в пътешествието си в програмирането.',
       color: 'from-yellow-500 to-orange-500'
     },
     {
       icon: BookOpen,
-      title: 'Structured Curriculum',
-      description: 'Follow our carefully designed learning path from basics to advanced programming concepts.',
+      title: 'Структурирана програма',
+      description: 'Следвайте внимателно проектирания път на обучение от основите до напредналите програмни концепции.',
       color: 'from-green-500 to-emerald-500'
     },
     {
       icon: Monitor,
-      title: 'Modern Tools',
-      description: 'Use the latest development tools and platforms used by professional programmers.',
+      title: 'Съвременни инструменти',
+      description: 'Използвайте най-новите инструменти за разработка и платформи, използвани от професионални програмисти.',
       color: 'from-indigo-500 to-blue-500'
     },
     {
       icon: Heart,
-      title: 'Safe Environment',
-      description: 'Learn in a secure, monitored environment designed specifically for young learners.',
+      title: 'Безопасна среда',
+      description: 'Учете се в сигурна, контролирана среда, проектирана специално за млади ученици.',
       color: 'from-red-500 to-pink-500'
     },
     {
       icon: Zap,
-      title: 'Fast Progress',
-      description: 'Accelerate your learning with our proven methodology and personalized feedback.',
+      title: 'Бърз прогрес',
+      description: 'Ускорете обучението си с нашата доказана методология и персонализирана обратна връзка.',
       color: 'from-yellow-400 to-orange-400'
     },
     {
       icon: Shield,
-      title: 'Parent Dashboard',
-      description: 'Track your child\'s progress and achievements through our comprehensive parent portal.',
+      title: 'Родителски панел',
+      description: 'Проследявайте прогреса и постиженията на детето си чрез нашия всеобхватен родителски портал.',
       color: 'from-gray-600 to-gray-800'
     }
   ];
@@ -96,14 +96,14 @@ const Features: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Why Choose{' '}
+            Защо да изберете{' '}
             <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              Akava Academy?
+              Акава Академия?
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We combine cutting-edge technology with proven educational methods to create 
-            an engaging learning experience that prepares children for the digital future.
+            Комбинираме най-новите технологии с доказани образователни методи, за да създадем 
+            увлекателно учебно преживяване, което подготвя децата за дигиталното бъдеще.
           </p>
         </motion.div>
 
@@ -147,18 +147,18 @@ const Features: React.FC = () => {
         >
           <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8 lg:p-12">
             <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Ready to Start Your Coding Journey?
+              Започнете своето приключение в света на технологиите!
             </h3>
             <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Join thousands of students who have already discovered the joy of programming 
-              with Akava Academy. Start your free trial today!
+              Присъединете се към хиляди ученици, които вече са открили радостта от програмирането 
+              с Акава Академи. Започнете безплатния си пробен период днес!
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-primary text-lg px-8 py-4"
             >
-              Start Free Trial
+              Започнете безплатен пробен период
             </motion.button>
           </div>
         </motion.div>

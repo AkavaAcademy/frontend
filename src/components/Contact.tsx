@@ -16,13 +16,15 @@ const Contact: React.FC = () => {
     name: '',
     email: '',
     phone: '',
-    childAge: '',
+    child_name: '',
+    child_age: '',
     message: '',
     course: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string>('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -37,31 +39,52 @@ const Contact: React.FC = () => {
     setError(null);
     
     try {
-      await contactsAPI.create({
+      const contactData = {
         name: formData.name,
         email: formData.email,
         phone: formData.phone || undefined,
-        child_age: parseInt(formData.childAge),
+        child_name: formData.child_name || undefined,
+        child_age: parseInt(formData.child_age),
         message: formData.message || undefined,
         course: formData.course || undefined
-      });
+      };
       
-      setIsSubmitted(true);
+      console.log('Sending contact data:', contactData); // Debug log
       
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          childAge: '',
-          message: '',
-          course: ''
-        });
-      }, 3000);
+      const response = await contactsAPI.create(contactData);
+      
+      // Check if the response indicates success
+      if (response.data.success) {
+        setSuccessMessage(response.data.message || 'Thank you for your message! We will get back to you soon.');
+        setIsSubmitted(true);
+        
+        // Reset form after 5 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setSuccessMessage('');
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            child_name: '',
+            child_age: '',
+            message: '',
+            course: ''
+          });
+        }, 5000);
+      } else {
+        setError(response.data.message || 'Failed to submit form. Please try again.');
+      }
     } catch (err: any) {
-      setError(err.message || 'Failed to submit form. Please try again.');
+      // Handle API errors
+      console.log('API Error:', err.response?.data); // Debug log
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else if (err.response?.data?.errors) {
+        setError(err.response.data.errors.join(', '));
+      } else {
+        setError('Failed to submit form. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -155,7 +178,7 @@ const Contact: React.FC = () => {
                     Благодарим ви!
                   </h4>
                   <p className="text-gray-600">
-                    Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.
+                    {successMessage || 'Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.'}
                   </p>
                 </motion.div>
               ) : (
@@ -215,14 +238,28 @@ const Contact: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label htmlFor="childAge" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="child_name" className="block text-sm font-medium text-gray-700 mb-2">
+                        Име на детето
+                      </label>
+                      <input
+                        type="text"
+                        id="child_name"
+                        name="child_name"
+                        value={formData.child_name}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                        placeholder="Име на детето"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="child_age" className="block text-sm font-medium text-gray-700 mb-2">
                         Възраст на детето *
                       </label>
                       <input
                         type="number"
-                        id="childAge"
-                        name="childAge"
-                        value={formData.childAge}
+                        id="child_age"
+                        name="child_age"
+                        value={formData.child_age}
                         onChange={handleInputChange}
                         required
                         min="6"

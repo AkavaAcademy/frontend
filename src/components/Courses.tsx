@@ -39,8 +39,7 @@ const Courses: React.FC = () => {
   const categories = [
     { id: 'all', name: 'Всички курсове' },
     { id: 'beginner', name: 'Начинаещи' },
-    { id: 'intermediate', name: 'Напреднали' },
-    { id: 'advanced', name: 'Експерти' },
+    { id: 'advanced', name: 'Напреднали' },
   ];
 
   const getIconForCategory = (category: string) => {
@@ -101,12 +100,57 @@ const Courses: React.FC = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      // Static course data based on Akava Academy website
+      setError(null);
+      
+      console.log('Fetching courses from API...');
+      const response = await coursesAPI.getAll();
+      
+      console.log('API Response:', response.data);
+      
+      // Transform API response to match our Course interface
+      const apiCourses: Course[] = response.data.map((course: any) => ({
+        id: course.id,
+        title: course.title,
+        description: course.description,
+        duration: course.duration,
+        price: course.price,
+        difficulty: course.difficulty,
+        category: course.category,
+        features: course.features || [],
+        formatted_price: `${course.price} лв.`,
+        created_at: course.created_at,
+        updated_at: course.updated_at
+      }));
+      
+      // Filter out unwanted courses
+      const allowedCourses = [
+        'LEGO РобоМастъри (6-10 г.)',
+        'Основи на програмирането със Scratch (10-12 г.)',
+        'Python за начинаещи (12-15 г.)',
+        'Web Development Basics (13-16 г.)',
+        'AI и Machine Learning за тийнейджъри (15-18 г.)',
+        'Киберсигурност за ученици (14-18 г.)',
+        'Графичен дизайн (15-18 г.)',
+        'Подготовка за ИТ интервю (18 г.)',
+        'Индивидуални уроци и консултации'
+      ];
+      
+      const filteredApiCourses = apiCourses.filter(course => 
+        allowedCourses.includes(course.title)
+      );
+      
+      setCourses(filteredApiCourses);
+    } catch (err: any) {
+      console.error('Error fetching courses:', err);
+      setError(err.response?.data?.message || err.message || 'Failed to fetch courses');
+      
+      // Fallback to static data if API fails
+      console.log('Falling back to static course data...');
       const staticCourses: Course[] = [
-        // BEGINNER COURSES
+        // НАЧИНАЕЩИ КУРСОВЕ
         {
           id: 1,
-          title: 'LEGO роботика и разработване на игри',
+          title: 'LEGO РобоМастъри (6-10 г.)',
           description: 'Научете децата да строят и програмират роботи с LEGO, като развиват логическо мислене и творчески умения.',
           duration: '12 седмици',
           price: 280,
@@ -125,7 +169,7 @@ const Courses: React.FC = () => {
         },
         {
           id: 2,
-          title: 'Основи на програмирането',
+          title: 'Основи на програмирането със Scratch (10-12 г.)',
           description: 'Въвеждане в света на програмирането с подходящи за възрастта езици и платформи.',
           duration: '16 седмици',
           price: 320,
@@ -144,86 +188,47 @@ const Courses: React.FC = () => {
         },
         {
           id: 3,
-          title: 'Дизайн и креативност',
-          description: 'Развиване на креативните умения чрез дигитален дизайн и изкуство.',
-          duration: '10 седмици',
-          price: 240,
-          difficulty: 'beginner',
-          category: 'design',
-          features: [
-            'Adobe Creative Suite',
-            'Цветова теория',
-            'Типография',
-            'Дигитално рисуване',
-            'Портфолио проекти'
-          ],
-          formatted_price: '240 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
-        },
-        // INTERMEDIATE COURSES
-        {
-          id: 4,
-          title: 'Технологии на бъдещето',
-          description: 'Разглеждане на AI, киберсигурност, дизайн и други модерни технологии.',
+          title: 'Python за начинаещи (12-15 г.)',
+          description: 'Научете основите на Python програмирането с практически проекти и игри.',
           duration: '20 седмици',
           price: 400,
-          difficulty: 'intermediate',
-          category: 'future-tech',
+          difficulty: 'beginner',
+          category: 'programming',
           features: [
-            'Изкуствен интелект основи',
-            'Киберсигурност',
-            'UI/UX дизайн',
-            '3D моделиране',
-            'Индивидуални проекти'
+            'Python синтаксис и основи',
+            'Структури от данни',
+            'Функции и модули',
+            'Практически проекти',
+            'Сертификат за завършване'
           ],
           formatted_price: '400 лв.',
           created_at: '2024-01-01',
           updated_at: '2024-01-01'
         },
+        // НАПРЕДНАЛИ КУРСОВЕ
         {
-          id: 5,
-          title: 'Разширено програмиране',
-          description: 'Задълбочено изучаване на програмни езици и софтуерно инженерство.',
+          id: 4,
+          title: 'Web Development Basics (13-16 г.)',
+          description: 'Научете основите на уеб разработката с HTML, CSS и JavaScript.',
           duration: '24 седмици',
           price: 480,
-          difficulty: 'intermediate',
+          difficulty: 'advanced',
           category: 'programming',
           features: [
-            'JavaScript и React',
-            'Бази данни',
-            'API разработка',
-            'Git и версиониране',
-            'Екипни проекти'
+            'HTML5 и CSS3',
+            'JavaScript основи',
+            'Responsive дизайн',
+            'Веб проекти',
+            'Git и версиониране'
           ],
           formatted_price: '480 лв.',
           created_at: '2024-01-01',
           updated_at: '2024-01-01'
         },
         {
-          id: 6,
-          title: 'Роботика и автоматизация',
-          description: 'Напреднали техники за роботика, автоматизация и IoT устройства.',
-          duration: '18 седмици',
-          price: 360,
-          difficulty: 'intermediate',
-          category: 'robotics',
-          features: [
-            'Arduino програмиране',
-            'Сензори и актуатори',
-            'IoT интеграция',
-            'Автоматизация',
-            'Реални проекти'
-          ],
-          formatted_price: '360 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
-        },
-        // ADVANCED COURSES
-        {
-          id: 7,
-          title: 'Машинно обучение и AI',
-          description: 'Експертни техники за изкуствен интелект и машинно обучение.',
+          id: 5,
+          title: 'AI и Machine Learning за тийнейджъри (15-18 г.)',
+          description: 'Разгледайте света на изкуствения интелект и машинното обучение.',
           duration: '30 седмици',
           price: 600,
           difficulty: 'advanced',
@@ -240,8 +245,8 @@ const Courses: React.FC = () => {
           updated_at: '2024-01-01'
         },
         {
-          id: 8,
-          title: 'Киберсигурност и етично хакерство',
+          id: 6,
+          title: 'Киберсигурност за ученици (14-18 г.)',
           description: 'Защита на дигитални системи и етични техники за тестване на сигурността.',
           duration: '28 седмици',
           price: 560,
@@ -259,12 +264,50 @@ const Courses: React.FC = () => {
           updated_at: '2024-01-01'
         },
         {
+          id: 7,
+          title: 'Графичен дизайн (15-18 г.)',
+          description: 'Развиване на креативните умения чрез дигитален дизайн и изкуство.',
+          duration: '18 седмици',
+          price: 360,
+          difficulty: 'advanced',
+          category: 'design',
+          features: [
+            'Adobe Creative Suite',
+            'Цветова теория',
+            'Типография',
+            'Дигитално рисуване',
+            'Портфолио проекти'
+          ],
+          formatted_price: '360 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 8,
+          title: 'Подготовка за ИТ интервю (18 г.)',
+          description: 'Подгответе се за успешно ИТ интервю с практически упражнения и симулации.',
+          duration: '12 седмици',
+          price: 500,
+          difficulty: 'advanced',
+          category: 'programming',
+          features: [
+            'Технически интервюта',
+            'Алгоритмични задачи',
+            'Системен дизайн',
+            'Мок интервюта',
+            'Кариерно консултиране'
+          ],
+          formatted_price: '500 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
           id: 9,
           title: 'Индивидуални уроци и консултации',
           description: 'Персонализирано обучение според нуждите и интересите на детето.',
           duration: 'По заявка',
           price: 50,
-          difficulty: 'all',
+          difficulty: 'both',
           category: 'programming',
           features: [
             '1-на-1 обучение',
@@ -280,9 +323,6 @@ const Courses: React.FC = () => {
       ];
       
       setCourses(staticCourses);
-      setError(null);
-    } catch (err: any) {
-      setError(err.message || 'Failed to fetch courses');
     } finally {
       setLoading(false);
     }
@@ -290,7 +330,11 @@ const Courses: React.FC = () => {
 
   const filteredCourses = selectedCategory === 'all' 
     ? courses 
-    : courses.filter(course => course.difficulty === selectedCategory);
+    : courses.filter(course => 
+        course.difficulty === selectedCategory || 
+        (selectedCategory === 'beginner' && course.difficulty === 'both') ||
+        (selectedCategory === 'advanced' && course.difficulty === 'both')
+      );
 
   if (loading) {
     return (
@@ -370,14 +414,31 @@ const Courses: React.FC = () => {
         </motion.div>
 
         {/* Courses Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {filteredCourses.map((course, index) => {
+        <div className="space-y-16">
+          {/* Начинаещи Courses */}
+          {selectedCategory === 'all' || selectedCategory === 'beginner' ? (
+            <div>
+              {selectedCategory !== 'all' && (
+                <motion.h3
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="text-2xl font-bold text-gray-900 mb-8 text-center"
+                >
+                  Курсове за начинаещи
+                </motion.h3>
+              )}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              >
+                {filteredCourses
+                  .filter(course => course.difficulty === 'beginner' || course.difficulty === 'both')
+                  .map((course, index) => {
             const IconComponent = getIconForCategory(course.category);
             const categoryColor = getCategoryColor(course.category);
             const categoryBadge = getCategoryBadge(course.category);
@@ -455,8 +516,117 @@ const Courses: React.FC = () => {
                 </div>
               </motion.div>
             );
-          })}
-        </motion.div>
+                  })}
+              </motion.div>
+            </div>
+          ) : null}
+
+          {/* Напреднали Courses */}
+          {selectedCategory === 'all' || selectedCategory === 'advanced' ? (
+            <div>
+              {selectedCategory !== 'all' && (
+                <motion.h3
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="text-2xl font-bold text-gray-900 mb-8 text-center"
+                >
+                  Курсове за напреднали
+                </motion.h3>
+              )}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              >
+                {filteredCourses
+                  .filter(course => course.difficulty === 'advanced' || course.difficulty === 'both')
+                  .map((course, index) => {
+                    const IconComponent = getIconForCategory(course.category);
+                    const categoryColor = getCategoryColor(course.category);
+                    const categoryBadge = getCategoryBadge(course.category);
+                    return (
+                      <motion.div
+                        key={course.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                        viewport={{ once: true }}
+                        whileHover={{ y: -10 }}
+                        className="group relative"
+                      >
+                        <div className="card p-6 h-full border-l-4 border-l-transparent hover:border-l-primary-500 transition-all duration-300">
+                          {/* Category Badge */}
+                          <div className="flex items-center justify-between mb-2">
+                            <span className={`text-xs font-semibold rounded-full px-3 py-1 ${categoryBadge.color}`}>
+                              {categoryBadge.text}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              #{course.id}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between mb-4">
+                            <div className={`w-12 h-12 bg-gradient-to-br ${categoryColor} rounded-lg flex items-center justify-center`}>
+                              <IconComponent className="w-6 h-6 text-white" />
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                              <span className="text-sm font-medium text-gray-600">4.8</span>
+                            </div>
+                          </div>
+
+                          <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                            {course.title}
+                          </h3>
+                          
+                          <p className="text-gray-600 mb-4 leading-relaxed">
+                            {course.description}
+                          </p>
+
+                          <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
+                            <div className="flex items-center">
+                              <Clock className="w-4 h-4 mr-1" />
+                              {course.duration}
+                            </div>
+                            <div className="flex items-center">
+                              <Users className="w-4 h-4 mr-1" />
+                              120 students
+                            </div>
+                          </div>
+
+                          <ul className="space-y-2 mb-6">
+                            {course.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-center text-sm text-gray-600">
+                                <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                                {feature}
+                              </li>
+                            ))}
+                          </ul>
+
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <span className="text-2xl font-bold text-gray-900">{course.formatted_price}</span>
+                              <span className="text-lg text-gray-400 line-through">${(course.price * 1.5).toFixed(0)}</span>
+                            </div>
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="btn-primary"
+                            >
+                              Запиши се
+                            </motion.button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+              </motion.div>
+            </div>
+          ) : null}
+        </div>
 
         {/* Discount Table Section */}
         <motion.section
