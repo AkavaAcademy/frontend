@@ -18,7 +18,7 @@ const FeaturesPage: React.FC = () => {
     },
     {
       icon: Globe,
-      title: 'Веб дизайн и разработка',
+      title: 'Уеб дизайн',
       description: 'Научете се да създавате красиви и функционални уебсайтове с HTML, CSS и JavaScript.',
       color: 'from-purple-500 to-pink-500'
     },
