@@ -247,24 +247,24 @@ const Footer: React.FC = () => {
               <h3 className="text-lg font-semibold mb-4">{t.footer.resourcesTitle}</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  <Link to="/free-lessons" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                     {t.footer.resources.tutorials}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  <Link to="/coding-challenges" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                     {t.footer.resources.challenges}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  <Link to="/project-ideas" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                     {t.footer.resources.projects}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  <Link to="/learning-paths" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                     {t.footer.resources.paths}
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">

@@ -18,6 +18,10 @@ import StudentPortal from './components/StudentPortal';
 import StudentDashboard from './components/StudentDashboard';
 import ParentPortal from './components/ParentPortal';
 import ParentDashboard from './components/ParentDashboard';
+import FreeLessons from './components/FreeLessons';
+import CodingChallenges from './components/CodingChallenges';
+import ProjectIdeas from './components/ProjectIdeas';
+import LearningPaths from './components/LearningPaths';
 import ScrollToTop from './components/ScrollToTop';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -49,6 +53,10 @@ function App() {
             <Route path="/student-dashboard" element={<StudentDashboard />} />
             <Route path="/parent-portal" element={<ParentPortal />} />
             <Route path="/parent-dashboard" element={<ParentDashboard />} />
+            <Route path="/free-lessons" element={<FreeLessons />} />
+            <Route path="/coding-challenges" element={<CodingChallenges />} />
+            <Route path="/project-ideas" element={<ProjectIdeas />} />
+            <Route path="/learning-paths" element={<LearningPaths />} />
           </Routes>
           <Footer />
         </div>

@@ -355,16 +355,16 @@ const Contact: React.FC = () => {
                   <p className="text-sm text-gray-600">Предлагаме курсове за ученици от 6 до 18 години.</p>
                 </div>
                 <div>
-                  <h5 className="font-medium text-gray-900">Предлагате ли онлайн класове?</h5>
-                  <p className="text-sm text-gray-600">Да, предлагаме както онлайн, така и присъствени класове за гъвкавост.</p>
+                  <h5 className="font-medium text-gray-900">Предлагате ли онлайн курсове?</h5>
+                  <p className="text-sm text-gray-600">Да, предлагаме както онлайн, така и присъствени курсове</p>
                 </div>
                 <div>
-                  <h5 className="font-medium text-gray-900">Има ли безплатен пробен курс?</h5>
-                  <p className="text-sm text-gray-600">Да, предлагаме безплатен пробен курс, за да ви помогнем да решите.</p>
+                  <h5 className="font-medium text-gray-900">Има ли безплатен пробен урок?</h5>
+                  <p className="text-sm text-gray-600">Да, има безплатен пробен урок за занятията по LEGO роботика.</p>
                 </div>
                 <div>
-                  <h5 className="font-medium text-gray-900">Къде се намирате?</h5>
-                  <p className="text-sm text-gray-600">Намираме се в Пловдив, бул. "6-ти Септември" 144а.</p>
+                  <h5 className="font-medium text-gray-900">Къде се намира академията?</h5>
+                  <p className="text-sm text-gray-600">Намираме се в Пловдив, бул. "6-ти Септември" 144а, бизнес сграда LEVEL CENTER, етаж 3</p>
                 </div>
               </div>
             </motion.div>
