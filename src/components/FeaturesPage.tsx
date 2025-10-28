@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Code, Users, Award, Clock, BookOpen, Globe, Smartphone, Gamepad2 } from 'lucide-react';
+import { Code, Award, BookOpen, Globe, Smartphone, Gamepad2 } from 'lucide-react';
 
 const FeaturesPage: React.FC = () => {
   const features = [

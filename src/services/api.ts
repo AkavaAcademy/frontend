@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000';
+// Prefer environment-configured backend URL; fall back to empty so CRA proxy can be used
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || '';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -77,10 +78,11 @@ export const contactsAPI = {
     name: string;
     email: string;
     phone?: string;
+    child_name?: string;
     child_age: number;
     message?: string;
     course?: string;
-  }) => api.post('/api/contacts', contactData),
+  }) => api.post('/api/contacts', { contact: contactData }),
   
   getAll: () => api.get('/api/contacts'),
   

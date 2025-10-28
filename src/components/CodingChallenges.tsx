@@ -10,8 +10,6 @@ import {
   Target,
   Zap,
   Award,
-  Medal,
-  Crown,
   ChevronRight,
   Filter,
   TrendingUp

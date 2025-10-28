@@ -125,34 +125,34 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">{t.footer.coursesTitle}</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.courses.python}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.courses.web}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.courses.game}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.courses.mobile}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.courses.data}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.courses.advanced}
-                </a>
+                </Link>
               </li>
             </ul>
           </motion.div>
@@ -167,34 +167,34 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">{t.footer.companyTitle}</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/features" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.company.about}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/features" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.company.mission}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/features" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.company.team}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.company.careers}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.company.press}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/blog" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.company.blog}
-                </a>
+                </Link>
               </li>
             </ul>
           </motion.div>
@@ -211,9 +211,9 @@ const Footer: React.FC = () => {
               <h3 className="text-lg font-semibold mb-4">{t.footer.supportTitle}</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                     {t.footer.support.help}
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
@@ -267,14 +267,14 @@ const Footer: React.FC = () => {
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  <Link to="/blog" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                     {t.footer.resources.stories}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                     {t.footer.resources.faq}
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

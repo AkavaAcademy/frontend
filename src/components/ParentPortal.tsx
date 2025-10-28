@@ -159,9 +159,9 @@ const ParentPortal: React.FC = () => {
                   Запомни ме
                 </label>
               </div>
-              <a href="#" className="text-sm text-primary-600 hover:text-primary-700">
+              <button type="button" className="text-sm text-primary-600 hover:text-primary-700">
                 Забравена парола?
-              </a>
+              </button>
             </div>
 
             {/* Submit Button */}
