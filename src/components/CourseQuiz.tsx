@@ -105,7 +105,6 @@ const CourseQuiz: React.FC = () => {
     const experience = answers[2];
     const interest = answers[3];
     const learningStyle = answers[4];
-    const goal = answers[5];
     const timeCommitment = answers[6];
 
     // Logic for course recommendation based on answers

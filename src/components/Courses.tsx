@@ -142,7 +142,10 @@ const Courses: React.FC = () => {
       setCourses(filteredApiCourses);
     } catch (err: any) {
       console.error('Error fetching courses:', err);
-      setError(err.response?.data?.message || err.message || 'Failed to fetch courses');
+      // Do not block UI if we have a local fallback
+      // Keep a console warning for visibility, but clear error for UI
+      const fallbackMessage = err.response?.data?.message || err.message || 'Failed to fetch courses';
+      console.warn('Using static courses due to error:', fallbackMessage);
       
       // Fallback to static data if API fails
       console.log('Falling back to static course data...');
@@ -323,6 +326,7 @@ const Courses: React.FC = () => {
       ];
       
       setCourses(staticCourses);
+      setError(null);
     } finally {
       setLoading(false);
     }

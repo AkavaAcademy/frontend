@@ -9,7 +9,6 @@ import {
   ChevronRight,
   Star,
   Users,
-  Download,
   Lock
 } from 'lucide-react';
 import { Link } from 'react-router-dom';

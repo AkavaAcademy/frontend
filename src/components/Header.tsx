@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Code, BookOpen, User, LogOut } from 'lucide-react';
+import { Menu, X, User, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
@@ -8,18 +8,10 @@ import akavaLogo from '../assets/akava-logo-small.png';
 import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, isAuthenticated, logout } = useAuth();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navItems = [
     { name: t('nav.home'), href: '/', isRoute: true },

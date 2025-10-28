@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
