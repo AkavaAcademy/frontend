@@ -11,13 +11,11 @@ import {
   MapPin
 } from 'lucide-react';
 import { FaTiktok } from 'react-icons/fa';
-import bgTranslations from '../i18n/bg.json';
-import enTranslations from '../i18n/en.json';
+import { useTranslation } from 'react-i18next';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  const [language] = React.useState('bg'); // You can integrate with your i18n context
-  const t = language === 'bg' ? bgTranslations : enTranslations;
+  const { t } = useTranslation();
 
   const socialLinks = [
     { icon: Facebook, href: 'https://www.facebook.com/AkavaAcademy/', label: 'Facebook' },
@@ -49,7 +47,7 @@ const Footer: React.FC = () => {
                 </span>
               </div>
               <p className="text-gray-300 leading-relaxed mb-6">
-                {t.footer.description}
+                {t('footer.description')}
               </p>
             </motion.div>
 
@@ -122,36 +120,36 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-lg font-semibold mb-4">{t.footer.coursesTitle}</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.coursesTitle')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.python}
+                  {t('footer.courses.python')}
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.web}
+                  {t('footer.courses.web')}
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.game}
+                  {t('footer.courses.game')}
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.mobile}
+                  {t('footer.courses.mobile')}
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.data}
+                  {t('footer.courses.data')}
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.advanced}
+                  {t('footer.courses.advanced')}
                 </Link>
               </li>
             </ul>
@@ -164,36 +162,31 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-lg font-semibold mb-4">{t.footer.companyTitle}</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.companyTitle')}</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/features" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.company.about}
+                <Link to="/about-us" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t('footer.company.about')}
                 </Link>
               </li>
               <li>
-                <Link to="/features" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.company.mission}
-                </Link>
-              </li>
-              <li>
-                <Link to="/features" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.company.team}
+                <Link to="/about-us#team" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                  {t('footer.company.team')}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.company.careers}
+                  {t('footer.company.careers')}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.company.press}
+                  {t('footer.company.press')}
                 </Link>
               </li>
               <li>
                 <Link to="/blog" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.company.blog}
+                  {t('footer.company.blog')}
                 </Link>
               </li>
             </ul>
@@ -208,72 +201,72 @@ const Footer: React.FC = () => {
             className="space-y-6"
           >
             <div>
-              <h3 className="text-lg font-semibold mb-4">{t.footer.supportTitle}</h3>
+              <h3 className="text-lg font-semibold mb-4">{t('footer.supportTitle')}</h3>
               <ul className="space-y-2">
                 <li>
                   <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.support.help}
+                    {t('footer.support.help')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.support.contact}
+                    {t('footer.support.contact')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/privacy-policy" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.support.privacy}
+                    {t('footer.support.privacy')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/terms-of-service" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.support.terms}
+                    {t('footer.support.terms')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/student-portal" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.support.studentPortal}
+                    {t('footer.support.studentPortal')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/parent-portal" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.support.parentDashboard}
+                    {t('footer.support.parentDashboard')}
                   </Link>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4">{t.footer.resourcesTitle}</h3>
+              <h3 className="text-lg font-semibold mb-4">{t('footer.resourcesTitle')}</h3>
               <ul className="space-y-2">
                 <li>
                   <Link to="/free-lessons" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.resources.tutorials}
+                    {t('footer.resources.tutorials')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/coding-challenges" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.resources.challenges}
+                    {t('footer.resources.challenges')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/project-ideas" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.resources.projects}
+                    {t('footer.resources.projects')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/learning-paths" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.resources.paths}
+                    {t('footer.resources.paths')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/blog" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.resources.stories}
+                    {t('footer.resources.stories')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/contact" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                    {t.footer.resources.faq}
+                    {t('footer.resources.faq')}
                   </Link>
                 </li>
               </ul>
@@ -293,15 +286,15 @@ const Footer: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="text-xl font-semibold mb-2">
-              {t.footer.newsletterTitle}
+              {t('footer.newsletterTitle')}
             </h3>
             <p className="text-gray-400 mb-6">
-              {t.footer.newsletterDesc}
+              {t('footer.newsletterDesc')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
-                placeholder={t.footer.emailPlaceholder}
+                placeholder={t('footer.emailPlaceholder')}
                 className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-white placeholder-gray-400"
               />
               <motion.button
@@ -309,7 +302,7 @@ const Footer: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
                 className="btn-primary whitespace-nowrap"
               >
-                {t.footer.subscribe}
+                {t('footer.subscribe')}
               </motion.button>
             </div>
           </div>
@@ -321,7 +314,7 @@ const Footer: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © {currentYear} {t.footer.copyright}
+              © {currentYear} {t('footer.copyright')}
             </div>
             <div className="flex space-x-6 text-sm">
               <Link to="/privacy-policy" className="text-gray-400 hover:text-primary-400 transition-colors">

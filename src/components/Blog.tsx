@@ -1,34 +1,37 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Users, Calendar, TrendingUp, ArrowRight, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const BlogComponent: React.FC = () => {
+  const { t } = useTranslation();
+  
   const newsCategories = [
     {
       icon: BookOpen,
-      title: 'Полезни статии',
-      description: 'Материали, които ще ви помогнат да разширите знанията си в света на технологиите и образованието.',
+      title: t('blog.categories.useful.title'),
+      description: t('blog.categories.useful.description'),
       articles: 15,
       color: 'from-blue-500 to-cyan-500'
     },
     {
       icon: Users,
-      title: 'Съвети за родители',
-      description: 'Полезни насоки за родители, които искат да подкрепят дигиталното развитие на своите деца.',
+      title: t('blog.categories.parents.title'),
+      description: t('blog.categories.parents.description'),
       articles: 12,
       color: 'from-green-500 to-emerald-500'
     },
     {
       icon: Calendar,
-      title: 'Новини от академията',
-      description: 'Бъдете в крак с всичко ново в Akava Academy — нови курсове, събития и успехи на учениците.',
+      title: t('blog.categories.news.title'),
+      description: t('blog.categories.news.description'),
       articles: 8,
       color: 'from-purple-500 to-pink-500'
     },
     {
       icon: TrendingUp,
-      title: 'Дигитални умения и тенденции',
-      description: 'Следете най-актуалните тенденции в света на технологиите и програмирането.',
+      title: t('blog.categories.trends.title'),
+      description: t('blog.categories.trends.description'),
       articles: 20,
       color: 'from-orange-500 to-red-500'
     }
@@ -81,14 +84,13 @@ const BlogComponent: React.FC = () => {
             className="text-center"
           >
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-              Новини и{' '}
+              {t('blog.title')}{' '}
               <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                Статии
+                {t('blog.titleHighlight')}
               </span>
             </h1>
             <p className="text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto">
-              Бъдете в крак с най-новите тенденции в образованието и технологиите. 
-              Полезни статии, съвети за родители и актуални новини от Акава Академия.
+              {t('blog.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -132,7 +134,7 @@ const BlogComponent: React.FC = () => {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-500">
-                    {category.articles} статии
+                    {category.articles} {t('blog.categories.useful.articles')}
                   </span>
                   <ArrowRight className="w-5 h-5 text-primary-600 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -153,10 +155,10 @@ const BlogComponent: React.FC = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Последни статии
+              {t('blog.recent')}
             </h2>
             <p className="text-xl text-gray-600">
-              Най-новите материали от нашата екипа
+              {t('blog.recentSubtitle')}
             </p>
           </motion.div>
 
@@ -197,7 +199,7 @@ const BlogComponent: React.FC = () => {
                       </div>
                       <div className="flex items-center">
                         <Clock className="w-4 h-4 mr-1" />
-                        {article.readTime}
+                        {article.readTime.replace('мин', t('blog.readTime'))}
                       </div>
                     </div>
                     <ArrowRight className="w-5 h-5 text-primary-600 group-hover:translate-x-1 transition-transform" />
@@ -219,15 +221,15 @@ const BlogComponent: React.FC = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Получавайте най-новите статии
+              {t('blog.newsletter.title')}
             </h2>
             <p className="text-xl text-white/90 mb-8">
-              Абонирайте се за нашия бюлетин и получавайте най-новите статии директно в пощенската си кутия.
+              {t('blog.newsletter.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
-                placeholder="Вашият имейл адрес"
+                placeholder={t('blog.newsletter.placeholder')}
                 className="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-white/50 text-gray-900"
               />
               <motion.button
@@ -235,7 +237,7 @@ const BlogComponent: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
                 className="bg-white text-primary-600 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors duration-300"
               >
-                Абонирай се
+                {t('blog.newsletter.subscribe')}
               </motion.button>
             </div>
           </motion.div>

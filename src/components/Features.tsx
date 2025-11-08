@@ -10,55 +10,58 @@ import {
   Zap,
   Shield
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Features: React.FC = () => {
+  const { t } = useTranslation();
+  
   const features = [
     {
       icon: Code,
-      title: 'Интерактивно програмиране',
-      description: 'Научете програмиране чрез забавни, интерактивни упражнения и реални проекти, които правят кодирането вълнуващо.',
+      title: t('features.items.interactive.title'),
+      description: t('features.items.interactive.description'),
       color: 'from-blue-500 to-cyan-500'
     },
     {
       icon: Users,
-      title: 'Експертни ментори',
-      description: 'Учете се от сертифицирани инструктори, които са специализирани в преподаването на програмиране на деца и млади хора.',
+      title: t('features.items.mentors.title'),
+      description: t('features.items.mentors.description'),
       color: 'from-purple-500 to-pink-500'
     },
     {
       icon: Trophy,
-      title: 'Система за постижения',
-      description: 'Печелете значки, сертификати и награди, докато напредвате в пътешествието си в програмирането.',
+      title: t('features.items.achievements.title'),
+      description: t('features.items.achievements.description'),
       color: 'from-yellow-500 to-orange-500'
     },
     {
       icon: BookOpen,
-      title: 'Структурирана програма',
-      description: 'Следвайте внимателно проектирания път на обучение от основите до напредналите програмни концепции.',
+      title: t('features.items.structured.title'),
+      description: t('features.items.structured.description'),
       color: 'from-green-500 to-emerald-500'
     },
     {
       icon: Monitor,
-      title: 'Съвременни инструменти',
-      description: 'Използвайте най-новите инструменти за разработка и платформи, използвани от професионални програмисти.',
+      title: t('features.items.tools.title'),
+      description: t('features.items.tools.description'),
       color: 'from-indigo-500 to-blue-500'
     },
     {
       icon: Heart,
-      title: 'Безопасна среда',
-      description: 'Учете се в сигурна, контролирана среда, проектирана специално за млади ученици.',
+      title: t('features.items.safe.title'),
+      description: t('features.items.safe.description'),
       color: 'from-red-500 to-pink-500'
     },
     {
       icon: Zap,
-      title: 'Бърз прогрес',
-      description: 'Ускорете обучението си с нашата доказана методология и персонализирана обратна връзка.',
+      title: t('features.items.progress.title'),
+      description: t('features.items.progress.description'),
       color: 'from-yellow-400 to-orange-400'
     },
     {
       icon: Shield,
-      title: 'Родителски панел',
-      description: 'Проследявайте прогреса и постиженията на детето си чрез нашия всеобхватен родителски портал.',
+      title: t('features.items.parent.title'),
+      description: t('features.items.parent.description'),
       color: 'from-gray-600 to-gray-800'
     }
   ];
@@ -96,14 +99,13 @@ const Features: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Защо да изберете{' '}
+            {t('features.title')}{' '}
             <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              Акава Академия?
+              {t('features.titleHighlight')}
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Комбинираме най-новите технологии с доказани образователни методи, за да създадем 
-            увлекателно учебно преживяване, което подготвя децата за дигиталното бъдеще.
+            {t('features.desc')}
           </p>
         </motion.div>
 
@@ -147,18 +149,17 @@ const Features: React.FC = () => {
         >
           <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8 lg:p-12">
             <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Започнете своето приключение в света на технологиите!
+              {t('features.cta.title')}
             </h3>
             <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Присъединете се към хиляди ученици, които вече са открили радостта от програмирането 
-              с Акава Академи. Започнете безплатния си пробен период днес!
+              {t('features.cta.description')}
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-primary text-lg px-8 py-4"
             >
-              Започнете безплатен пробен период
+              {t('features.cta.button')}
             </motion.button>
           </div>
         </motion.div>

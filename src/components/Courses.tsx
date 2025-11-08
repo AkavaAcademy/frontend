@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { coursesAPI } from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface Course {
   id: number;
@@ -30,6 +31,7 @@ interface Course {
 }
 
 const Courses: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [courses, setCourses] = useState<Course[]>([]);
@@ -37,9 +39,9 @@ const Courses: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const categories = [
-    { id: 'all', name: 'Всички курсове' },
-    { id: 'beginner', name: 'Начинаещи' },
-    { id: 'advanced', name: 'Напреднали' },
+    { id: 'all', name: t('courses.categories.all') },
+    { id: 'beginner', name: t('courses.categories.beginner') },
+    { id: 'advanced', name: t('courses.categories.advanced') },
   ];
 
   const getIconForCategory = (category: string) => {
@@ -79,17 +81,17 @@ const Courses: React.FC = () => {
   const getCategoryBadge = (category: string) => {
     switch (category) {
       case 'robotics':
-        return { text: 'Роботика', color: 'bg-blue-100 text-blue-800' };
+        return { text: t('courses.categoryBadge.robotics'), color: 'bg-blue-100 text-blue-800' };
       case 'programming':
-        return { text: 'Програмиране', color: 'bg-green-100 text-green-800' };
+        return { text: t('courses.categoryBadge.programming'), color: 'bg-green-100 text-green-800' };
       case 'future-tech':
-        return { text: 'Бъдещи технологии', color: 'bg-purple-100 text-purple-800' };
+        return { text: t('courses.categoryBadge.future-tech'), color: 'bg-purple-100 text-purple-800' };
       case 'design':
-        return { text: 'Дизайн', color: 'bg-orange-100 text-orange-800' };
+        return { text: t('courses.categoryBadge.design'), color: 'bg-orange-100 text-orange-800' };
       case 'security':
-        return { text: 'Киберсигурност', color: 'bg-red-100 text-red-800' };
+        return { text: t('courses.categoryBadge.security'), color: 'bg-red-100 text-red-800' };
       default:
-        return { text: 'Други', color: 'bg-gray-100 text-gray-800' };
+        return { text: t('courses.categoryBadge.other'), color: 'bg-gray-100 text-gray-800' };
     }
   };
 
@@ -124,15 +126,14 @@ const Courses: React.FC = () => {
       
       // Filter out unwanted courses
       const allowedCourses = [
-        'LEGO РобоМастъри (6-10 г.)',
-        'Основи на програмирането със Scratch (10-12 г.)',
-        'Python за начинаещи (12-15 г.)',
-        'Web Development Basics (13-16 г.)',
-        'AI и Machine Learning за тийнейджъри (15-18 г.)',
-        'Киберсигурност за ученици (14-18 г.)',
-        'Графичен дизайн (15-18 г.)',
-        'Подготовка за ИТ интервю (18 г.)',
-        'Индивидуални уроци и консултации'
+        'Tech Explorers: LEGO Robotics & Coding (6–10 г.)',
+        'Scratch Creators (10–12 г.)',
+        'Python Start Lab (12–14 г.)',
+        'Digital Design Studio (15–18 г.)',
+        'UX Discovery (16–18 г.)',
+        'CyberSmart Teens (15–18 г.)',
+        'AI for Teens (15–18 г.)',
+        'Career & Confidence Lab (16–18 г.)'
       ];
       
       const filteredApiCourses = apiCourses.filter(course => 
@@ -150,176 +151,158 @@ const Courses: React.FC = () => {
       // Fallback to static data if API fails
       console.log('Falling back to static course data...');
       const staticCourses: Course[] = [
-        // НАЧИНАЕЩИ КУРСОВЕ
+        // НАЧИНАЕЩИ КУРСОВЕ (6-14 г.)
         {
           id: 1,
-          title: 'LEGO РобоМастъри (6-10 г.)',
+          title: 'Tech Explorers: LEGO Robotics & Coding (6–10 г.)',
           description: 'Научете децата да строят и програмират роботи с LEGO, като развиват логическо мислене и творчески умения.',
-          duration: '12 седмици',
-          price: 280,
+          duration: '6 седмици / 6 занятия',
+          price: 240,
           difficulty: 'beginner',
           category: 'robotics',
           features: [
-            'LEGO Mindstorms програмиране',
-            'Строене на роботи',
+            'Основи на роботиката',
+            'Сензори и двигатели',
+            'Блоково програмиране',
+            'STEM игри',
+            'Сертификат за завършване'
+          ],
+          formatted_price: '240 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 2,
+          title: 'Scratch Creators (10–12 г.)',
+          description: 'Създаване на анимации, игри и интерактивни истории. Основи на логическо мислене.',
+          duration: '6 седмици / 6 занятия',
+          price: 240,
+          difficulty: 'beginner',
+          category: 'programming',
+          features: [
+            'Създаване на анимации',
             'Разработване на игри',
-            'Групови проекти',
+            'Интерактивни истории',
+            'Основи на логическо мислене',
+            'Практически проекти'
+          ],
+          formatted_price: '240 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 3,
+          title: 'Python Start Lab (12–14 г.)',
+          description: 'Програмиране на мини игри, чатботове, базови алгоритми.',
+          duration: '6 седмици / 6 занятия',
+          price: 280,
+          difficulty: 'beginner',
+          category: 'programming',
+          features: [
+            'Програмиране на мини игри',
+            'Създаване на чатботове',
+            'Базови алгоритми',
+            'Python синтаксис',
             'Сертификат за завършване'
           ],
           formatted_price: '280 лв.',
           created_at: '2024-01-01',
           updated_at: '2024-01-01'
         },
-        {
-          id: 2,
-          title: 'Основи на програмирането със Scratch (10-12 г.)',
-          description: 'Въвеждане в света на програмирането с подходящи за възрастта езици и платформи.',
-          duration: '16 седмици',
-          price: 320,
-          difficulty: 'beginner',
-          category: 'programming',
-          features: [
-            'Scratch и Blockly',
-            'Python за начинаещи',
-            'Веб дизайн основи',
-            'Алгоритмично мислене',
-            'Практически проекти'
-          ],
-          formatted_price: '320 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
-        },
-        {
-          id: 3,
-          title: 'Python за начинаещи (12-15 г.)',
-          description: 'Научете основите на Python програмирането с практически проекти и игри.',
-          duration: '20 седмици',
-          price: 400,
-          difficulty: 'beginner',
-          category: 'programming',
-          features: [
-            'Python синтаксис и основи',
-            'Структури от данни',
-            'Функции и модули',
-            'Практически проекти',
-            'Сертификат за завършване'
-          ],
-          formatted_price: '400 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
-        },
-        // НАПРЕДНАЛИ КУРСОВЕ
+        // ДИЗАЙН КУРСОВЕ (15-18 г.)
         {
           id: 4,
-          title: 'Web Development Basics (13-16 г.)',
-          description: 'Научете основите на уеб разработката с HTML, CSS и JavaScript.',
-          duration: '24 седмици',
-          price: 480,
-          difficulty: 'advanced',
-          category: 'programming',
-          features: [
-            'HTML5 и CSS3',
-            'JavaScript основи',
-            'Responsive дизайн',
-            'Веб проекти',
-            'Git и версиониране'
-          ],
-          formatted_price: '480 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
-        },
-        {
-          id: 5,
-          title: 'AI и Machine Learning за тийнейджъри (15-18 г.)',
-          description: 'Разгледайте света на изкуствения интелект и машинното обучение.',
-          duration: '30 седмици',
-          price: 600,
-          difficulty: 'advanced',
-          category: 'future-tech',
-          features: [
-            'TensorFlow и PyTorch',
-            'Нейронни мрежи',
-            'Обработка на данни',
-            'Исследователски проекти',
-            'Менторство'
-          ],
-          formatted_price: '600 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
-        },
-        {
-          id: 6,
-          title: 'Киберсигурност за ученици (14-18 г.)',
-          description: 'Защита на дигитални системи и етични техники за тестване на сигурността.',
-          duration: '28 седмици',
-          price: 560,
-          difficulty: 'advanced',
-          category: 'security',
-          features: [
-            'Етично хакерство',
-            'Пенетрационно тестване',
-            'Криптография',
-            'Форензика',
-            'Сертификация'
-          ],
-          formatted_price: '560 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
-        },
-        {
-          id: 7,
-          title: 'Графичен дизайн (15-18 г.)',
-          description: 'Развиване на креативните умения чрез дигитален дизайн и изкуство.',
-          duration: '18 седмици',
+          title: 'Digital Design Studio (15–18 г.)',
+          description: 'Canva, Adobe Express, Figma – графика, композиция, лого дизайн, визуален сторителинг.',
+          duration: '8 седмици / 8 занятия',
           price: 360,
           difficulty: 'advanced',
           category: 'design',
           features: [
-            'Adobe Creative Suite',
-            'Цветова теория',
-            'Типография',
-            'Дигитално рисуване',
-            'Портфолио проекти'
+            'Canva и Adobe Express',
+            'Figma дизайн',
+            'Графика и композиция',
+            'Лого дизайн',
+            'Визуален сторителинг'
           ],
           formatted_price: '360 лв.',
           created_at: '2024-01-01',
           updated_at: '2024-01-01'
         },
         {
-          id: 8,
-          title: 'Подготовка за ИТ интервю (18 г.)',
-          description: 'Подгответе се за успешно ИТ интервю с практически упражнения и симулации.',
-          duration: '12 седмици',
+          id: 5,
+          title: 'UX Discovery (16–18 г.)',
+          description: 'Основи на UX/UI, wireframes, потребителско изживяване, прототипиране.',
+          duration: '8 седмици / 8 занятия',
+          price: 400,
+          difficulty: 'advanced',
+          category: 'design',
+          features: [
+            'Основи на UX/UI',
+            'Wireframes',
+            'Потребителско изживяване',
+            'Прототипиране',
+            'Портфолио проекти'
+          ],
+          formatted_price: '400 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        // НАПРЕДНАЛИ ТЕХНОЛОГИИ (15-18 г.)
+        {
+          id: 6,
+          title: 'CyberSmart Teens (15–18 г.)',
+          description: 'Онлайн безопасност, дигитален отпечатък, AI етика, защита на данни.',
+          duration: '6 седмици / 6 занятия',
+          price: 300,
+          difficulty: 'advanced',
+          category: 'security',
+          features: [
+            'Онлайн безопасност',
+            'Дигитален отпечатък',
+            'AI етика',
+            'Защита на данни',
+            'Сертификат за завършване'
+          ],
+          formatted_price: '300 лв.',
+          created_at: '2024-01-01',
+          updated_at: '2024-01-01'
+        },
+        {
+          id: 7,
+          title: 'AI for Teens (15–18 г.)',
+          description: 'Как работи AI, ChatGPT, машинно обучение, визуални и текстови модели.',
+          duration: '10 седмици / 10 занятия',
           price: 500,
           difficulty: 'advanced',
-          category: 'programming',
+          category: 'future-tech',
           features: [
-            'Технически интервюта',
-            'Алгоритмични задачи',
-            'Системен дизайн',
-            'Мок интервюта',
-            'Кариерно консултиране'
+            'Как работи AI',
+            'ChatGPT и AI инструменти',
+            'Машинно обучение',
+            'Визуални и текстови модели',
+            'Практически проекти'
           ],
           formatted_price: '500 лв.',
           created_at: '2024-01-01',
           updated_at: '2024-01-01'
         },
         {
-          id: 9,
-          title: 'Индивидуални уроци и консултации',
-          description: 'Персонализирано обучение според нуждите и интересите на детето.',
-          duration: 'По заявка',
-          price: 50,
-          difficulty: 'both',
+          id: 8,
+          title: 'Career & Confidence Lab (16–18 г.)',
+          description: 'Комуникация, CV, интервю симулации, критическо мислене, лидерство.',
+          duration: '5 седмици / 5 занятия',
+          price: 280,
+          difficulty: 'advanced',
           category: 'programming',
           features: [
-            '1-на-1 обучение',
-            'Гъвкаво време',
-            'Персонализирана програма',
-            'Онлайн или присъствено',
-            'Експертни ментори'
+            'Комуникация и soft skills',
+            'CV създаване',
+            'Интервю симулации',
+            'Критическо мислене',
+            'Лидерство и работа в екип'
           ],
-          formatted_price: '50 лв./час',
+          formatted_price: '280 лв.',
           created_at: '2024-01-01',
           updated_at: '2024-01-01'
         }
@@ -383,14 +366,13 @@ const Courses: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Нашите{' '}
+            {t('courses.title').split(' ')[0]}{' '}
             <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              Курсове
+              {t('courses.title').split(' ').slice(1).join(' ')}
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Разгледайте курсовете, които предлагаме за ученици от 6 до 18 г. Всяка категория е внимателно структурирана, 
-            за да отговаря на възрастта и интересите на учениците.
+            {t('courses.desc')}
           </p>
         </motion.div>
 
@@ -491,7 +473,7 @@ const Courses: React.FC = () => {
                     </div>
                     <div className="flex items-center">
                       <Users className="w-4 h-4 mr-1" />
-                      120 students
+                      120 {t('courses.students')}
                     </div>
                   </div>
 
@@ -512,6 +494,7 @@ const Courses: React.FC = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => navigate(`/course/${course.id}`)}
                       className="btn-primary"
                     >
                       Запиши се
@@ -618,6 +601,7 @@ const Courses: React.FC = () => {
                             <motion.button
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
+                              onClick={() => navigate(`/course/${course.id}`)}
                               className="btn-primary"
                             >
                               Запиши се

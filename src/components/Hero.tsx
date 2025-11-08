@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Hero: React.FC = () => {
+  const { t } = useTranslation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const { scrollY } = useScroll();
@@ -141,7 +143,7 @@ const Hero: React.FC = () => {
                   scale: 1.05
                 }}
               >
-                IT АКАДЕМИЯ
+                {t('hero.title1')}
                 <motion.span
                   className="absolute -top-2 -right-2 text-2xl"
                   animate={{ rotate: [0, 360] }}
@@ -160,7 +162,7 @@ const Hero: React.FC = () => {
                   scale: 1.05
                 }}
               >
-                ЗА ДЕЦА И УЧЕНИЦИ
+                {t('hero.title2')}
               </motion.span>
             </motion.h1>
 
@@ -188,7 +190,13 @@ const Hero: React.FC = () => {
               transition={{ delay: 1.2, duration: 0.8 }}
               className="flex flex-wrap justify-center gap-4 mb-8"
             >
-              {['Роботика', 'Програмиране', 'Дизайн', 'Киберсигурност', 'AI'].map((tech, index) => (
+              {[
+                t('hero.techStack.robotics'), 
+                t('hero.techStack.programming'), 
+                t('hero.techStack.design'), 
+                t('hero.techStack.cybersecurity'), 
+                t('hero.techStack.ai')
+              ].map((tech, index) => (
                 <motion.span
                   key={tech}
                   initial={{ opacity: 0, scale: 0 }}
@@ -217,14 +225,15 @@ const Hero: React.FC = () => {
                 className="text-lg sm:text-xl lg:text-2xl text-white/90 font-medium"
                 whileHover={{ scale: 1.05 }}
               >
-                за ученици от <motion.span 
+                {t('hero.ageRange').split(' ').slice(0, -3).join(' ')}{' '}
+                <motion.span 
                   className="text-yellow-300 font-bold relative"
                   whileHover={{ 
                     textShadow: "0 0 15px rgba(251, 191, 36, 0.5)",
                     scale: 1.1
                   }}
                 >
-                  6 до 18 г.
+                  {t('hero.ageText')}
                   <motion.span
                     className="absolute -top-1 -right-1 text-sm"
                     animate={{ 
@@ -267,7 +276,7 @@ const Hero: React.FC = () => {
                   className="relative z-10 flex items-center"
                   whileHover={{ x: -2 }}
                 >
-                  Виж всички курсове
+                  {t('hero.viewCourses')}
                   <motion.div
                     className="ml-3"
                     whileHover={{ x: 4, rotate: 15 }}
@@ -301,8 +310,8 @@ const Hero: React.FC = () => {
                 >
                   <Play className="w-6 h-6" />
                 </motion.div>
-                <span className="hidden sm:inline">Запиши се за безплатен пробен курс</span>
-                <span className="sm:hidden">Безплатен пробен курс</span>
+                <span className="hidden sm:inline">{t('hero.freeTrial')}</span>
+                <span className="sm:hidden">{t('hero.freeTrialShort')}</span>
               </motion.span>
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-xl"

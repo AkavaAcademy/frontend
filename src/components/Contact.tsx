@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Mail, 
@@ -10,8 +10,12 @@ import {
   Loader
 } from 'lucide-react';
 import { contactsAPI } from '../services/api';
+import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 
 const Contact: React.FC = () => {
+  const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,6 +29,16 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>('');
+
+  useEffect(() => {
+    const courseParam = searchParams.get('course');
+    if (courseParam) {
+      setFormData(prev => ({
+        ...prev,
+        course: decodeURIComponent(courseParam)
+      }));
+    }
+  }, [searchParams]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -93,42 +107,48 @@ const Contact: React.FC = () => {
   const contactInfo = [
     {
       icon: Mail,
-      title: 'Имейл',
-      content: 'info@akavaacademy.com',
-      description: 'Отговаряме в рамките на 24 часа'
+      title: t('contact.contactInfo.email.title'),
+      content: t('contact.contactInfo.email.content'),
+      description: t('contact.contactInfo.email.description')
     },
     {
       icon: Phone,
-      title: 'Телефон',
-      content: '0895 30 20 74',
-      description: 'Свържете се с нас за консултация'
+      title: t('contact.contactInfo.phone.title'),
+      content: t('contact.contactInfo.phone.content'),
+      description: t('contact.contactInfo.phone.description')
     },
     {
       icon: MapPin,
-      title: 'Адрес',
-      content: 'бул. "6-ти Септември" 144а, Пловдив',
-      description: 'Запишете се за безплатна консултация'
+      title: t('contact.contactInfo.address.title'),
+      content: t('contact.contactInfo.address.content'),
+      description: t('contact.contactInfo.address.description')
     },
     {
       icon: Clock,
-      title: 'Работно време',
-      content: 'Понеделник - Петък',
-      description: '9:00 - 18:00'
+      title: t('contact.contactInfo.hours.title'),
+      content: t('contact.contactInfo.hours.content'),
+      description: t('contact.contactInfo.hours.description')
     }
   ];
 
-  const courses = [
-    'LEGO роботика и разработване на игри',
-    'Основи на програмирането',
-    'Дизайн и креативност',
-    'Технологии на бъдещето',
-    'Разширено програмиране',
-    'Роботика и автоматизация',
-    'Машинно обучение и AI',
-    'Киберсигурност и етично хакерство',
-    'Индивидуални уроци и консултации',
-    'Не съм сигурен - имам нужда от съвет'
+  const baseCourses = [
+    t('contact.courses.lego'),
+    t('contact.courses.basics'),
+    t('contact.courses.design'),
+    t('contact.courses.future'),
+    t('contact.courses.advanced'),
+    t('contact.courses.robotics'),
+    t('contact.courses.ml'),
+    t('contact.courses.cyber'),
+    t('contact.courses.individual'),
+    t('contact.courses.unsure')
   ];
+
+  // Add course from URL if it's not in the list
+  const courseParam = searchParams.get('course');
+  const courses = courseParam && !baseCourses.includes(decodeURIComponent(courseParam))
+    ? [...baseCourses, decodeURIComponent(courseParam)]
+    : baseCourses;
 
   return (
     <section id="contact" className="py-20 bg-gray-50">
@@ -142,15 +162,13 @@ const Contact: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Свържете се с{' '}
+            {t('contact.titlePart1')}{' '}
             <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              нас
+              {t('contact.titlePart2')}
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Готови да започнете пътешествието на вашето дете в света на програмирането? 
-            Свържете се с нас днес за безплатна консултация и открийте как Акава Академия 
-            може да помогне за формирането на бъдещето им.
+            {t('contact.desc')}
           </p>
         </motion.div>
 
@@ -164,7 +182,7 @@ const Contact: React.FC = () => {
           >
             <div className="card p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Изпратете ни съобщение
+                {t('contact.sendMessage')}
               </h3>
 
               {isSubmitted ? (
@@ -175,10 +193,10 @@ const Contact: React.FC = () => {
                 >
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                    Благодарим ви!
+                    {t('contact.thankYou')}
                   </h4>
                   <p className="text-gray-600">
-                    {successMessage || 'Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.'}
+                    {successMessage || t('contact.received')}
                   </p>
                 </motion.div>
               ) : (
@@ -192,7 +210,7 @@ const Contact: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                        Име на родителя *
+                        {t('contact.parentName')}
                       </label>
                       <input
                         type="text"
@@ -202,12 +220,12 @@ const Contact: React.FC = () => {
                         onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="Вашето пълно име"
+                        placeholder={t('contact.parentNamePlaceholder')}
                       />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Имейл адрес *
+                        {t('contact.email')}
                       </label>
                       <input
                         type="email"
@@ -217,7 +235,7 @@ const Contact: React.FC = () => {
                         onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="ваш@имейл.com"
+                        placeholder={t('contact.emailPlaceholder')}
                       />
                     </div>
                   </div>
@@ -225,7 +243,7 @@ const Contact: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                        Телефонен номер
+                        {t('contact.phone')}
                       </label>
                       <input
                         type="tel"
@@ -234,12 +252,12 @@ const Contact: React.FC = () => {
                         value={formData.phone}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="0895 30 20 74"
+                        placeholder={t('contact.phonePlaceholder')}
                       />
                     </div>
                     <div>
                       <label htmlFor="child_name" className="block text-sm font-medium text-gray-700 mb-2">
-                        Име на детето
+                        {t('contact.childName')}
                       </label>
                       <input
                         type="text"
@@ -248,12 +266,12 @@ const Contact: React.FC = () => {
                         value={formData.child_name}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="Име на детето"
+                        placeholder={t('contact.childNamePlaceholder')}
                       />
                     </div>
                     <div>
                       <label htmlFor="child_age" className="block text-sm font-medium text-gray-700 mb-2">
-                        Възраст на детето *
+                        {t('contact.childAge')}
                       </label>
                       <input
                         type="number"
@@ -265,14 +283,14 @@ const Contact: React.FC = () => {
                         min="6"
                         max="18"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="Възраст (6-18)"
+                        placeholder={t('contact.childAgePlaceholder')}
                       />
                     </div>
                   </div>
 
                   <div>
                     <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-2">
-                      Интересен курс
+                      {t('contact.interestedCourse')}
                     </label>
                     <select
                       id="course"
@@ -281,7 +299,7 @@ const Contact: React.FC = () => {
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
                     >
-                      <option value="">Изберете курс</option>
+                      <option value="">{t('contact.selectCourse')}</option>
                       {courses.map((course) => (
                         <option key={course} value={course}>
                           {course}
@@ -292,7 +310,7 @@ const Contact: React.FC = () => {
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                      Съобщение
+                      {t('contact.message')}
                     </label>
                     <textarea
                       id="message"
@@ -301,7 +319,7 @@ const Contact: React.FC = () => {
                       onChange={handleInputChange}
                       rows={4}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
-                      placeholder="Разкажете ни за интересите на вашето дете и въпросите, които имате..."
+                      placeholder={t('contact.messagePlaceholder')}
                     />
                   </div>
 
@@ -315,12 +333,12 @@ const Contact: React.FC = () => {
                     {isSubmitting ? (
                       <>
                         <Loader className="w-5 h-5 mr-2 animate-spin" />
-                        Изпращане...
+                        {t('contact.sending')}
                       </>
                     ) : (
                       <>
                         <Send className="w-5 h-5 mr-2" />
-                        Изпрати съобщение
+                        {t('contact.send')}
                       </>
                     )}
                   </motion.button>
@@ -339,11 +357,10 @@ const Contact: React.FC = () => {
           >
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Информация за контакт
+                {t('contact.contactInfo.title')}
               </h3>
               <p className="text-gray-600 mb-8">
-                Тук сме, за да ви помогнем и на вашето дете да започне пътешествието си в света на програмирането. 
-                Свържете се с нас чрез някой от каналите по-долу.
+                {t('contact.contactInfo.description')}
               </p>
             </div>
 
@@ -384,24 +401,24 @@ const Contact: React.FC = () => {
               className="bg-white rounded-xl p-6 shadow-lg"
             >
               <h4 className="text-lg font-semibold text-gray-900 mb-4">
-                Често задавани въпроси
+                {t('contact.faq.title')}
               </h4>
               <div className="space-y-3">
                 <div>
-                  <h5 className="font-medium text-gray-900">За какви възрастови групи преподавате?</h5>
-                  <p className="text-sm text-gray-600">Предлагаме курсове за ученици от 6 до 18 години.</p>
+                  <h5 className="font-medium text-gray-900">{t('contact.faq.q1.question')}</h5>
+                  <p className="text-sm text-gray-600">{t('contact.faq.q1.answer')}</p>
                 </div>
                 <div>
-                  <h5 className="font-medium text-gray-900">Предлагате ли онлайн курсове?</h5>
-                  <p className="text-sm text-gray-600">Да, предлагаме както онлайн, така и присъствени курсове</p>
+                  <h5 className="font-medium text-gray-900">{t('contact.faq.q2.question')}</h5>
+                  <p className="text-sm text-gray-600">{t('contact.faq.q2.answer')}</p>
                 </div>
                 <div>
-                  <h5 className="font-medium text-gray-900">Има ли безплатен пробен урок?</h5>
-                  <p className="text-sm text-gray-600">Да, има безплатен пробен урок за занятията по LEGO роботика.</p>
+                  <h5 className="font-medium text-gray-900">{t('contact.faq.q3.question')}</h5>
+                  <p className="text-sm text-gray-600">{t('contact.faq.q3.answer')}</p>
                 </div>
                 <div>
-                  <h5 className="font-medium text-gray-900">Къде се намира академията?</h5>
-                  <p className="text-sm text-gray-600">Намираме се в Пловдив, бул. "6-ти Септември" 144а, бизнес сграда LEVEL CENTER, етаж 3</p>
+                  <h5 className="font-medium text-gray-900">{t('contact.faq.q4.question')}</h5>
+                  <p className="text-sm text-gray-600">{t('contact.faq.q4.answer')}</p>
                 </div>
               </div>
             </motion.div>
