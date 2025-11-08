@@ -49,13 +49,19 @@ const Contact: React.FC = () => {
         course: formData.course || undefined
       };
       
-      console.log('Sending contact data:', contactData); // Debug log
+      console.log('Sending contact data to backend:', contactData); // Debug log
       
       const response = await contactsAPI.create(contactData);
       
-      // Check if the response indicates success
-      if (response.data.success) {
-        setSuccessMessage(response.data.message || 'Thank you for your message! We will get back to you soon.');
+      console.log('Backend response:', response.data); // Debug log
+      
+      // Handle success - check for success field or assume success if status is 200/201
+      if (response.status === 200 || response.status === 201 || response.data.success) {
+        setSuccessMessage(
+          response.data.message || 
+          response.data.contact?.message || 
+          'Благодарим ви! Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.'
+        );
         setIsSubmitted(true);
         
         // Reset form after 5 seconds
@@ -73,17 +79,28 @@ const Contact: React.FC = () => {
           });
         }, 5000);
       } else {
-        setError(response.data.message || 'Failed to submit form. Please try again.');
+        setError(response.data.message || 'Неуспешно изпращане на формата. Моля, опитайте отново.');
       }
     } catch (err: any) {
       // Handle API errors
-      console.log('API Error:', err.response?.data); // Debug log
-      if (err.response?.data?.message) {
+      console.error('API Error:', err.response?.data || err.message); // Debug log
+      
+      if (err.response?.status === 404) {
+        setError('Сървърът не е намерен. Моля, проверете дали backend сървърът работи на http://127.0.0.1:3000');
+      } else if (err.response?.status === 500) {
+        setError('Възникна грешка на сървъра. Моля, опитайте отново по-късно.');
+      } else if (err.response?.data?.message) {
         setError(err.response.data.message);
       } else if (err.response?.data?.errors) {
-        setError(err.response.data.errors.join(', '));
+        // Handle validation errors (array or object)
+        const errors = Array.isArray(err.response.data.errors) 
+          ? err.response.data.errors 
+          : Object.values(err.response.data.errors).flat();
+        setError(errors.join(', '));
+      } else if (err.message) {
+        setError(`Грешка: ${err.message}`);
       } else {
-        setError('Failed to submit form. Please try again.');
+        setError('Неуспешно изпращане на формата. Моля, опитайте отново.');
       }
     } finally {
       setIsSubmitting(false);
