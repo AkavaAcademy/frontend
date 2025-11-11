@@ -41,7 +41,7 @@ function App() {
                 <Contact />
               </>
             } />
-            <Route path="/features" element={<FeaturesPage />} />
+            <Route path="/aboutUs" element={<FeaturesPage />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/course-quiz" element={<CourseQuiz />} />
             <Route path="/contact" element={<ContactPage />} />

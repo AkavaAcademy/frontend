@@ -167,17 +167,17 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">{t.footer.companyTitle}</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/features" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/aboutUs" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.company.about}
                 </Link>
               </li>
               <li>
-                <Link to="/features" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/aboutUs" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.company.mission}
                 </Link>
               </li>
               <li>
-                <Link to="/features" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
+                <Link to="/aboutUs" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                   {t.footer.company.team}
                 </Link>
               </li>
