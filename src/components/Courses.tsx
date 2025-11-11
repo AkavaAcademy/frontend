@@ -388,10 +388,6 @@ const Courses: React.FC = () => {
               Курсове
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Разгледайте курсовете, които предлагаме за ученици от 6 до 18 г. Всяка категория е внимателно структурирана, 
-            за да отговаря на възрастта и интересите на учениците.
-          </p>
         </motion.div>
 
         {/* Category Filter */}
@@ -643,8 +639,7 @@ const Courses: React.FC = () => {
           <div className="text-center mb-12">
             <h3 className="text-4xl font-bold text-gray-900 mb-4">Възможности за отстъпки</h3>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Спестете повече, когато инвестирате в повече знания!<br />
-              Възползвайте се от нашите гъвкави условия и запишете вашето дете с преференциална цена.
+              Спестете повече, когато инвестирате в повече знания!
             </p>
           </div>
           

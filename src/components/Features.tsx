@@ -98,12 +98,12 @@ const Features: React.FC = () => {
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             Защо да изберете{' '}
             <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              Акава Академия?
+              Акава Академи?
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Комбинираме най-новите технологии с доказани образователни методи, за да създадем 
-            увлекателно учебно преживяване, което подготвя децата за дигиталното бъдеще.
+            увлекателно учебно преживяване, което подготвя обучаемите за дигиталното бъдеще.
           </p>
         </motion.div>
 
