@@ -137,31 +137,6 @@ const Features: React.FC = () => {
           ))}
         </motion.div>
 
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8 lg:p-12">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Започнете своето приключение в света на технологиите!
-            </h3>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Присъединете се към хиляди ученици, които вече са открили радостта от програмирането 
-              с Акава Академи. Започнете безплатния си пробен период днес!
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="btn-primary text-lg px-8 py-4"
-            >
-              Започнете безплатен пробен период
-            </motion.button>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
