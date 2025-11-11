@@ -396,10 +396,6 @@ const Contact: React.FC = () => {
               </h4>
               <div className="space-y-3">
                 <div>
-                  <h5 className="font-medium text-gray-900">За какви възрастови групи преподавате?</h5>
-                  <p className="text-sm text-gray-600">Предлагаме курсове за ученици от 6 до 18 години.</p>
-                </div>
-                <div>
                   <h5 className="font-medium text-gray-900">Предлагате ли онлайн курсове?</h5>
                   <p className="text-sm text-gray-600">Да, предлагаме както онлайн, така и присъствени курсове</p>
                 </div>
