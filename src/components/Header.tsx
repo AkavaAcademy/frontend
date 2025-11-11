@@ -15,7 +15,7 @@ const Header: React.FC = () => {
 
   const navItems = [
     { name: t('nav.home'), href: '/', isRoute: true },
-    { name: t('nav.features'), href: '/features', isRoute: true },
+    { name: t('nav.features'), href: '/aboutUs', isRoute: true },
     { name: t('nav.courses'), href: '/courses', isRoute: true },
     { name: t('nav.blog'), href: '/blog', isRoute: true },
     { name: t('nav.contact'), href: '/contact', isRoute: true },
