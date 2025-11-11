@@ -87,8 +87,8 @@ const BlogComponent: React.FC = () => {
               </span>
             </h1>
             <p className="text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto">
-              Бъдете в крак с най-новите тенденции в образованието и технологиите. 
-              Полезни статии, съвети за родители и актуални новини от Акава Академия.
+              Информирайте се за най-новите тенденции в образованието и технологиите. 
+              Полезни статии, съвети за родители и актуални новини от Акава Академи.
             </p>
           </motion.div>
         </div>
@@ -155,9 +155,6 @@ const BlogComponent: React.FC = () => {
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Последни статии
             </h2>
-            <p className="text-xl text-gray-600">
-              Най-новите материали от нашата екипа
-            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
