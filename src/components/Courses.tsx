@@ -1,378 +1,325 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { 
-  Check, 
-  Star, 
-  Clock, 
-  Users, 
   BookOpen,
-  Code,
-  Gamepad2,
-  Globe,
-  Smartphone,
-  Loader
+  BadgeCheck,
+  GraduationCap,
+  Check,
+  Clock,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
-import { coursesAPI } from '../services/api';
-import { useNavigate } from 'react-router-dom';
+
+interface CourseCategory {
+  id: string;
+  title: string;
+  description: string;
+  fullDescription: string;
+  icon: React.ElementType;
+  color: string;
+  bgColor: string;
+  textColor: string;
+  borderColor: string;
+  courses: Course[];
+  comingSoon?: boolean;
+  specialties?: string[];
+}
 
 interface Course {
   id: number;
   title: string;
   description: string;
   duration: string;
-  price: number;
-  difficulty: string;
-  category: string;
+  price?: number;
+  difficulty?: string;
   features: string[];
-  formatted_price: string;
-  created_at: string;
-  updated_at: string;
+  formatted_price?: string;
+  formatted_price_eur?: string;
+  slug?: string;
 }
+
+// Function to generate URL-friendly slug from course title
+const generateSlug = (title: string): string => {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9а-я\s-]/g, '') // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+    .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+};
 
 const Courses: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    searchParams.get('category') || null
+  );
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
+    new Set(searchParams.get('category') ? [searchParams.get('category')!] : [])
+  );
 
-  const categories = [
-    { id: 'all', name: 'Всички курсове' },
-    { id: 'beginner', name: 'Начинаещи' },
-    { id: 'advanced', name: 'Напреднали' },
-  ];
+  const scrollToCategory = (categoryId: string, delay: number = 300) => {
+    setTimeout(() => {
+      const element = document.getElementById(`category-${categoryId}`);
+      if (element) {
+        const headerOffset = 100; // Offset for fixed header if any
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-  const getIconForCategory = (category: string) => {
-    switch (category) {
-      case 'robotics':
-        return Gamepad2;
-      case 'programming':
-        return Code;
-      case 'future-tech':
-        return Globe;
-      case 'design':
-        return BookOpen;
-      case 'security':
-        return Smartphone;
-      default:
-        return Code;
-    }
-  };
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'robotics':
-        return 'from-blue-500 to-cyan-500';
-      case 'programming':
-        return 'from-green-500 to-emerald-500';
-      case 'future-tech':
-        return 'from-purple-500 to-pink-500';
-      case 'design':
-        return 'from-orange-500 to-red-500';
-      case 'security':
-        return 'from-red-500 to-rose-500';
-      default:
-        return 'from-gray-500 to-slate-500';
-    }
-  };
-
-  const getCategoryBadge = (category: string) => {
-    switch (category) {
-      case 'robotics':
-        return { text: 'Роботика', color: 'bg-blue-100 text-blue-800' };
-      case 'programming':
-        return { text: 'Програмиране', color: 'bg-green-100 text-green-800' };
-      case 'future-tech':
-        return { text: 'Бъдещи технологии', color: 'bg-purple-100 text-purple-800' };
-      case 'design':
-        return { text: 'Дизайн', color: 'bg-orange-100 text-orange-800' };
-      case 'security':
-        return { text: 'Киберсигурност', color: 'bg-red-100 text-red-800' };
-      default:
-        return { text: 'Други', color: 'bg-gray-100 text-gray-800' };
-    }
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, delay);
   };
 
   useEffect(() => {
-    fetchCourses();
-  }, []);
+    const category = searchParams.get('category');
+    if (category) {
+      setSelectedCategory(category);
+      setExpandedCategories(new Set([category]));
+      // Scroll to category after state update and DOM render
+      scrollToCategory(category, 400);
+    }
+  }, [searchParams]);
 
-  const fetchCourses = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      console.log('Fetching courses from API...');
-      const response = await coursesAPI.getAll();
-      
-      console.log('API Response:', response.data);
-      
-      // Transform API response to match our Course interface
-      const apiCourses: Course[] = response.data.map((course: any) => ({
-        id: course.id,
-        title: course.title,
-        description: course.description,
-        duration: course.duration,
-        price: course.price,
-        difficulty: course.difficulty,
-        category: course.category,
-        features: course.features || [],
-        formatted_price: `${course.price} лв.`,
-        created_at: course.created_at,
-        updated_at: course.updated_at
-      }));
-      
-      // Filter out unwanted courses
-      const allowedCourses = [
-        'LEGO РобоМастъри (6-10 г.)',
-        'Основи на програмирането със Scratch (10-12 г.)',
-        'Python за начинаещи (12-15 г.)',
-        'Web Development Basics (13-16 г.)',
-        'AI и Machine Learning за тийнейджъри (15-18 г.)',
-        'Киберсигурност за ученици (14-18 г.)',
-        'Графичен дизайн (15-18 г.)',
-        'Подготовка за ИТ интервю (18 г.)',
-        'Индивидуални уроци и консултации'
-      ];
-      
-      const filteredApiCourses = apiCourses.filter(course => 
-        allowedCourses.includes(course.title)
-      );
-      
-      setCourses(filteredApiCourses);
-    } catch (err: any) {
-      console.error('Error fetching courses:', err);
-      // Do not block UI if we have a local fallback
-      // Keep a console warning for visibility, but clear error for UI
-      const fallbackMessage = err.response?.data?.message || err.message || 'Failed to fetch courses';
-      console.warn('Using static courses due to error:', fallbackMessage);
-      
-      // Fallback to static data if API fails
-      console.log('Falling back to static course data...');
-      const staticCourses: Course[] = [
-        // НАЧИНАЕЩИ КУРСОВЕ
+  // Handle initial page load with category parameter
+  useEffect(() => {
+    const category = searchParams.get('category');
+    if (category) {
+      // Wait for component to fully mount, render, and ScrollToTop to finish
+      scrollToCategory(category, 700);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only on mount
+
+  const courseCategories: CourseCategory[] = [
+    {
+      id: 'short',
+      title: 'Краткосрочни обучения',
+      description: 'Програми за ученици, студенти и възрастни, които искат бързо и практично да развият дигитални или технологични умения.',
+      fullDescription: 'Програмите са предназначени за ученици, студенти и възрастни, които искат бързо и практично да развият дигитални или технологични умения. Подходящи са за хора без предишен опит или с желание да се преквалифицират.',
+      icon: BookOpen,
+      color: 'from-blue-500 to-cyan-500',
+      bgColor: 'bg-blue-50',
+      textColor: 'text-blue-800',
+      borderColor: 'border-blue-200',
+      courses: [
         {
           id: 1,
-          title: 'LEGO РобоМастъри (6-10 г.)',
-          description: 'Научете децата да строят и програмират роботи с LEGO, като развиват логическо мислене и творчески умения.',
-          duration: '12 седмици',
-          price: 280,
+          title: 'Tech Explorers: LEGO Robotics & Coding (6–10 г.)',
+          slug: 'tech-explorers-lego-robotics-coding',
+          description: 'Въвеждане в света на роботиката и програмирането чрез LEGO, развиване на логическо мислене и STEM умения.',
+          duration: '8 седмици / 8 занятия',
+          price: 380,
           difficulty: 'beginner',
-          category: 'robotics',
           features: [
-            'LEGO Mindstorms програмиране',
-            'Строене на роботи',
-            'Разработване на игри',
-            'Групови проекти',
+            'Основи на роботиката',
+            'Сензори и двигатели',
+            'Блоково програмиране',
+            'STEM игри',
             'Сертификат за завършване'
           ],
-          formatted_price: '280 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
+          formatted_price: '380 лв.',
+          formatted_price_eur: '195 €'
         },
         {
           id: 2,
-          title: 'Основи на програмирането със Scratch (10-12 г.)',
-          description: 'Въвеждане в света на програмирането с подходящи за възрастта езици и платформи.',
-          duration: '16 седмици',
+          title: 'Scratch Creators (10–12 г.)',
+          slug: 'scratch-creators',
+          description: 'Създаване на анимации, игри и интерактивни истории чрез визуално програмиране.',
+          duration: '8 седмици / 8 занятия',
           price: 320,
           difficulty: 'beginner',
-          category: 'programming',
           features: [
-            'Scratch и Blockly',
-            'Python за начинаещи',
-            'Веб дизайн основи',
-            'Алгоритмично мислене',
-            'Практически проекти'
+            'Създаване на анимации',
+            'Разработване на игри',
+            'Интерактивни истории',
+            'Основи на логическо мислене',
+            'Творчески проекти'
           ],
           formatted_price: '320 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
+          formatted_price_eur: '164 €'
         },
         {
           id: 3,
-          title: 'Python за начинаещи (12-15 г.)',
-          description: 'Научете основите на Python програмирането с практически проекти и игри.',
-          duration: '20 седмици',
-          price: 400,
+          title: 'Python Start Lab (12–14 г.)',
+          slug: 'python-start-lab',
+          description: 'Първи стъпки в програмирането с Python чрез забавни проекти и практически приложения.',
+          duration: '8 седмици / 8 занятия',
+          price: 380,
           difficulty: 'beginner',
-          category: 'programming',
           features: [
-            'Python синтаксис и основи',
-            'Структури от данни',
-            'Функции и модули',
-            'Практически проекти',
-            'Сертификат за завършване'
+            'Програмиране на мини игри',
+            'Създаване на чатботове',
+            'Базови алгоритми',
+            'Python синтаксис',
+            'Практически проекти'
           ],
-          formatted_price: '400 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
+          formatted_price: '380 лв.',
+          formatted_price_eur: '195 €'
         },
-        // НАПРЕДНАЛИ КУРСОВЕ
         {
           id: 4,
-          title: 'Web Development Basics (13-16 г.)',
-          description: 'Научете основите на уеб разработката с HTML, CSS и JavaScript.',
-          duration: '24 седмици',
-          price: 480,
+          title: 'Digital Design Studio (15–18 г.)',
+          slug: 'digital-design-studio',
+          description: 'Освояване на дигитален дизайн с модерни инструменти за създаване на визуални решения.',
+          duration: '8 седмици / 8 занятия',
+          price: 340,
           difficulty: 'advanced',
-          category: 'programming',
           features: [
-            'HTML5 и CSS3',
-            'JavaScript основи',
-            'Responsive дизайн',
-            'Веб проекти',
-            'Git и версиониране'
+            'Canva, Adobe Express, Figma',
+            'Графика и композиция',
+            'Лого дизайн',
+            'Визуален сторителинг',
+            'Портфолио проекти'
           ],
-          formatted_price: '480 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
+          formatted_price: '340 лв.',
+          formatted_price_eur: '174 €'
         },
         {
           id: 5,
-          title: 'AI и Machine Learning за тийнейджъри (15-18 г.)',
-          description: 'Разгледайте света на изкуствения интелект и машинното обучение.',
-          duration: '30 седмици',
-          price: 600,
+          title: 'UX Discovery (16–18 г.)',
+          slug: 'ux-discovery',
+          description: 'Разглеждане на основите на потребителското изживяване и дизайн на интерфейси.',
+          duration: '8 седмици / 8 занятия',
+          price: 360,
           difficulty: 'advanced',
-          category: 'future-tech',
           features: [
-            'TensorFlow и PyTorch',
-            'Нейронни мрежи',
-            'Обработка на данни',
-            'Исследователски проекти',
-            'Менторство'
+            'Основи на UX/UI',
+            'Wireframes',
+            'Потребителско изживяване',
+            'Прототипиране',
+            'Тестване на дизайн'
           ],
-          formatted_price: '600 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
+          formatted_price: '360 лв.',
+          formatted_price_eur: '185 €'
         },
         {
           id: 6,
-          title: 'Киберсигурност за ученици (14-18 г.)',
-          description: 'Защита на дигитални системи и етични техники за тестване на сигурността.',
-          duration: '28 седмици',
-          price: 560,
+          title: 'CyberSmart Teens (15–18 г.)',
+          slug: 'cybersmart-teens',
+          description: 'Обучение за безопасност в дигиталния свят и защита на лични данни.',
+          duration: '8 седмици / 8 занятия',
+          price: 340,
           difficulty: 'advanced',
-          category: 'security',
           features: [
-            'Етично хакерство',
-            'Пенетрационно тестване',
-            'Криптография',
-            'Форензика',
-            'Сертификация'
+            'Онлайн безопасност',
+            'Дигитален отпечатък',
+            'AI етика',
+            'Защита на данни',
+            'Киберсигурност основи'
           ],
-          formatted_price: '560 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
+          formatted_price: '340 лв.',
+          formatted_price_eur: '174 €'
         },
         {
           id: 7,
-          title: 'Графичен дизайн (15-18 г.)',
-          description: 'Развиване на креативните умения чрез дигитален дизайн и изкуство.',
-          duration: '18 седмици',
-          price: 360,
+          title: 'AI for Teens (15–18 г.)',
+          slug: 'ai-for-teens',
+          description: 'Разбиране на изкуствения интелект, неговите приложения и възможности.',
+          duration: '10 седмици / 10 занятия',
+          price: 480,
           difficulty: 'advanced',
-          category: 'design',
           features: [
-            'Adobe Creative Suite',
-            'Цветова теория',
-            'Типография',
-            'Дигитално рисуване',
-            'Портфолио проекти'
+            'Как работи AI',
+            'ChatGPT и текстови модели',
+            'Машинно обучение',
+            'Визуални модели',
+            'Практически AI проекти'
           ],
-          formatted_price: '360 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
+          formatted_price: '480 лв.',
+          formatted_price_eur: '246 €'
         },
         {
           id: 8,
-          title: 'Подготовка за ИТ интервю (18 г.)',
-          description: 'Подгответе се за успешно ИТ интервю с практически упражнения и симулации.',
-          duration: '12 седмици',
-          price: 500,
+          title: 'Career & Confidence Lab (16–18 г.)',
+          slug: 'career-confidence-lab',
+          description: 'Подготовка за кариера и развитие на лични умения за успех в професионалния свят.',
+          duration: '5 седмици / 5 занятия',
+          price: 280,
           difficulty: 'advanced',
-          category: 'programming',
           features: [
-            'Технически интервюта',
-            'Алгоритмични задачи',
-            'Системен дизайн',
-            'Мок интервюта',
-            'Кариерно консултиране'
+            'Подготовка за интервю',
+            'Soft skills развитие',
+            'Комуникация',
+            'CV създаване',
+            'Интервю симулации',
+            'Критическо мислене',
+            'Лидерство'
           ],
-          formatted_price: '500 лв.',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
-        },
-        {
-          id: 9,
-          title: 'Индивидуални уроци и консултации',
-          description: 'Персонализирано обучение според нуждите и интересите на детето.',
-          duration: 'По заявка',
-          price: 50,
-          difficulty: 'both',
-          category: 'programming',
-          features: [
-            '1-на-1 обучение',
-            'Гъвкаво време',
-            'Персонализирана програма',
-            'Онлайн или присъствено',
-            'Експертни ментори'
-          ],
-          formatted_price: '50 лв./час',
-          created_at: '2024-01-01',
-          updated_at: '2024-01-01'
+          formatted_price: '280 лв.',
+          formatted_price_eur: '144 €'
         }
-      ];
-      
-      setCourses(staticCourses);
-      setError(null);
-    } finally {
-      setLoading(false);
+      ]
+    },
+    {
+      id: 'licensed',
+      title: 'Лицензирани професионални обучения',
+      description: 'Курсове, които водят до придобиване на професионална квалификация по утвърдени програми, лицензирани от НАПОО.',
+      fullDescription: 'Акава Академи в момента е в процес на получаване на лиценз от Националната агенция за професионално образование и обучение (НАПОО) за провеждане на професионални обучения, водещи до издаване на свидетелство или удостоверение за професионална квалификация. След одобрение ще предлагаме сертифицирани програми в различни специалности.',
+      icon: BadgeCheck,
+      color: 'from-green-500 to-emerald-500',
+      bgColor: 'bg-green-50',
+      textColor: 'text-green-800',
+      borderColor: 'border-green-200',
+      comingSoon: true,
+      specialties: [
+        'Полиграфия',
+        'Компютърна графика',
+        'Графичен дизайн',
+        'Бизнес администрация',
+        'Програмно осигуряване',
+        'Системно програмиране',
+        'Приложно програмиране',
+        'Текстообработване',
+        'Електронна търговия'
+      ],
+      courses: []
+    },
+    {
+      id: 'teachers',
+      title: 'Квалификация за преподаватели',
+      description: 'Програми за педагогически специалисти, които искат да повишат своята квалификация.',
+      fullDescription: 'Акава Академи подготвя лицензирани програми за повишаване на квалификацията на педагогически специалисти, които ще бъдат одобрени от Министерството на образованието и науката (МОН). Програмите са в процес на одобрение и скоро ще бъдат достъпни за всички учители, желаещи да надградят своите компетентности.',
+      icon: GraduationCap,
+      color: 'from-purple-500 to-pink-500',
+      bgColor: 'bg-purple-50',
+      textColor: 'text-purple-800',
+      borderColor: 'border-purple-200',
+      comingSoon: true,
+      specialties: [
+        'Дигитализация на учебния процес',
+        'Съвременни методи на преподаване',
+        'Използване на AI и интерактивни технологии в класната стая'
+      ],
+      courses: []
     }
+  ];
+
+  const toggleCategory = (categoryId: string) => {
+    const newExpanded = new Set(expandedCategories);
+    if (newExpanded.has(categoryId)) {
+      newExpanded.delete(categoryId);
+      if (selectedCategory === categoryId) {
+        setSelectedCategory(null);
+        setSearchParams({});
+      }
+    } else {
+      newExpanded.add(categoryId);
+      setSelectedCategory(categoryId);
+      setSearchParams({ category: categoryId });
+      // Scroll to category after expanding
+      scrollToCategory(categoryId);
+    }
+    setExpandedCategories(newExpanded);
   };
 
-  const filteredCourses = selectedCategory === 'all' 
-    ? courses 
-    : courses.filter(course => 
-        course.difficulty === selectedCategory || 
-        (selectedCategory === 'beginner' && course.difficulty === 'both') ||
-        (selectedCategory === 'advanced' && course.difficulty === 'both')
-      );
-
-  if (loading) {
-    return (
-      <section id="courses" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <Loader className="w-8 h-8 animate-spin mx-auto mb-4" />
-            <p className="text-gray-600">Loading courses...</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section id="courses" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <p className="text-red-600 mb-4">{error}</p>
-            <button 
-              onClick={fetchCourses}
-              className="btn-primary"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
-    <section id="courses" className="py-20 bg-gray-50">
+    <section id="courses" className="py-20 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -388,362 +335,215 @@ const Courses: React.FC = () => {
               Курсове
             </span>
           </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Изберете категория, която отговаря на вашите цели и нужди
+          </p>
         </motion.div>
 
-        {/* Category Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
-        >
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                selectedCategory === category.id
-                  ? 'bg-primary-600 text-white shadow-lg'
-                  : 'bg-white text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
-        </motion.div>
+        {/* Category Cards */}
+        <div className="space-y-8 mb-16">
+          {courseCategories.map((category, index) => {
+            const IconComponent = category.icon;
+            const isExpanded = expandedCategories.has(category.id);
+            const isSelected = selectedCategory === category.id;
 
-        {/* Courses Grid */}
-        <div className="space-y-16">
-          {/* Начинаещи Courses */}
-          {selectedCategory === 'all' || selectedCategory === 'beginner' ? (
-            <div>
-              {selectedCategory !== 'all' && (
-                <motion.h3
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="text-2xl font-bold text-gray-900 mb-8 text-center"
-                >
-                  Курсове за начинаещи
-                </motion.h3>
-              )}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              >
-                {filteredCourses
-                  .filter(course => course.difficulty === 'beginner' || course.difficulty === 'both')
-                  .map((course, index) => {
-            const IconComponent = getIconForCategory(course.category);
-            const categoryColor = getCategoryColor(course.category);
-            const categoryBadge = getCategoryBadge(course.category);
             return (
               <motion.div
-                key={course.id}
+                key={category.id}
+                id={`category-${category.id}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-                className="group relative"
+                className={`${category.bgColor} ${category.borderColor} border-2 rounded-2xl overflow-hidden transition-all duration-300 ${
+                  isSelected ? 'shadow-xl ring-4 ring-opacity-50' : 'shadow-lg hover:shadow-xl'
+                }`}
               >
-                <div className="card p-6 h-full border-l-4 border-l-transparent hover:border-l-primary-500 transition-all duration-300">
-                  {/* Category Badge */}
-                  <div className="flex items-center justify-between mb-2">
-                    <span className={`text-xs font-semibold rounded-full px-3 py-1 ${categoryBadge.color}`}>
-                      {categoryBadge.text}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      #{course.id}
-                    </span>
+                {/* Category Header */}
+                <div
+                  className={`p-8 cursor-pointer ${isSelected ? 'bg-gradient-to-r ' + category.color : ''}`}
+                  onClick={() => toggleCategory(category.id)}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start space-x-6 flex-1">
+                      <div className={`w-16 h-16 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center flex-shrink-0 ${
+                        isSelected ? 'bg-white/20' : ''
+                      }`}>
+                        <IconComponent className={`w-8 h-8 ${isSelected ? 'text-white' : 'text-white'}`} />
                   </div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`w-12 h-12 bg-gradient-to-br ${categoryColor} rounded-lg flex items-center justify-center`}>
-                      <IconComponent className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                      <span className="text-sm font-medium text-gray-600">4.8</span>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
-                    {course.title}
+                      <div className="flex-1">
+                        <h3 className={`text-2xl font-bold mb-3 ${isSelected ? 'text-white' : category.textColor}`}>
+                          {category.title}
                   </h3>
-                  
-                  <p className="text-gray-600 mb-4 leading-relaxed">
-                    {course.description}
-                  </p>
-
-                  <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {course.duration}
+                        <p className={`text-base leading-relaxed ${isSelected ? 'text-white/90' : 'text-gray-700'}`}>
+                          {isExpanded ? category.fullDescription : category.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <Users className="w-4 h-4 mr-1" />
-                      120 students
+                    <div className="ml-4 flex-shrink-0">
+                      {isExpanded ? (
+                        <ChevronUp className={`w-6 h-6 ${isSelected ? 'text-white' : category.textColor}`} />
+                      ) : (
+                        <ChevronDown className={`w-6 h-6 ${isSelected ? 'text-white' : category.textColor}`} />
+                      )}
                     </div>
-                  </div>
-
-                  <ul className="space-y-2 mb-6">
-                    {course.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-gray-600">
-                        <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-bold text-gray-900">{course.formatted_price}</span>
-                      <span className="text-lg text-gray-400 line-through">${(course.price * 1.5).toFixed(0)}</span>
-                    </div>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="btn-primary"
-                    >
-                      Запиши се
-                    </motion.button>
                   </div>
                 </div>
-              </motion.div>
-            );
-                  })}
-              </motion.div>
-            </div>
-          ) : null}
 
-          {/* Напреднали Courses */}
-          {selectedCategory === 'all' || selectedCategory === 'advanced' ? (
-            <div>
-              {selectedCategory !== 'all' && (
-                <motion.h3
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="text-2xl font-bold text-gray-900 mb-8 text-center"
-                >
-                  Курсове за напреднали
-                </motion.h3>
-              )}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              >
-                {filteredCourses
-                  .filter(course => course.difficulty === 'advanced' || course.difficulty === 'both')
-                  .map((course, index) => {
-                    const IconComponent = getIconForCategory(course.category);
-                    const categoryColor = getCategoryColor(course.category);
-                    const categoryBadge = getCategoryBadge(course.category);
-                    return (
-                      <motion.div
-                        key={course.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                        whileHover={{ y: -10 }}
-                        className="group relative"
-                      >
-                        <div className="card p-6 h-full border-l-4 border-l-transparent hover:border-l-primary-500 transition-all duration-300">
-                          {/* Category Badge */}
-                          <div className="flex items-center justify-between mb-2">
-                            <span className={`text-xs font-semibold rounded-full px-3 py-1 ${categoryBadge.color}`}>
-                              {categoryBadge.text}
+                {/* Courses List or Coming Soon */}
+                {isExpanded && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-white border-t-2 border-gray-200"
+                  >
+                    {category.comingSoon ? (
+                      <div className="p-8 lg:p-12">
+                        {/* Coming Soon Badge */}
+                        <div className="text-center mb-8">
+                          <motion.div
+                            initial={{ scale: 0.9 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.5 }}
+                            className="inline-block"
+                          >
+                            <span className={`inline-flex items-center px-6 py-3 rounded-full text-lg font-bold ${category.bgColor} ${category.textColor} border-2 ${category.borderColor}`}>
+                              Очаквайте скоро!
                             </span>
-                            <span className="text-xs text-gray-500">
-                              #{course.id}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between mb-4">
-                            <div className={`w-12 h-12 bg-gradient-to-br ${categoryColor} rounded-lg flex items-center justify-center`}>
-                              <IconComponent className="w-6 h-6 text-white" />
-                            </div>
-                            <div className="flex items-center space-x-1">
-                              <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                              <span className="text-sm font-medium text-gray-600">4.8</span>
-                            </div>
-                          </div>
+                          </motion.div>
+                        </div>
 
-                          <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
-                            {course.title}
-                          </h3>
-                          
-                          <p className="text-gray-600 mb-4 leading-relaxed">
-                            {course.description}
-                          </p>
-
-                          <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
-                            <div className="flex items-center">
-                              <Clock className="w-4 h-4 mr-1" />
-                              {course.duration}
-                            </div>
-                            <div className="flex items-center">
-                              <Users className="w-4 h-4 mr-1" />
-                              120 students
-                            </div>
+                        {/* Status Information */}
+                        <div className="max-w-4xl mx-auto mb-10">
+                          <div className={`${category.bgColor} ${category.borderColor} border-2 rounded-2xl p-6 lg:p-8 mb-6`}>
+                            <h4 className="text-xl font-bold text-gray-900 mb-4">
+                              {category.id === 'licensed' ? 'Статус на лицензиране' : 'Статус на одобрение'}
+                            </h4>
+                            <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                              {category.fullDescription}
+                            </p>
                           </div>
 
-                          <ul className="space-y-2 mb-6">
-                            {course.features.map((feature, idx) => (
-                              <li key={idx} className="flex items-center text-sm text-gray-600">
-                                <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                                {feature}
-                              </li>
-                            ))}
-                          </ul>
-
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                              <span className="text-2xl font-bold text-gray-900">{course.formatted_price}</span>
-                              <span className="text-lg text-gray-400 line-through">${(course.price * 1.5).toFixed(0)}</span>
+                          {/* Specialties List */}
+                          <div>
+                            <h4 className="text-xl font-bold text-gray-900 mb-6 text-center">
+                              {category.id === 'licensed' ? 'Специалности, които ще предлагаме' : 'Теми, които ще обхващат курсовете'}
+                            </h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                              {category.specialties?.map((specialty, index) => (
+                                <motion.div
+                                  key={specialty}
+                                  initial={{ opacity: 0, y: 10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                                  className={`${category.bgColor} ${category.borderColor} border-2 rounded-xl p-4 flex items-center`}
+                                >
+                                  <Check className={`w-5 h-5 ${category.textColor} mr-3 flex-shrink-0`} />
+                                  <span className={`font-semibold ${category.textColor}`}>
+                                    {specialty}
+                                  </span>
+                                </motion.div>
+                              ))}
                             </div>
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="btn-primary"
-                            >
-                              Запиши се
-                            </motion.button>
                           </div>
                         </div>
-                      </motion.div>
-                    );
-                  })}
-              </motion.div>
-            </div>
-          ) : null}
-        </div>
 
-        {/* Discount Table Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mt-20 bg-white rounded-2xl p-8 lg:p-12 shadow-xl border border-gray-100 max-w-6xl mx-auto"
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-4xl font-bold text-gray-900 mb-4">Възможности за отстъпки</h3>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Спестете повече, когато инвестирате в повече знания!
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {[
-              {
-                type: 'Ранно записване',
-                size: '10%',
-                condition: 'Записване до един месец преди началото',
-                combinable: true,
-                note: 'Да, само със семейната отстъпка',
-                icon: '⏰',
-                color: 'from-green-500 to-emerald-500',
-                bgColor: 'bg-green-50',
-                textColor: 'text-green-800',
-                borderColor: 'border-green-200'
-              },
-              {
-                type: 'Семейна отстъпка',
-                size: '5%',
-                condition: 'Две или повече деца от едно семейство',
-                combinable: true,
-                note: 'Да, само с ранното записване',
-                icon: '👨‍👩‍👧‍👦',
-                color: 'from-blue-500 to-cyan-500',
-                bgColor: 'bg-blue-50',
-                textColor: 'text-blue-800',
-                borderColor: 'border-blue-200'
-              },
-              {
-                type: 'Записване на целия курс',
-                size: '8%',
-                condition: 'Записване на всички модули от курса последователно',
-                combinable: false,
-                note: 'Не, фиксирана цена, не се комбинира',
-                icon: '📚',
-                color: 'from-purple-500 to-pink-500',
-                bgColor: 'bg-purple-50',
-                textColor: 'text-purple-800',
-                borderColor: 'border-purple-200'
-              },
-              {
-                type: 'За повече от един модул',
-                size: '8%',
-                condition: 'Записване за повече от един модул в рамките на учебната година',
-                combinable: false,
-                note: 'Не, не се комбинира с други отстъпки',
-                icon: '🎯',
-                color: 'from-orange-500 to-red-500',
-                bgColor: 'bg-orange-50',
-                textColor: 'text-orange-800',
-                borderColor: 'border-orange-200'
-              },
-            ].map((row, idx) => (
-              <motion.div
-                key={row.type}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className={`${row.bgColor} ${row.borderColor} border-2 rounded-xl p-6 hover:shadow-lg transition-all duration-300 cursor-pointer`}
-              >
-                <div className="mb-6">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <div className={`w-12 h-12 bg-gradient-to-r ${row.color} rounded-lg flex items-center justify-center text-white text-xl`}>
-                      {row.icon}
-                    </div>
-                    <div>
-                      <h4 className={`text-xl font-bold ${row.textColor}`}>{row.type}</h4>
-                      <div className={`text-3xl font-bold ${row.textColor}`}>{row.size} отстъпка</div>
-                    </div>
-                  </div>
-                  
-                  <div className={`${row.bgColor} ${row.borderColor} border rounded-lg p-4 mb-4`}>
-                    <p className="text-gray-700 font-medium leading-relaxed">{row.condition}</p>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <div className="flex items-start space-x-3">
-                      <div className={`w-6 h-6 rounded-full ${row.combinable ? 'bg-green-100' : 'bg-gray-100'} flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                        <div className={`w-3 h-3 rounded-full ${row.combinable ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                        {/* Call to Action */}
+                        <div className="text-center mt-8">
+                          <p className="text-gray-600 mb-4">
+                            Искате ли да бъдете уведомени, когато програмите станат достъпни?
+                          </p>
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => navigate('/contact')}
+                            className={`px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r ${category.color} hover:shadow-lg transition-all duration-300`}
+                          >
+                            Свържете се с нас
+                          </motion.button>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900 mb-1">
-                          {row.combinable ? 'Може да се комбинира' : 'Не може да се комбинира'}
-                        </p>
-                        <p className="text-sm text-gray-600">{row.note}</p>
-                      </div>
-                    </div>
-                    
-                    {row.combinable && (
-                      <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                        <p className="text-sm text-green-800 font-medium">
-                          💡 Съвет: Комбинирайте с други отстъпки за максимални спестявания!
-                        </p>
+                    ) : (
+                      <div className="p-8">
+                        <h4 className="text-xl font-semibold text-gray-900 mb-6">
+                          Курсове в тази категория ({category.courses.length})
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          {category.courses.map((course, courseIndex) => (
+                            <motion.div
+                              key={course.id}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4, delay: courseIndex * 0.1 }}
+                              whileHover={{ y: -5 }}
+                              className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-all duration-300"
+                            >
+                              <div className="flex items-center justify-between mb-3">
+                                <span className={`text-xs font-semibold rounded-full px-3 py-1 ${category.bgColor} ${category.textColor}`}>
+                                  {course.difficulty === 'beginner' ? 'Начинаещи' : course.difficulty === 'advanced' ? 'Напреднали' : 'Всички'}
+                                </span>
+                                {course.formatted_price && (
+                                  <div className="flex flex-col items-end">
+                                    <span className="text-lg font-bold text-gray-900">
+                                      {course.formatted_price}
+                                    </span>
+                                    {course.formatted_price_eur && (
+                                      <span className="text-sm text-gray-500">
+                                        {course.formatted_price_eur}
+                                      </span>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+
+                              <h5 className="text-lg font-semibold text-gray-900 mb-2">
+                                {course.title}
+                              </h5>
+                            
+                              <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                                {course.description}
+                              </p>
+
+                              <div className="flex items-center text-sm text-gray-500 mb-4">
+                                <Clock className="w-4 h-4 mr-1" />
+                                {course.duration}
+                              </div>
+
+                              <ul className="space-y-2 mb-4">
+                                {course.features.slice(0, 3).map((feature, idx) => (
+                                  <li key={idx} className="flex items-center text-sm text-gray-600">
+                                    <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                                    <span className="line-clamp-1">{feature}</span>
+                                  </li>
+                                ))}
+                                {course.features.length > 3 && (
+                                  <li className="text-xs text-gray-500">
+                                    +{course.features.length - 3} още
+                                  </li>
+                                )}
+                              </ul>
+
+                              <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => navigate(`/course/${course.slug || generateSlug(course.title)}`)}
+                                className={`w-full py-2 px-4 rounded-lg font-medium text-white bg-gradient-to-r ${category.color} hover:shadow-md transition-all duration-300`}
+                              >
+                                Запиши се
+                              </motion.button>
+                            </motion.div>
+                          ))}
+                        </div>
                       </div>
                     )}
-                  </div>
-                </div>
+                  </motion.div>
+                )}
               </motion.div>
-            ))}
+            );
+          })}
           </div>
-        </motion.section>
 
         {/* Call to Action */}
         <motion.div

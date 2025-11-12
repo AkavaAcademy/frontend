@@ -4,13 +4,14 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Features from './components/Features';
 import FeaturesPage from './components/FeaturesPage';
-import Courses, { CoursesSection } from './components/Courses';
+import Courses from './components/Courses';
 import News from './components/Testimonials';
 import Contact from './components/Contact';
 import ContactPage from './components/ContactPage';
 import Footer from './components/Footer';
 import Blog from './components/Blog';
 import CourseQuiz from './components/CourseQuiz';
+import CourseRegistration from './components/CourseRegistration';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import StudentPortal from './components/StudentPortal';
@@ -36,7 +37,6 @@ function App() {
               <>
                 <Hero />
                 <Features />
-                <CoursesSection />
                 <News />
                 <Contact />
               </>
@@ -44,6 +44,7 @@ function App() {
             <Route path="/aboutUs" element={<FeaturesPage />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/course-quiz" element={<CourseQuiz />} />
+            <Route path="/course/:slug" element={<CourseRegistration />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
