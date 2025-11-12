@@ -62,12 +62,12 @@
     "address": "Plovdiv, 6-ti Septemvri blvd. 144a",
     "coursesTitle": "Courses",
     "courses": {
-      "python": "Python for Kids",
-      "web": "Web Development",
-      "game": "Game Development",
-      "mobile": "Mobile Apps",
-      "data": "Data Science",
-      "advanced": "Advanced Python"
+      "python": "Python for Beginners",
+      "web": "Web Development Basics",
+      "robotics": "LEGO Robotics",
+      "scratch": "Programming Basics with Scratch",
+      "ai": "AI and Machine Learning",
+      "design": "Graphic Design"
     },
     "companyTitle": "Company",
     "company": {
@@ -78,7 +78,7 @@
       "press": "Press",
       "blog": "Blog"
     },
-    "supportTitle": "Support",
+    "supportTitle": "Information",
     "support": {
       "help": "Help Center",
       "contact": "Contact Us",
