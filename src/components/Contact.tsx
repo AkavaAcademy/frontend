@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
 import { 
   Mail, 
   Phone, 
@@ -12,6 +13,7 @@ import {
 import { contactsAPI } from '../services/api';
 
 const Contact: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,6 +27,17 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>('');
+
+  // Read course parameter from URL and pre-fill the form
+  useEffect(() => {
+    const courseParam = searchParams.get('course');
+    if (courseParam) {
+      setFormData(prev => ({
+        ...prev,
+        course: decodeURIComponent(courseParam)
+      }));
+    }
+  }, [searchParams]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({

@@ -79,7 +79,7 @@ export const contactsAPI = {
     email: string;
     phone?: string;
     child_name?: string;
-    child_age: number;
+    child_age?: number;
     message?: string;
     course?: string;
   }) => api.post('/api/contacts', { contact: contactData }),
