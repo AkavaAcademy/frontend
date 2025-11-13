@@ -10,7 +10,10 @@ import {
   ChevronDown,
   ChevronUp,
   Users,
-  Briefcase
+  Briefcase,
+  Calendar,
+  Info,
+  Monitor
 } from 'lucide-react';
 
 interface CourseSubcategory {
@@ -48,6 +51,9 @@ interface Course {
   formatted_price?: string;
   formatted_price_eur?: string;
   slug?: string;
+  startDate?: string; // Начало
+  status?: string; // Статус
+  format?: string; // Формат
 }
 
 // Function to generate URL-friendly slug from course title
@@ -130,6 +136,27 @@ const Courses: React.FC = () => {
           description: 'Специализирани курсове, адаптирани към възрастта и интересите на младите ученици. Идеални за развитие на дигитални умения, подготовка за бъдеща кариера и възможности за стажове в IT компании.',
           icon: Users,
           courses: [
+        {
+          id: 2,
+          title: 'Scratch Creators (10–12 г.)',
+          slug: 'scratch-creators',
+          description: 'Създаване на анимации, игри и интерактивни истории чрез визуално програмиране.',
+          duration: '8 седмици / 8 занятия',
+          price: 320,
+          difficulty: 'beginner',
+          features: [
+            'Създаване на анимации',
+            'Разработване на игри',
+            'Интерактивни истории',
+            'Основи на логическо мислене',
+            'Творчески проекти'
+          ],
+          formatted_price: '320 лв.',
+              formatted_price_eur: '164 €',
+              startDate: '29 ноември 2025',
+              status: 'Записвания отворени',
+              format: 'Присъствен'
+            },
             {
               id: 1,
               title: 'Tech Explorers: LEGO Robotics & Coding (6–10 г.)',
@@ -146,97 +173,31 @@ const Courses: React.FC = () => {
                 'Сертификат за завършване'
               ],
               formatted_price: '380 лв.',
-              formatted_price_eur: '195 €'
-            },
-            {
-              id: 2,
-              title: 'Scratch Creators (10–12 г.)',
-              slug: 'scratch-creators',
-              description: 'Създаване на анимации, игри и интерактивни истории чрез визуално програмиране.',
-              duration: '8 седмици / 8 занятия',
-              price: 320,
-              difficulty: 'beginner',
-              features: [
-                'Създаване на анимации',
-                'Разработване на игри',
-                'Интерактивни истории',
-                'Основи на логическо мислене',
-                'Творчески проекти'
-              ],
-              formatted_price: '320 лв.',
-              formatted_price_eur: '164 €'
-            },
-            {
-              id: 3,
-              title: 'Python Start Lab (12–14 г.)',
-              slug: 'python-start-lab',
-              description: 'Първи стъпки в програмирането с Python чрез забавни проекти и практически приложения.',
-              duration: '8 седмици / 8 занятия',
-              price: 380,
-              difficulty: 'beginner',
-              features: [
-                'Програмиране на мини игри',
-                'Създаване на чатботове',
-                'Базови алгоритми',
-                'Python синтаксис',
-                'Практически проекти'
-              ],
-              formatted_price: '380 лв.',
-              formatted_price_eur: '195 €'
-            },
-            {
-              id: 4,
-              title: 'Digital Design Studio (15–18 г.)',
-              slug: 'digital-design-studio',
-              description: 'Освояване на дигитален дизайн с модерни инструменти за създаване на визуални решения.',
-              duration: '8 седмици / 8 занятия',
-              price: 340,
-              difficulty: 'advanced',
-              features: [
-                'Canva, Adobe Express, Figma',
-                'Графика и композиция',
-                'Лого дизайн',
-                'Визуален сторителинг',
-                'Портфолио проекти'
-              ],
-              formatted_price: '340 лв.',
-              formatted_price_eur: '174 €'
-            },
-            {
-              id: 5,
-              title: 'UX Discovery (16–18 г.)',
-              slug: 'ux-discovery',
-              description: 'Разглеждане на основите на потребителското изживяване и дизайн на интерфейси.',
-              duration: '8 седмици / 8 занятия',
-              price: 360,
-              difficulty: 'advanced',
-              features: [
-                'Основи на UX/UI',
-                'Wireframes',
-                'Потребителско изживяване',
-                'Прототипиране',
-                'Тестване на дизайн'
-              ],
-              formatted_price: '360 лв.',
-              formatted_price_eur: '185 €'
-            },
-            {
-              id: 6,
-              title: 'CyberSmart Teens (15–18 г.)',
-              slug: 'cybersmart-teens',
-              description: 'Обучение за безопасност в дигиталния свят и защита на лични данни.',
-              duration: '8 седмици / 8 занятия',
-              price: 340,
-              difficulty: 'advanced',
-              features: [
-                'Онлайн безопасност',
-                'Дигитален отпечатък',
-                'AI етика',
-                'Защита на данни',
-                'Киберсигурност основи'
-              ],
-              formatted_price: '340 лв.',
-              formatted_price_eur: '174 €'
+              formatted_price_eur: '195 €',
+              startDate: '10 януари 2026',
+              status: 'Предстоящ',
+              format: 'Присъствен'
+        },
+        {
+          id: 3,
+          title: 'Python Start Lab (12–14 г.)',
+          slug: 'python-start-lab',
+          description: 'Първи стъпки в програмирането с Python чрез забавни проекти и практически приложения.',
+          duration: '8 седмици / 8 занятия',
+          price: 380,
+          difficulty: 'beginner',
+          features: [
+            'Програмиране на мини игри',
+            'Създаване на чатботове',
+            'Базови алгоритми',
+            'Python синтаксис',
+            'Практически проекти'
+          ],
+          formatted_price: '380 лв.',
+              formatted_price_eur: '195 €',
+              startDate: '20 януари 2026',
+              status: 'Предстоящ',
+              format: 'Присъствен'
             },
             {
               id: 7,
@@ -245,8 +206,8 @@ const Courses: React.FC = () => {
               description: 'Разбиране на изкуствения интелект, неговите приложения и възможности.',
               duration: '10 седмици / 10 занятия',
               price: 480,
-              difficulty: 'advanced',
-              features: [
+          difficulty: 'advanced',
+          features: [
                 'Как работи AI',
                 'ChatGPT и текстови модели',
                 'Машинно обучение',
@@ -254,27 +215,75 @@ const Courses: React.FC = () => {
                 'Практически AI проекти'
               ],
               formatted_price: '480 лв.',
-              formatted_price_eur: '246 €'
+              formatted_price_eur: '246 €',
+              startDate: '10 февруари 2026',
+              status: 'Предстоящ',
+              format: 'Присъствен'
+        },
+        {
+          id: 5,
+          title: 'UX Discovery (16–18 г.)',
+          slug: 'ux-discovery',
+          description: 'Разглеждане на основите на потребителското изживяване и дизайн на интерфейси.',
+          duration: '8 седмици / 8 занятия',
+          price: 360,
+          difficulty: 'advanced',
+          features: [
+            'Основи на UX/UI',
+            'Wireframes',
+            'Потребителско изживяване',
+            'Прототипиране',
+            'Тестване на дизайн'
+          ],
+          formatted_price: '360 лв.',
+              formatted_price_eur: '185 €',
+              startDate: '15 март 2026',
+              status: 'Предстоящ',
+              format: 'Присъствен'
             },
             {
-              id: 8,
-              title: 'Career & Confidence Lab (16–18 г.)',
-              slug: 'career-confidence-lab',
-              description: 'Подготовка за кариера и развитие на лични умения за успех в професионалния свят.',
-              duration: '5 седмици / 5 занятия',
-              price: 280,
-              difficulty: 'advanced',
-              features: [
-                'Подготовка за интервю',
-                'Soft skills развитие',
-                'Комуникация',
-                'CV създаване',
-                'Интервю симулации',
-                'Критическо мислене',
-                'Лидерство'
-              ],
-              formatted_price: '280 лв.',
-              formatted_price_eur: '144 €'
+              id: 4,
+              title: 'Digital Design Studio (15–18 г.)',
+              slug: 'digital-design-studio',
+              description: 'Освояване на дигитален дизайн с модерни инструменти за създаване на визуални решения.',
+          duration: '8 седмици / 8 занятия',
+          price: 340,
+          difficulty: 'advanced',
+          features: [
+                'Canva, Adobe Express, Figma',
+                'Графика и композиция',
+                'Лого дизайн',
+                'Визуален сторителинг',
+                'Портфолио проекти'
+          ],
+          formatted_price: '340 лв.',
+              formatted_price_eur: '174 €',
+              startDate: '20 март 2026',
+              status: 'Предстоящ',
+              format: 'Присъствен'
+        },
+        {
+          id: 8,
+          title: 'Career & Confidence Lab (16–18 г.)',
+          slug: 'career-confidence-lab',
+          description: 'Подготовка за кариера и развитие на лични умения за успех в професионалния свят.',
+          duration: '5 седмици / 5 занятия',
+          price: 280,
+          difficulty: 'advanced',
+          features: [
+            'Подготовка за интервю',
+            'Soft skills развитие',
+            'Комуникация',
+            'CV създаване',
+            'Интервю симулации',
+            'Критическо мислене',
+            'Лидерство'
+          ],
+          formatted_price: '280 лв.',
+              formatted_price_eur: '144 €',
+              startDate: '1 април 2026',
+              status: 'Предстоящ',
+              format: 'Присъствен'
             }
           ]
         },
@@ -284,6 +293,28 @@ const Courses: React.FC = () => {
           description: 'Интензивни курсове за бързо придобиване на практически умения и преквалификация в технологични и дигитални области. Подходящи за хора, които искат да променят кариерата си или да развият нови професионални компетенции.',
           icon: Briefcase,
           courses: [
+            {
+              id: 13,
+              title: 'Digital Essentials – Дигитални компетентности за съвременния офис',
+              slug: 'digital-essentials',
+              description: 'Практически курс за развитие на дигитални компетентности за съвременна офис среда. Подходящ за възрастни и служители, които искат да развият своите практически дигитални умения.',
+              duration: '6 седмици / 6 занятия',
+              price: 420,
+              difficulty: 'beginner',
+              features: [
+                'Microsoft Office (Word, Excel, PowerPoint, Outlook)',
+                'Организация и управление на файлове (OneDrive, Google Drive)',
+                'Онлайн комуникация (Teams, Zoom, Slack)',
+                'Основи на киберсигурността',
+                'Дигитална етика',
+                'Практически офис умения'
+              ],
+              formatted_price: '420 лв.',
+              formatted_price_eur: '215 €',
+              startDate: '25 ноември 2025',
+              status: 'Записвания отворени',
+              format: 'Онлайн'
+            },
             {
               id: 9,
               title: 'QA и автоматизирано тестване',
@@ -301,7 +332,55 @@ const Courses: React.FC = () => {
                 'Подготовка за кариера като QA инженер'
               ],
               formatted_price: '700 лв.',
-              formatted_price_eur: '359 €'
+              formatted_price_eur: '359 €',
+              startDate: '27 ноември 2025',
+              status: 'Записвания отворени',
+              format: 'Онлайн'
+            },
+            {
+              id: 16,
+              title: 'QA - Ръчно тестване',
+              slug: 'qa-manual-testing',
+              description: 'Комплексен курс за ръчно тестване на софтуер, тестови сценарии, баг репортиране и QA процеси. Подготовка за кариера като Manual QA Engineer или Software Tester.',
+              duration: '6 седмици',
+              price: 550,
+              difficulty: 'beginner',
+              features: [
+                'Основи на ръчно тестване',
+                'Тестови сценарии и тестови случаи',
+                'Баг репортиране и проследяване',
+                'Тестване на функционалност',
+                'Тестване на UI/UX',
+                'Тестова документация',
+                'Подготовка за кариера като Manual QA Engineer'
+              ],
+              formatted_price: '550 лв.',
+              formatted_price_eur: '282 €',
+              startDate: '30 ноември 2025',
+              status: 'Записвания отворени',
+              format: 'Онлайн'
+            },
+            {
+              id: 12,
+              title: 'AI-Driven UI Design: Създаване на потребителски интерфейс с помощта на изкуствен интелект',
+              slug: 'ai-driven-ui-design',
+              description: 'Курс за създаване на потребителски интерфейси с помощта на изкуствен интелект. Подходящ за начинаещи и напреднали в UX/UI, графичен дизайн или фронтенд разработка, които искат да използват AI за ускорено прототипиране и дизайн.',
+              duration: '8 седмици / 8 занятия',
+              price: 750,
+              difficulty: 'advanced',
+              features: [
+                'AI-задвижвано прототипиране',
+                'Ускорен дизайн процес',
+                'UX/UI с AI инструменти',
+                'Визуален дизайн и композиция',
+                'Практически AI дизайн проекти',
+                'Портфолио от AI-генерирани дизайни'
+              ],
+              formatted_price: '750 лв.',
+              formatted_price_eur: '385 €',
+              startDate: '5 декември 2025',
+              status: 'Записвания отворени',
+              format: 'Онлайн'
             },
             {
               id: 10,
@@ -321,85 +400,10 @@ const Courses: React.FC = () => {
                 'Подготовка за IT Project Manager'
               ],
               formatted_price: '650 лв.',
-              formatted_price_eur: '333 €'
-            },
-            {
-              id: 11,
-              title: 'Софтуерно инженерство – Full Stack старт',
-              slug: 'full-stack-start',
-              description: 'Интензивен курс за пълноценна Full Stack разработка: HTML/CSS, JavaScript, backend (Node.js/Java/Python), REST API, работа с база данни и deployment. Подготовка за кариера като Junior Full-Stack Developer.',
-              duration: '12 седмици',
-              price: 1300,
-              difficulty: 'beginner',
-              features: [
-                'HTML/CSS и JavaScript',
-                'Backend разработка (Node.js/Java/Python)',
-                'REST API',
-                'Работа с база данни',
-                'Deployment и DevOps основи',
-                'Портфолио проекти',
-                'Подготовка за Junior Full-Stack Developer'
-              ],
-              formatted_price: '1300 лв.',
-              formatted_price_eur: '667 €'
-            },
-            {
-              id: 12,
-              title: 'AI-Driven UI Design: Създаване на потребителски интерфейс с помощта на изкуствен интелект',
-              slug: 'ai-driven-ui-design',
-              description: 'Курс за създаване на потребителски интерфейси с помощта на изкуствен интелект. Подходящ за начинаещи и напреднали в UX/UI, графичен дизайн или фронтенд разработка, които искат да използват AI за ускорено прототипиране и дизайн.',
-              duration: '8 седмици / 8 занятия',
-              price: 750,
-              difficulty: 'advanced',
-              features: [
-                'AI-задвижвано прототипиране',
-                'Ускорен дизайн процес',
-                'UX/UI с AI инструменти',
-                'Визуален дизайн и композиция',
-                'Практически AI дизайн проекти',
-                'Портфолио от AI-генерирани дизайни'
-              ],
-              formatted_price: '750 лв.',
-              formatted_price_eur: '385 €'
-            },
-            {
-              id: 13,
-              title: 'Digital Essentials – Дигитални компетентности за съвременния офис',
-              slug: 'digital-essentials',
-              description: 'Практически курс за развитие на дигитални компетентности за съвременна офис среда. Подходящ за възрастни и служители, които искат да развият своите практически дигитални умения.',
-              duration: '6 седмици / 6 занятия',
-              price: 420,
-              difficulty: 'beginner',
-              features: [
-                'Microsoft Office (Word, Excel, PowerPoint, Outlook)',
-                'Организация и управление на файлове (OneDrive, Google Drive)',
-                'Онлайн комуникация (Teams, Zoom, Slack)',
-                'Основи на киберсигурността',
-                'Дигитална етика',
-                'Практически офис умения'
-              ],
-              formatted_price: '420 лв.',
-              formatted_price_eur: '215 €'
-            },
-            {
-              id: 14,
-              title: 'Vibe Coding – Програмиране чрез креативност и интуиция',
-              slug: 'vibe-coding',
-              description: 'Уникален подход към програмирането чрез креативност и интуиция. Подходящ за хора без опит в програмирането, които искат да навлязат в ИТ сферата по креативен и нестандартен начин.',
-              duration: '8 седмици / 8 занятия',
-              price: 550,
-              difficulty: 'beginner',
-              features: [
-                'Основи на програмирането чрез визуално и звуково възприятие',
-                'Креативно мислене и структуриране на код',
-                'Програмиране на интерактивни приложения',
-                'Визуализации и творчески проекти',
-                'Работа с Processing и p5.js',
-                'AI code асистенти',
-                'Креативни програмни проекти'
-              ],
-              formatted_price: '550 лв.',
-              formatted_price_eur: '282 €'
+              formatted_price_eur: '333 €',
+              startDate: '15 януари 2026',
+              status: 'Предстоящ',
+              format: 'Онлайн'
             },
             {
               id: 15,
@@ -419,7 +423,56 @@ const Courses: React.FC = () => {
                 'Портфолио от AI дизайн проекти'
               ],
               formatted_price: '750 лв.',
-              formatted_price_eur: '385 €'
+              formatted_price_eur: '385 €',
+              startDate: '25 януари 2026',
+              status: 'Предстоящ',
+              format: 'Онлайн'
+            },
+            {
+              id: 11,
+              title: 'Софтуерно инженерство – Full Stack старт',
+              slug: 'full-stack-start',
+              description: 'Интензивен курс за пълноценна Full Stack разработка: HTML/CSS, JavaScript, backend (Node.js/Java/Python), REST API, работа с база данни и deployment. Подготовка за кариера като Junior Full-Stack Developer.',
+              duration: '12 седмици',
+              price: 1300,
+              difficulty: 'beginner',
+              features: [
+                'HTML/CSS и JavaScript',
+                'Backend разработка (Node.js/Java/Python)',
+                'REST API',
+                'Работа с база данни',
+                'Deployment и DevOps основи',
+                'Портфолио проекти',
+                'Подготовка за Junior Full-Stack Developer'
+              ],
+              formatted_price: '1300 лв.',
+              formatted_price_eur: '667 €',
+              startDate: '5 февруари 2026',
+              status: 'Предстоящ',
+              format: 'Онлайн'
+            },
+            {
+              id: 14,
+              title: 'Vibe Coding – Програмиране чрез креативност и интуиция',
+              slug: 'vibe-coding',
+              description: 'Уникален подход към програмирането чрез креативност и интуиция. Подходящ за хора без опит в програмирането, които искат да навлязат в ИТ сферата по креативен и нестандартен начин.',
+              duration: '8 седмици / 8 занятия',
+              price: 550,
+              difficulty: 'beginner',
+              features: [
+                'Основи на програмирането чрез визуално и звуково възприятие',
+                'Креативно мислене и структуриране на код',
+                'Програмиране на интерактивни приложения',
+                'Визуализации и творчески проекти',
+                'Работа с Processing и p5.js',
+                'AI code асистенти',
+                'Креативни програмни проекти'
+              ],
+              formatted_price: '550 лв.',
+              formatted_price_eur: '282 €',
+              startDate: '25 март 2026',
+              status: 'Предстоящ',
+              format: 'Онлайн'
             }
           ]
         }
@@ -754,9 +807,40 @@ const Courses: React.FC = () => {
                                       {course.description}
                                     </p>
 
-                                    <div className="flex items-center text-sm text-gray-500 mb-4">
-                                      <Clock className="w-4 h-4 mr-1" />
-                                      {course.duration}
+                                    <div className="space-y-2 mb-4">
+                                      {course.startDate && (
+                                        <div className="flex items-center text-sm text-gray-600">
+                                          <Calendar className="w-4 h-4 mr-2 text-primary-600 flex-shrink-0" />
+                                          <span className="font-medium">Начало:</span>
+                                          <span className="ml-2">{course.startDate}</span>
+                                        </div>
+                                      )}
+                                      {course.status && (
+                                        <div className="flex items-center text-sm">
+                                          <Info className="w-4 h-4 mr-2 text-primary-600 flex-shrink-0" />
+                                          <span className="font-medium">Статус:</span>
+                                          <span className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
+                                            course.status === 'Записвания отворени' 
+                                              ? 'bg-green-100 text-green-700' 
+                                              : course.status === 'Предстоящ'
+                                              ? 'bg-blue-100 text-blue-700'
+                                              : 'bg-gray-100 text-gray-700'
+                                          }`}>
+                                            {course.status}
+                                          </span>
+                                        </div>
+                                      )}
+                                      {course.format && (
+                                        <div className="flex items-center text-sm text-gray-600">
+                                          <Monitor className="w-4 h-4 mr-2 text-primary-600 flex-shrink-0" />
+                                          <span className="font-medium">Формат:</span>
+                                          <span className="ml-2">{course.format}</span>
+                                        </div>
+                                      )}
+                                      <div className="flex items-center text-sm text-gray-500">
+                                        <Clock className="w-4 h-4 mr-1" />
+                                        {course.duration}
+                                      </div>
                                     </div>
 
                                     <ul className="space-y-2 mb-4">
@@ -829,9 +913,40 @@ const Courses: React.FC = () => {
                                 {course.description}
                               </p>
 
-                              <div className="flex items-center text-sm text-gray-500 mb-4">
-                                <Clock className="w-4 h-4 mr-1" />
-                                {course.duration}
+                              <div className="space-y-2 mb-4">
+                                {course.startDate && (
+                                  <div className="flex items-center text-sm text-gray-600">
+                                    <Calendar className="w-4 h-4 mr-2 text-primary-600 flex-shrink-0" />
+                                    <span className="font-medium">Начало:</span>
+                                    <span className="ml-2">{course.startDate}</span>
+                                  </div>
+                                )}
+                                {course.status && (
+                                  <div className="flex items-center text-sm">
+                                    <Info className="w-4 h-4 mr-2 text-primary-600 flex-shrink-0" />
+                                    <span className="font-medium">Статус:</span>
+                                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
+                                      course.status === 'Записвания отворени' 
+                                        ? 'bg-green-100 text-green-700' 
+                                        : course.status === 'Предстоящ'
+                                        ? 'bg-blue-100 text-blue-700'
+                                        : 'bg-gray-100 text-gray-700'
+                                    }`}>
+                                      {course.status}
+                                    </span>
+                                  </div>
+                                )}
+                                {course.format && (
+                                  <div className="flex items-center text-sm text-gray-600">
+                                    <Monitor className="w-4 h-4 mr-2 text-primary-600 flex-shrink-0" />
+                                    <span className="font-medium">Формат:</span>
+                                    <span className="ml-2">{course.format}</span>
+                                  </div>
+                                )}
+                                <div className="flex items-center text-sm text-gray-500">
+                                  <Clock className="w-4 h-4 mr-1" />
+                                  {course.duration}
+                                </div>
                               </div>
 
                               <ul className="space-y-2 mb-4">
