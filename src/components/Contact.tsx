@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useSearchParams } from 'react-router-dom';
 import { 
   Mail, 
   Phone, 
@@ -13,33 +12,19 @@ import {
 import { contactsAPI } from '../services/api';
 
 const Contact: React.FC = () => {
-  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    child_name: '',
-    child_age: '',
-    message: '',
-    course: ''
+    message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>('');
 
-  // Read course parameter from URL and pre-fill the form
-  useEffect(() => {
-    const courseParam = searchParams.get('course');
-    if (courseParam) {
-      setFormData(prev => ({
-        ...prev,
-        course: decodeURIComponent(courseParam)
-      }));
-    }
-  }, [searchParams]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -56,10 +41,7 @@ const Contact: React.FC = () => {
         name: formData.name,
         email: formData.email,
         phone: formData.phone || undefined,
-        child_name: formData.child_name || undefined,
-        child_age: parseInt(formData.child_age),
-        message: formData.message || undefined,
-        course: formData.course || undefined
+        message: formData.message || undefined
       };
       
       console.log('Sending contact data to backend:', contactData); // Debug log
@@ -85,10 +67,7 @@ const Contact: React.FC = () => {
             name: '',
             email: '',
             phone: '',
-            child_name: '',
-            child_age: '',
-            message: '',
-            course: ''
+            message: ''
           });
         }, 5000);
       } else {
@@ -147,18 +126,6 @@ const Contact: React.FC = () => {
     }
   ];
 
-  const courses = [
-    'LEGO роботика и разработване на игри',
-    'Основи на програмирането',
-    'Дизайн и креативност',
-    'Технологии на бъдещето',
-    'Разширено програмиране',
-    'Роботика и автоматизация',
-    'Машинно обучение и AI',
-    'Киберсигурност и етично хакерство',
-    'Индивидуални уроци и консултации',
-    'Не съм сигурен - имам нужда от съвет'
-  ];
 
   return (
     <section id="contact" className="py-20 bg-gray-50">
@@ -214,121 +181,69 @@ const Contact: React.FC = () => {
                     </div>
                   )}
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                        Име на родителя *
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="Вашето пълно име"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Имейл адрес *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="ваш@имейл.com"
-                      />
-                    </div>
-                  </div>
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    Име *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                    placeholder="Вашето име"
+                  />
+                </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                        Телефонен номер
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="0895 30 20 74"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="child_name" className="block text-sm font-medium text-gray-700 mb-2">
-                        Име на детето
-                      </label>
-                      <input
-                        type="text"
-                        id="child_name"
-                        name="child_name"
-                        value={formData.child_name}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="Име на детето"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="child_age" className="block text-sm font-medium text-gray-700 mb-2">
-                        Възраст на детето *
-                      </label>
-                      <input
-                        type="number"
-                        id="child_age"
-                        name="child_age"
-                        value={formData.child_age}
-                        onChange={handleInputChange}
-                        required
-                        min="6"
-                        max="18"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="Възраст (6-18)"
-                      />
-                    </div>
-                  </div>
-
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-2">
-                      Интересен курс
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                      Имейл адрес *
                     </label>
-                    <select
-                      id="course"
-                      name="course"
-                      value={formData.course}
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
                       onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                    >
-                      <option value="">Изберете курс</option>
-                      {courses.map((course) => (
-                        <option key={course} value={course}>
-                          {course}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                      Съобщение
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
-                      placeholder="Разкажете ни за интересите на вашето дете и въпросите, които имате..."
+                      placeholder="your@email.com"
                     />
                   </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                      Телефонен номер
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                      placeholder="+359 888 123 456"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                    Допълнителна информация
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
+                    placeholder="Имате ли въпроси или специални изисквания?"
+                  />
+                </div>
 
                   <motion.button
                     type="submit"
