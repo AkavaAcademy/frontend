@@ -8,8 +8,18 @@ import {
   Check,
   Clock,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Users,
+  Briefcase
 } from 'lucide-react';
+
+interface CourseSubcategory {
+  id: string;
+  title: string;
+  description: string;
+  icon?: React.ElementType;
+  courses: Course[];
+}
 
 interface CourseCategory {
   id: string;
@@ -22,6 +32,7 @@ interface CourseCategory {
   textColor: string;
   borderColor: string;
   courses: Course[];
+  subcategories?: CourseSubcategory[];
   comingSoon?: boolean;
   specialties?: string[];
 }
@@ -58,6 +69,7 @@ const Courses: React.FC = () => {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(searchParams.get('category') ? [searchParams.get('category')!] : [])
   );
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string>('students');
 
   const scrollToCategory = (categoryId: string, delay: number = 300) => {
     setTimeout(() => {
@@ -80,6 +92,11 @@ const Courses: React.FC = () => {
     if (category) {
       setSelectedCategory(category);
       setExpandedCategories(new Set([category]));
+      // Set default subcategory if category has subcategories
+      const categoryData = courseCategories.find(c => c.id === category);
+      if (categoryData?.subcategories && categoryData.subcategories.length > 0) {
+        setSelectedSubcategory(categoryData.subcategories[0].id);
+      }
       // Scroll to category after state update and DOM render
       scrollToCategory(category, 400);
     }
@@ -106,154 +123,308 @@ const Courses: React.FC = () => {
       bgColor: 'bg-blue-50',
       textColor: 'text-blue-800',
       borderColor: 'border-blue-200',
-      courses: [
+      subcategories: [
         {
-          id: 1,
-          title: 'Tech Explorers: LEGO Robotics & Coding (6–10 г.)',
-          slug: 'tech-explorers-lego-robotics-coding',
-          description: 'Въвеждане в света на роботиката и програмирането чрез LEGO, развиване на логическо мислене и STEM умения.',
-          duration: '8 седмици / 8 занятия',
-          price: 380,
-          difficulty: 'beginner',
-          features: [
-            'Основи на роботиката',
-            'Сензори и двигатели',
-            'Блоково програмиране',
-            'STEM игри',
-            'Сертификат за завършване'
-          ],
-          formatted_price: '380 лв.',
-          formatted_price_eur: '195 €'
+          id: 'students',
+          title: 'За ученици до 18 години',
+          description: 'Специализирани курсове, адаптирани към възрастта и интересите на младите ученици. Идеални за развитие на дигитални умения, подготовка за бъдеща кариера и възможности за стажове в IT компании.',
+          icon: Users,
+          courses: [
+            {
+              id: 1,
+              title: 'Tech Explorers: LEGO Robotics & Coding (6–10 г.)',
+              slug: 'tech-explorers-lego-robotics-coding',
+              description: 'Въвеждане в света на роботиката и програмирането чрез LEGO, развиване на логическо мислене и STEM умения.',
+              duration: '8 седмици / 8 занятия',
+              price: 380,
+              difficulty: 'beginner',
+              features: [
+                'Основи на роботиката',
+                'Сензори и двигатели',
+                'Блоково програмиране',
+                'STEM игри',
+                'Сертификат за завършване'
+              ],
+              formatted_price: '380 лв.',
+              formatted_price_eur: '195 €'
+            },
+            {
+              id: 2,
+              title: 'Scratch Creators (10–12 г.)',
+              slug: 'scratch-creators',
+              description: 'Създаване на анимации, игри и интерактивни истории чрез визуално програмиране.',
+              duration: '8 седмици / 8 занятия',
+              price: 320,
+              difficulty: 'beginner',
+              features: [
+                'Създаване на анимации',
+                'Разработване на игри',
+                'Интерактивни истории',
+                'Основи на логическо мислене',
+                'Творчески проекти'
+              ],
+              formatted_price: '320 лв.',
+              formatted_price_eur: '164 €'
+            },
+            {
+              id: 3,
+              title: 'Python Start Lab (12–14 г.)',
+              slug: 'python-start-lab',
+              description: 'Първи стъпки в програмирането с Python чрез забавни проекти и практически приложения.',
+              duration: '8 седмици / 8 занятия',
+              price: 380,
+              difficulty: 'beginner',
+              features: [
+                'Програмиране на мини игри',
+                'Създаване на чатботове',
+                'Базови алгоритми',
+                'Python синтаксис',
+                'Практически проекти'
+              ],
+              formatted_price: '380 лв.',
+              formatted_price_eur: '195 €'
+            },
+            {
+              id: 4,
+              title: 'Digital Design Studio (15–18 г.)',
+              slug: 'digital-design-studio',
+              description: 'Освояване на дигитален дизайн с модерни инструменти за създаване на визуални решения.',
+              duration: '8 седмици / 8 занятия',
+              price: 340,
+              difficulty: 'advanced',
+              features: [
+                'Canva, Adobe Express, Figma',
+                'Графика и композиция',
+                'Лого дизайн',
+                'Визуален сторителинг',
+                'Портфолио проекти'
+              ],
+              formatted_price: '340 лв.',
+              formatted_price_eur: '174 €'
+            },
+            {
+              id: 5,
+              title: 'UX Discovery (16–18 г.)',
+              slug: 'ux-discovery',
+              description: 'Разглеждане на основите на потребителското изживяване и дизайн на интерфейси.',
+              duration: '8 седмици / 8 занятия',
+              price: 360,
+              difficulty: 'advanced',
+              features: [
+                'Основи на UX/UI',
+                'Wireframes',
+                'Потребителско изживяване',
+                'Прототипиране',
+                'Тестване на дизайн'
+              ],
+              formatted_price: '360 лв.',
+              formatted_price_eur: '185 €'
+            },
+            {
+              id: 6,
+              title: 'CyberSmart Teens (15–18 г.)',
+              slug: 'cybersmart-teens',
+              description: 'Обучение за безопасност в дигиталния свят и защита на лични данни.',
+              duration: '8 седмици / 8 занятия',
+              price: 340,
+              difficulty: 'advanced',
+              features: [
+                'Онлайн безопасност',
+                'Дигитален отпечатък',
+                'AI етика',
+                'Защита на данни',
+                'Киберсигурност основи'
+              ],
+              formatted_price: '340 лв.',
+              formatted_price_eur: '174 €'
+            },
+            {
+              id: 7,
+              title: 'AI for Teens (15–18 г.)',
+              slug: 'ai-for-teens',
+              description: 'Разбиране на изкуствения интелект, неговите приложения и възможности.',
+              duration: '10 седмици / 10 занятия',
+              price: 480,
+              difficulty: 'advanced',
+              features: [
+                'Как работи AI',
+                'ChatGPT и текстови модели',
+                'Машинно обучение',
+                'Визуални модели',
+                'Практически AI проекти'
+              ],
+              formatted_price: '480 лв.',
+              formatted_price_eur: '246 €'
+            },
+            {
+              id: 8,
+              title: 'Career & Confidence Lab (16–18 г.)',
+              slug: 'career-confidence-lab',
+              description: 'Подготовка за кариера и развитие на лични умения за успех в професионалния свят.',
+              duration: '5 седмици / 5 занятия',
+              price: 280,
+              difficulty: 'advanced',
+              features: [
+                'Подготовка за интервю',
+                'Soft skills развитие',
+                'Комуникация',
+                'CV създаване',
+                'Интервю симулации',
+                'Критическо мислене',
+                'Лидерство'
+              ],
+              formatted_price: '280 лв.',
+              formatted_price_eur: '144 €'
+            }
+          ]
         },
         {
-          id: 2,
-          title: 'Scratch Creators (10–12 г.)',
-          slug: 'scratch-creators',
-          description: 'Създаване на анимации, игри и интерактивни истории чрез визуално програмиране.',
-          duration: '8 седмици / 8 занятия',
-          price: 320,
-          difficulty: 'beginner',
-          features: [
-            'Създаване на анимации',
-            'Разработване на игри',
-            'Интерактивни истории',
-            'Основи на логическо мислене',
-            'Творчески проекти'
-          ],
-          formatted_price: '320 лв.',
-          formatted_price_eur: '164 €'
-        },
-        {
-          id: 3,
-          title: 'Python Start Lab (12–14 г.)',
-          slug: 'python-start-lab',
-          description: 'Първи стъпки в програмирането с Python чрез забавни проекти и практически приложения.',
-          duration: '8 седмици / 8 занятия',
-          price: 380,
-          difficulty: 'beginner',
-          features: [
-            'Програмиране на мини игри',
-            'Създаване на чатботове',
-            'Базови алгоритми',
-            'Python синтаксис',
-            'Практически проекти'
-          ],
-          formatted_price: '380 лв.',
-          formatted_price_eur: '195 €'
-        },
-        {
-          id: 4,
-          title: 'Digital Design Studio (15–18 г.)',
-          slug: 'digital-design-studio',
-          description: 'Освояване на дигитален дизайн с модерни инструменти за създаване на визуални решения.',
-          duration: '8 седмици / 8 занятия',
-          price: 340,
-          difficulty: 'advanced',
-          features: [
-            'Canva, Adobe Express, Figma',
-            'Графика и композиция',
-            'Лого дизайн',
-            'Визуален сторителинг',
-            'Портфолио проекти'
-          ],
-          formatted_price: '340 лв.',
-          formatted_price_eur: '174 €'
-        },
-        {
-          id: 5,
-          title: 'UX Discovery (16–18 г.)',
-          slug: 'ux-discovery',
-          description: 'Разглеждане на основите на потребителското изживяване и дизайн на интерфейси.',
-          duration: '8 седмици / 8 занятия',
-          price: 360,
-          difficulty: 'advanced',
-          features: [
-            'Основи на UX/UI',
-            'Wireframes',
-            'Потребителско изживяване',
-            'Прототипиране',
-            'Тестване на дизайн'
-          ],
-          formatted_price: '360 лв.',
-          formatted_price_eur: '185 €'
-        },
-        {
-          id: 6,
-          title: 'CyberSmart Teens (15–18 г.)',
-          slug: 'cybersmart-teens',
-          description: 'Обучение за безопасност в дигиталния свят и защита на лични данни.',
-          duration: '8 седмици / 8 занятия',
-          price: 340,
-          difficulty: 'advanced',
-          features: [
-            'Онлайн безопасност',
-            'Дигитален отпечатък',
-            'AI етика',
-            'Защита на данни',
-            'Киберсигурност основи'
-          ],
-          formatted_price: '340 лв.',
-          formatted_price_eur: '174 €'
-        },
-        {
-          id: 7,
-          title: 'AI for Teens (15–18 г.)',
-          slug: 'ai-for-teens',
-          description: 'Разбиране на изкуствения интелект, неговите приложения и възможности.',
-          duration: '10 седмици / 10 занятия',
-          price: 480,
-          difficulty: 'advanced',
-          features: [
-            'Как работи AI',
-            'ChatGPT и текстови модели',
-            'Машинно обучение',
-            'Визуални модели',
-            'Практически AI проекти'
-          ],
-          formatted_price: '480 лв.',
-          formatted_price_eur: '246 €'
-        },
-        {
-          id: 8,
-          title: 'Career & Confidence Lab (16–18 г.)',
-          slug: 'career-confidence-lab',
-          description: 'Подготовка за кариера и развитие на лични умения за успех в професионалния свят.',
-          duration: '5 седмици / 5 занятия',
-          price: 280,
-          difficulty: 'advanced',
-          features: [
-            'Подготовка за интервю',
-            'Soft skills развитие',
-            'Комуникация',
-            'CV създаване',
-            'Интервю симулации',
-            'Критическо мислене',
-            'Лидерство'
-          ],
-          formatted_price: '280 лв.',
-          formatted_price_eur: '144 €'
+          id: 'adults',
+          title: 'За възрастни - бърза преквалификация',
+          description: 'Интензивни курсове за бързо придобиване на практически умения и преквалификация в технологични и дигитални области. Подходящи за хора, които искат да променят кариерата си или да развият нови професионални компетенции.',
+          icon: Briefcase,
+          courses: [
+            {
+              id: 9,
+              title: 'QA и автоматизирано тестване',
+              slug: 'qa-automated-testing',
+              description: 'Комплексен курс за основи на QA, автоматизирани тестове, работа с инструменти като Selenium и CI/CD интеграция. Подготовка за кариера като QA инженер или Test Automation Engineer.',
+              duration: '8 седмици',
+              price: 700,
+              difficulty: 'beginner',
+              features: [
+                'Основи на QA',
+                'Автоматизирани тестове',
+                'Работа с Selenium',
+                'CI/CD интеграция',
+                'Практически проекти',
+                'Подготовка за кариера като QA инженер'
+              ],
+              formatted_price: '700 лв.',
+              formatted_price_eur: '359 €'
+            },
+            {
+              id: 10,
+              title: 'Project Management в ИТ',
+              slug: 'project-management-it',
+              description: 'Обучение по Agile, Scrum, Kanban, управление на екипи, работа с инструменти (JIRA, Trello), бюджетиране и комуникация. Подготовка за роли като IT Project Manager или Scrum Master.',
+              duration: '6 седмици',
+              price: 650,
+              difficulty: 'beginner',
+              features: [
+                'Agile методологии',
+                'Scrum и Kanban',
+                'Управление на екипи',
+                'Инструменти (JIRA, Trello)',
+                'Бюджетиране',
+                'Комуникация и лидерство',
+                'Подготовка за IT Project Manager'
+              ],
+              formatted_price: '650 лв.',
+              formatted_price_eur: '333 €'
+            },
+            {
+              id: 11,
+              title: 'Софтуерно инженерство – Full Stack старт',
+              slug: 'full-stack-start',
+              description: 'Интензивен курс за пълноценна Full Stack разработка: HTML/CSS, JavaScript, backend (Node.js/Java/Python), REST API, работа с база данни и deployment. Подготовка за кариера като Junior Full-Stack Developer.',
+              duration: '12 седмици',
+              price: 1300,
+              difficulty: 'beginner',
+              features: [
+                'HTML/CSS и JavaScript',
+                'Backend разработка (Node.js/Java/Python)',
+                'REST API',
+                'Работа с база данни',
+                'Deployment и DevOps основи',
+                'Портфолио проекти',
+                'Подготовка за Junior Full-Stack Developer'
+              ],
+              formatted_price: '1300 лв.',
+              formatted_price_eur: '667 €'
+            },
+            {
+              id: 12,
+              title: 'AI-Driven UI Design: Създаване на потребителски интерфейс с помощта на изкуствен интелект',
+              slug: 'ai-driven-ui-design',
+              description: 'Курс за създаване на потребителски интерфейси с помощта на изкуствен интелект. Подходящ за начинаещи и напреднали в UX/UI, графичен дизайн или фронтенд разработка, които искат да използват AI за ускорено прототипиране и дизайн.',
+              duration: '8 седмици / 8 занятия',
+              price: 750,
+              difficulty: 'advanced',
+              features: [
+                'AI-задвижвано прототипиране',
+                'Ускорен дизайн процес',
+                'UX/UI с AI инструменти',
+                'Визуален дизайн и композиция',
+                'Практически AI дизайн проекти',
+                'Портфолио от AI-генерирани дизайни'
+              ],
+              formatted_price: '750 лв.',
+              formatted_price_eur: '385 €'
+            },
+            {
+              id: 13,
+              title: 'Digital Essentials – Дигитални компетентности за съвременния офис',
+              slug: 'digital-essentials',
+              description: 'Практически курс за развитие на дигитални компетентности за съвременна офис среда. Подходящ за възрастни и служители, които искат да развият своите практически дигитални умения.',
+              duration: '6 седмици / 6 занятия',
+              price: 420,
+              difficulty: 'beginner',
+              features: [
+                'Microsoft Office (Word, Excel, PowerPoint, Outlook)',
+                'Организация и управление на файлове (OneDrive, Google Drive)',
+                'Онлайн комуникация (Teams, Zoom, Slack)',
+                'Основи на киберсигурността',
+                'Дигитална етика',
+                'Практически офис умения'
+              ],
+              formatted_price: '420 лв.',
+              formatted_price_eur: '215 €'
+            },
+            {
+              id: 14,
+              title: 'Vibe Coding – Програмиране чрез креативност и интуиция',
+              slug: 'vibe-coding',
+              description: 'Уникален подход към програмирането чрез креативност и интуиция. Подходящ за хора без опит в програмирането, които искат да навлязат в ИТ сферата по креативен и нестандартен начин.',
+              duration: '8 седмици / 8 занятия',
+              price: 550,
+              difficulty: 'beginner',
+              features: [
+                'Основи на програмирането чрез визуално и звуково възприятие',
+                'Креативно мислене и структуриране на код',
+                'Програмиране на интерактивни приложения',
+                'Визуализации и творчески проекти',
+                'Работа с Processing и p5.js',
+                'AI code асистенти',
+                'Креативни програмни проекти'
+              ],
+              formatted_price: '550 лв.',
+              formatted_price_eur: '282 €'
+            },
+            {
+              id: 15,
+              title: 'AI Design Lab – Дизайн с изкуствен интелект',
+              slug: 'ai-design-lab',
+              description: 'Курс за създаване на впечатляващи визуални проекти с помощта на AI. Подходящ за дизайнери, маркетолози, предприемачи и творци, които искат да автоматизират творчески процеси и да създават бранд идентичност чрез AI.',
+              duration: '6 седмици / 6 занятия',
+              price: 750,
+              difficulty: 'beginner',
+              features: [
+                'Въведение в генеративния дизайн',
+                'Работа с Adobe Firefly, Midjourney, Runway ML',
+                'Canva Magic Studio',
+                'Автоматизация на творчески процеси',
+                'Бранд идентичност и визуално разказване',
+                'AI-генерирано визуално съдържание',
+                'Портфолио от AI дизайн проекти'
+              ],
+              formatted_price: '750 лв.',
+              formatted_price_eur: '385 €'
+            }
+          ]
         }
-      ]
+      ],
+      courses: [] // Keep empty as courses are now in subcategories
     },
     {
       id: 'licensed',
@@ -311,6 +482,11 @@ const Courses: React.FC = () => {
       newExpanded.add(categoryId);
       setSelectedCategory(categoryId);
       setSearchParams({ category: categoryId });
+      // Reset subcategory selection when switching categories
+      const category = courseCategories.find(c => c.id === categoryId);
+      if (category?.subcategories && category.subcategories.length > 0) {
+        setSelectedSubcategory(category.subcategories[0].id);
+      }
       // Scroll to category after expanding
       scrollToCategory(categoryId);
     }
@@ -464,6 +640,153 @@ const Courses: React.FC = () => {
                             Свържете се с нас
                           </motion.button>
                         </div>
+                      </div>
+                    ) : category.subcategories ? (
+                      <div className="p-8">
+                        {/* Subcategory Tabs */}
+                        <div className="mb-8 border-b border-gray-200">
+                          <div className="flex flex-wrap gap-4">
+                            {category.subcategories.map((subcat) => {
+                              const SubcatIcon = subcat.icon;
+                              const isActive = selectedSubcategory === subcat.id;
+                              return (
+                                <button
+                                  key={subcat.id}
+                                  onClick={() => setSelectedSubcategory(subcat.id)}
+                                  className={`flex items-center gap-3 px-6 py-4 rounded-t-lg font-semibold transition-all duration-300 ${
+                                    isActive
+                                      ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
+                                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                                  }`}
+                                >
+                                  {SubcatIcon && <SubcatIcon className="w-5 h-5" />}
+                                  <span>{subcat.title}</span>
+                                  <span className={`ml-2 px-2 py-1 rounded-full text-xs ${
+                                    isActive ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-700'
+                                  }`}>
+                                    {subcat.courses.length}
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Subcategory Description */}
+                        {category.subcategories.find(sc => sc.id === selectedSubcategory) && (
+                          <div className="mb-8">
+                            <p className="text-gray-700 leading-relaxed text-lg">
+                              {category.subcategories.find(sc => sc.id === selectedSubcategory)?.description}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Courses for Selected Subcategory */}
+                        {(() => {
+                          const activeSubcat = category.subcategories?.find(sc => sc.id === selectedSubcategory);
+                          const coursesToShow = activeSubcat?.courses || [];
+                          
+                          if (coursesToShow.length === 0) {
+                            return (
+                              <div className="text-center py-12">
+                                <div className={`inline-block p-4 rounded-full ${category.bgColor} mb-4`}>
+                                  {activeSubcat?.icon && (() => {
+                                    const Icon = activeSubcat.icon;
+                                    return <Icon className={`w-12 h-12 ${category.textColor}`} />;
+                                  })()}
+                                </div>
+                                <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                                  Курсовете скоро ще бъдат достъпни
+                                </h4>
+                                <p className="text-gray-600 mb-6">
+                                  В момента работим по подготовката на курсовете за тази категория.
+                                </p>
+                                <motion.button
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  onClick={() => navigate('/contact')}
+                                  className={`px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r ${category.color} hover:shadow-lg transition-all duration-300`}
+                                >
+                                  Свържете се с нас за информация
+                                </motion.button>
+                              </div>
+                            );
+                          }
+
+                          return (
+                            <>
+                              <h4 className="text-xl font-semibold text-gray-900 mb-6">
+                                Достъпни курсове ({coursesToShow.length})
+                              </h4>
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {coursesToShow.map((course, courseIndex) => (
+                                  <motion.div
+                                    key={course.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.4, delay: courseIndex * 0.1 }}
+                                    whileHover={{ y: -5 }}
+                                    className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-all duration-300"
+                                  >
+                                    <div className="flex items-center justify-between mb-3">
+                                      <span className={`text-xs font-semibold rounded-full px-3 py-1 ${category.bgColor} ${category.textColor}`}>
+                                        {course.difficulty === 'beginner' ? 'Начинаещи' : course.difficulty === 'advanced' ? 'Напреднали' : 'Всички'}
+                                      </span>
+                                      {course.formatted_price && (
+                                        <div className="flex flex-col items-end">
+                                          <span className="text-lg font-bold text-gray-900">
+                                            {course.formatted_price}
+                                          </span>
+                                          {course.formatted_price_eur && (
+                                            <span className="text-sm text-gray-500">
+                                              {course.formatted_price_eur}
+                                            </span>
+                                          )}
+                                        </div>
+                                      )}
+                                    </div>
+
+                                    <h5 className="text-lg font-semibold text-gray-900 mb-2">
+                                      {course.title}
+                                    </h5>
+                                  
+                                    <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                                      {course.description}
+                                    </p>
+
+                                    <div className="flex items-center text-sm text-gray-500 mb-4">
+                                      <Clock className="w-4 h-4 mr-1" />
+                                      {course.duration}
+                                    </div>
+
+                                    <ul className="space-y-2 mb-4">
+                                      {course.features.slice(0, 3).map((feature, idx) => (
+                                        <li key={idx} className="flex items-center text-sm text-gray-600">
+                                          <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                                          <span className="line-clamp-1">{feature}</span>
+                                        </li>
+                                      ))}
+                                      {course.features.length > 3 && (
+                                        <li className="text-xs text-gray-500">
+                                          +{course.features.length - 3} още
+                                        </li>
+                                      )}
+                                    </ul>
+
+                                    <motion.button
+                                      whileHover={{ scale: 1.02 }}
+                                      whileTap={{ scale: 0.98 }}
+                                      onClick={() => navigate(`/course/${course.slug || generateSlug(course.title)}`)}
+                                      className={`w-full py-2 px-4 rounded-lg font-medium text-white bg-gradient-to-r ${category.color} hover:shadow-md transition-all duration-300`}
+                                    >
+                                      Запиши се
+                                    </motion.button>
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </>
+                          );
+                        })()}
                       </div>
                     ) : (
                       <div className="p-8">
