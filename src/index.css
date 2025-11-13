@@ -60,3 +60,39 @@ section.hero::before {
     background-size: cover;
   }
 }
+
+/* Article content styling for better readability */
+.article-content h2 {
+  @apply text-3xl font-bold mt-10 mb-6 pt-4 pb-2 border-b-2 border-primary-300;
+  color: #1e40af;
+  font-weight: 700;
+}
+
+.article-content h3 {
+  @apply text-2xl font-semibold text-gray-800 mt-8 mb-4;
+  font-weight: 600;
+}
+
+.article-content p {
+  @apply text-gray-700 leading-relaxed mb-6;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.article-content ul,
+.article-content ol {
+  @apply mb-6 space-y-2 pl-6;
+}
+
+.article-content ul {
+  list-style-type: disc;
+}
+
+.article-content ol {
+  list-style-type: decimal;
+}
+
+.article-content li {
+  @apply text-gray-700 leading-relaxed;
+  margin-bottom: 0.5rem;
+}

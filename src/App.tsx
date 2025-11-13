@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import ContactPage from './components/ContactPage';
 import Footer from './components/Footer';
 import Blog from './components/Blog';
+import ArticleDetail from './components/ArticleDetail';
 import CourseQuiz from './components/CourseQuiz';
 import CourseRegistration from './components/CourseRegistration';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -47,6 +48,7 @@ function App() {
             <Route path="/course/:slug" element={<CourseRegistration />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/article/:id" element={<ArticleDetail />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/student-portal" element={<StudentPortal />} />

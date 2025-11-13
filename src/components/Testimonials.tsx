@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { BookOpen, Users, Calendar, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const News: React.FC = () => {
@@ -10,6 +11,7 @@ const News: React.FC = () => {
       id: 1,
       title: 'Полезни статии',
       category: 'Образование',
+      categorySlug: 'useful-articles',
       icon: BookOpen,
       content: 'Материали, които ще ви помогнат да разширите знанията си в света на технологиите и образованието. Научете най-новите техники за ефективно обучение и развитие на дигитални умения.',
       date: '2024-01-15',
@@ -20,6 +22,7 @@ const News: React.FC = () => {
       id: 2,
       title: 'Съвети за родители',
       category: 'Родителство',
+      categorySlug: 'parent-tips',
       icon: Users,
       content: 'Полезни насоки за родители, които искат да подкрепят дигиталното развитие на своите деца. Теми за безопасност, мотивация и ефективно учене в съвременната дигитална среда.',
       date: '2024-01-12',
@@ -30,6 +33,7 @@ const News: React.FC = () => {
       id: 3,
       title: 'Новини от академията',
       category: 'Академия',
+      categorySlug: 'academy-news',
       icon: Calendar,
       content: 'Бъдете в крак с всичко ново в Akava Academy — нови курсове, събития, успехи на учениците и актуални инициативи, които развиваме заедно с нашата общност.',
       date: '2024-01-10',
@@ -40,6 +44,7 @@ const News: React.FC = () => {
       id: 4,
       title: 'Дигитални умения и тенденции',
       category: 'Технологии',
+      categorySlug: 'digital-skills',
       icon: TrendingUp,
       content: 'Следете най-актуалните тенденции в света на технологиите, програмирането, дизайна и дигиталната безопасност. Научете какви умения са нужни на децата днес, за да успеят утре.',
       date: '2024-01-08',
@@ -50,6 +55,7 @@ const News: React.FC = () => {
       id: 5,
       title: 'Нови курсове за 2024',
       category: 'Образование',
+      categorySlug: 'academy-news',
       icon: BookOpen,
       content: 'Представяме ви новите курсове за 2024 година! Разширяваме програмата си с курсове по изкуствен интелект, киберсигурност и 3D дизайн за по-голямо разнообразие и възможности за развитие.',
       date: '2024-01-05',
@@ -60,6 +66,7 @@ const News: React.FC = () => {
       id: 6,
       title: 'Успехи на учениците',
       category: 'Академия',
+      categorySlug: 'academy-news',
       icon: Users,
       content: 'Гордеем се с постиженията на нашите ученици! Този месец няколко от тях спечелиха награди на национални състезания по програмиране и роботика. Вижте техните проекти и вдъхновете се!',
       date: '2024-01-03',
@@ -114,7 +121,11 @@ const News: React.FC = () => {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              <div className="card p-8 lg:p-12">
+              <Link
+                to={`/blog?category=${newsItems[currentIndex].categorySlug}`}
+                className="block"
+              >
+                <div className="card p-8 lg:p-12 hover:shadow-xl transition-shadow duration-300 cursor-pointer">
                 {/* News Icon */}
                 <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
                   {React.createElement(newsItems[currentIndex].icon, { className: "w-8 h-8 text-white" })}
@@ -151,6 +162,7 @@ const News: React.FC = () => {
                   </div>
                 </div>
               </div>
+              </Link>
             </motion.div>
           </AnimatePresence>
 
