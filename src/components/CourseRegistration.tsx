@@ -474,7 +474,7 @@ const CourseRegistration: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 pt-20 pb-12">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 pt-32 md:pt-40 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.div
@@ -507,23 +507,52 @@ const CourseRegistration: React.FC = () => {
                 <h1 className="text-2xl font-bold text-gray-900 mb-3">
                   {course.title}
                 </h1>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed mb-4">
                   {course.description}
                 </p>
+                
+                {/* Start Date and Status */}
+                {(course.startDate || course.status) && (
+                  <div className="space-y-4 pt-4 border-t border-gray-200">
+                    {course.startDate && (
+                      <div className="flex items-start">
+                        <Calendar className="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-sm font-medium text-gray-500 mb-1">Начало</p>
+                          <p className="text-base font-semibold text-gray-900">{course.startDate}</p>
+                        </div>
+                      </div>
+                    )}
+                    {course.status && (
+                      <div className="flex items-start">
+                        <CheckCircle className={`w-5 h-5 mr-2 mt-0.5 flex-shrink-0 ${
+                          course.status === 'Записвания отворени' 
+                            ? 'text-green-600' 
+                            : 'text-blue-600'
+                        }`} />
+                        <div>
+                          <p className="text-sm font-medium text-gray-500 mb-1">Статус</p>
+                          <p className={`text-base font-semibold ${
+                            course.status === 'Записвания отворени' 
+                              ? 'text-green-600' 
+                              : 'text-blue-600'
+                          }`}>
+                            {course.status}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
-              <div className="space-y-4 mb-6 pb-6 border-b border-gray-200">
-                <div className="flex items-center text-gray-700">
-                  <Clock className="w-5 h-5 mr-3 text-primary-600" />
-                  <span className="font-medium">{course.duration}</span>
-                </div>
-                <div className="flex items-center text-gray-700">
-                  <Users className="w-5 h-5 mr-3 text-primary-600" />
-                  <span className="font-medium">Малки групи</span>
-                </div>
-                <div className="flex items-center text-gray-700">
-                  <Calendar className="w-5 h-5 mr-3 text-primary-600" />
-                  <span className="font-medium">Гъвкаво разписание</span>
+              <div className="mb-6 pb-6 border-b border-gray-200">
+                <div className="flex items-start">
+                  <Clock className="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 mb-1">Продължителност</p>
+                    <p className="text-base font-semibold text-gray-900">{course.duration}</p>
+                  </div>
                 </div>
               </div>
 
