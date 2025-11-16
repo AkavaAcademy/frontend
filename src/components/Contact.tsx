@@ -78,7 +78,7 @@ const Contact: React.FC = () => {
       console.error('API Error:', err.response?.data || err.message); // Debug log
       
       if (err.response?.status === 404) {
-        setError('Сървърът не е намерен. Моля, проверете дали backend сървърът работи на http://127.0.0.1:3000');
+        setError('Сървърът не е намерен. Моля, проверете дали backend сървърът работи.');
       } else if (err.response?.status === 500) {
         setError('Възникна грешка на сървъра. Моля, опитайте отново по-късно.');
       } else if (err.response?.data?.message) {

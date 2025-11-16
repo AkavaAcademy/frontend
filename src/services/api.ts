@@ -1,7 +1,12 @@
 import axios from 'axios';
 
-// Prefer environment-configured backend URL; fall back to empty so CRA proxy can be used
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:3001';
+// Prefer environment-configured backend URL
+// Set REACT_APP_API_BASE_URL in environment variables for each environment:
+// - Development: .env.development.local or Vercel dev env vars
+// - Staging: .env.staging.local or Vercel preview env vars
+// - Production: .env.production.local or Vercel production env vars
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 
+  (process.env.NODE_ENV === 'production' ? '' : 'http://127.0.0.1:3000');
 
 const api = axios.create({
   baseURL: API_BASE_URL,

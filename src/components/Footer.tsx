@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
                   className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors duration-300"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5" />
+                  {/* <social.icon className="w-5 h-5" /> */}
                 </motion.a>
               ))}
             </motion.div>
