@@ -860,7 +860,7 @@ const Courses: React.FC = () => {
                                     <motion.button
                                       whileHover={{ scale: 1.02 }}
                                       whileTap={{ scale: 0.98 }}
-                                      onClick={() => navigate(`/course/${course.slug || generateSlug(course.title)}`)}
+                                      onClick={() => navigate(`/contact?course=${encodeURIComponent(course.title)}`)}
                                       className={`w-full py-2 px-4 rounded-lg font-medium text-white bg-gradient-to-r ${category.color} hover:shadow-md transition-all duration-300`}
                                     >
                                       Запиши се
@@ -966,7 +966,7 @@ const Courses: React.FC = () => {
                               <motion.button
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                onClick={() => navigate(`/course/${course.slug || generateSlug(course.title)}`)}
+                                onClick={() => navigate(`/contact?course=${encodeURIComponent(course.title)}`)}
                                 className={`w-full py-2 px-4 rounded-lg font-medium text-white bg-gradient-to-r ${category.color} hover:shadow-md transition-all duration-300`}
                               >
                                 Запиши се

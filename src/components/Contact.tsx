@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
 import { 
   Mail, 
   Phone, 
@@ -7,15 +8,20 @@ import {
   Clock, 
   Send,
   CheckCircle,
-  Loader
+  Loader,
+  BookOpen
 } from 'lucide-react';
 import { contactsAPI } from '../services/api';
 
 const Contact: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const courseFromUrl = searchParams.get('course');
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
+    course: courseFromUrl || '',
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -23,8 +29,15 @@ const Contact: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>('');
 
+  // Update course when URL param changes
+  useEffect(() => {
+    if (courseFromUrl) {
+      setFormData(prev => ({ ...prev, course: courseFromUrl }));
+    }
+  }, [courseFromUrl]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -41,6 +54,8 @@ const Contact: React.FC = () => {
         name: formData.name,
         email: formData.email,
         phone: formData.phone || undefined,
+        // Only include course if it was pre-selected (from URL), not from home page
+        course: courseFromUrl ? formData.course : undefined,
         message: formData.message || undefined
       };
       
@@ -67,6 +82,7 @@ const Contact: React.FC = () => {
             name: '',
             email: '',
             phone: '',
+            course: courseFromUrl || '',
             message: ''
           });
         }, 5000);
@@ -230,6 +246,47 @@ const Contact: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Show course info if pre-selected, otherwise show dropdown */}
+                {courseFromUrl ? (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Избран курс
+                    </label>
+                    <div className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 flex items-center space-x-3">
+                      <BookOpen className="w-5 h-5 text-primary-600 flex-shrink-0" />
+                      <span className="text-gray-900 font-medium">{courseFromUrl}</span>
+                    </div>
+                    <p className="mt-2 text-sm text-gray-600">
+                      Записвате се за този курс. Моля, попълнете данните по-долу.
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-2">
+                      Интересен курс
+                    </label>
+                    <select
+                      id="course"
+                      name="course"
+                      value={formData.course}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                    >
+                      <option value="">Изберете курс (незадължително)</option>
+                      <option value="LEGO РобоМастъри (6-10 г.)">LEGO РобоМастъри (6-10 г.)</option>
+                      <option value="Основи на програмирането със Scratch (10-12 г.)">Основи на програмирането със Scratch (10-12 г.)</option>
+                      <option value="Python за начинаещи (12-15 г.)">Python за начинаещи (12-15 г.)</option>
+                      <option value="Web Development Basics (13-16 г.)">Web Development Basics (13-16 г.)</option>
+                      <option value="AI и Machine Learning за тийнейджъри (15-18 г.)">AI и Machine Learning за тийнейджъри (15-18 г.)</option>
+                      <option value="Киберсигурност за ученици (14-18 г.)">Киберсигурност за ученици (14-18 г.)</option>
+                      <option value="Графичен дизайн (15-18 г.)">Графичен дизайн (15-18 г.)</option>
+                      <option value="Подготовка за ИТ интервю (18 г.)">Подготовка за ИТ интервю (18 г.)</option>
+                      <option value="Индивидуални уроци и консултации">Индивидуални уроци и консултации</option>
+                      <option value="Не съм сигурен - имам нужда от съвет">Не съм сигурен - имам нужда от съвет</option>
+                    </select>
+                  </div>
+                )}
+
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                     Допълнителна информация
@@ -260,7 +317,7 @@ const Contact: React.FC = () => {
                     ) : (
                       <>
                         <Send className="w-5 h-5 mr-2" />
-                        Изпрати съобщение
+                        {courseFromUrl ? 'Изпрати заявка за записване' : 'Изпрати съобщение'}
                       </>
                     )}
                   </motion.button>
