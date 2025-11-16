@@ -24,7 +24,7 @@ export default function middleware(request: Request) {
 
   // Get allowed IPs from environment variable
   // Format: "1.2.3.4,5.6.7.8,9.10.11.12" (comma-separated)
-  const allowedIPsEnv = Deno.env.get('ALLOWED_IPS') || '';
+  const allowedIPsEnv = process.env.ALLOWED_IPS || '';
   const allowedIPs = allowedIPsEnv.split(',').map(ip => ip.trim()).filter(Boolean);
   
   // If no IPs are configured, allow all (for development/testing)
