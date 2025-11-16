@@ -1,7 +1,11 @@
-// Vercel Edge Middleware for IP Whitelisting
-// This runs at the edge before requests reach your application
+// Vercel Edge Function for IP Whitelisting
+// Place this in /api/middleware.ts for Vercel Edge Functions
 
-export default function middleware(request: Request) {
+export const config = {
+  runtime: 'edge',
+};
+
+export default async function handler(request: Request) {
   const url = new URL(request.url);
   
   // Skip IP check for static assets
@@ -10,11 +14,10 @@ export default function middleware(request: Request) {
     url.pathname.startsWith('/_next/') ||
     url.pathname.match(/\.(ico|png|jpg|jpeg|gif|svg|css|js|woff|woff2|ttf|eot)$/)
   ) {
-    return;
+    return new Response(null, { status: 200 });
   }
 
   // Get the client IP address
-  // Vercel provides the real IP in x-forwarded-for or x-vercel-forwarded-for
   const forwardedFor = request.headers.get('x-forwarded-for');
   const vercelForwardedFor = request.headers.get('x-vercel-forwarded-for');
   const clientIp = 
@@ -23,32 +26,24 @@ export default function middleware(request: Request) {
     'unknown';
 
   // Get allowed IPs from environment variable
-  // Format: "1.2.3.4,5.6.7.8,9.10.11.12" (comma-separated)
   const allowedIPsEnv = process.env.ALLOWED_IPS || '';
   const allowedIPs = allowedIPsEnv.split(',').map(ip => ip.trim()).filter(Boolean);
   
-  // If no IPs are configured, allow all (for development/testing)
+  // If no IPs are configured, allow all
   if (allowedIPs.length === 0 || !allowedIPsEnv) {
-    return;
+    return new Response(null, { status: 200 });
   }
 
   // Check if IP is in the whitelist
   const isAllowed = allowedIPs.some(allowedIP => {
-    // Support exact IP match
     if (clientIp === allowedIP) return true;
-    
-    // Support CIDR notation (e.g., 192.168.1.0/24)
     if (allowedIP.includes('/')) {
       return isIPInCIDR(clientIp, allowedIP);
     }
-    
     return false;
   });
 
   if (!isAllowed) {
-    console.log(`🚫 Blocked access from IP: ${clientIp} to ${url.pathname}`);
-    
-    // Return 403 Forbidden
     return new Response(
       JSON.stringify({
         error: 'Access Denied',
@@ -57,35 +52,28 @@ export default function middleware(request: Request) {
       }),
       {
         status: 403,
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       }
     );
   }
 
-  console.log(`✅ Allowed access from IP: ${clientIp} to ${url.pathname}`);
+  return new Response(null, { status: 200 });
 }
 
-// Helper function to check if IP is in CIDR range
 function isIPInCIDR(ip: string, cidr: string): boolean {
   try {
     const [subnet, prefixLength] = cidr.split('/');
     const prefix = parseInt(prefixLength, 10);
-    
     if (isNaN(prefix) || prefix < 0 || prefix > 32) return false;
-    
     const ipNum = ipToNumber(ip);
     const subnetNum = ipToNumber(subnet);
     const mask = (0xFFFFFFFF << (32 - prefix)) >>> 0;
-    
     return (ipNum & mask) === (subnetNum & mask);
   } catch {
     return false;
   }
 }
 
-// Helper function to convert IP to number
 function ipToNumber(ip: string): number {
   const parts = ip.split('.');
   if (parts.length !== 4) return 0;
@@ -95,3 +83,4 @@ function ipToNumber(ip: string): number {
     return (acc << 8) + num;
   }, 0) >>> 0;
 }
+
