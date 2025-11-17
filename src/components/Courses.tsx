@@ -107,6 +107,7 @@ const Courses: React.FC = () => {
       // Scroll to category after state update and DOM render
       scrollToCategory(category, 400);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   // Handle initial page load with category parameter

@@ -1,64 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Clock, Calendar, User, Tag, Share2, BookOpen } from 'lucide-react';
-import { articles, Article } from '../data/articles';
-import { blogsAPI } from '../services/api';
+import { articles } from '../data/articles';
 
 const ArticleDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const [article, setArticle] = useState<Article | null>(null);
-  const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(true);
+  const articleId = id ? parseInt(id) : null;
 
-  useEffect(() => {
-    fetchArticle();
-  }, [id]);
+  // Find article directly from local articles
+  const article = useMemo(() => {
+    return articleId ? articles.find(a => a.id === articleId) || null : null;
+  }, [articleId]);
 
-  const fetchArticle = async () => {
-    try {
-      setLoading(true);
-      // Try to fetch from API first
-      if (id) {
-        try {
-          const response = await blogsAPI.getAll();
-          if (response.data && response.data.length > 0) {
-            const foundArticle = response.data.find((a: Article) => a.id === parseInt(id));
-            if (foundArticle) {
-              setArticle(foundArticle);
-              findRelatedArticles(foundArticle);
-              return;
-            }
-          }
-        } catch (error) {
-          console.log('API not available, using local data');
-        }
-      }
-
-      // Fallback to local data
-      const foundArticle = articles.find(a => a.id === parseInt(id || '0'));
-      if (foundArticle) {
-        setArticle(foundArticle);
-        findRelatedArticles(foundArticle);
-      }
-    } catch (error) {
-      console.error('Error fetching article:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const findRelatedArticles = (currentArticle: Article) => {
-    const related = articles
+  // Find related articles
+  const relatedArticles = useMemo(() => {
+    if (!article) return [];
+    return articles
       .filter(a => 
-        a.id !== currentArticle.id && 
-        (a.categorySlug === currentArticle.categorySlug || 
-         a.tags?.some(tag => currentArticle.tags?.includes(tag)))
+        a.id !== article.id && 
+        (a.categorySlug === article.categorySlug || 
+         a.tags?.some(tag => article.tags?.includes(tag)))
       )
       .slice(0, 3);
-    setRelatedArticles(related);
-  };
+  }, [article]);
 
   const handleShare = () => {
     if (navigator.share && article) {
@@ -73,17 +38,6 @@ const ArticleDetail: React.FC = () => {
       alert('Линкът е копиран в клипборда!');
     }
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 pt-20 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Зареждане на статия...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (!article) {
     return (
