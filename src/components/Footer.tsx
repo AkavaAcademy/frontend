@@ -13,10 +13,57 @@ import { FaTiktok } from 'react-icons/fa';
 import bgTranslations from '../i18n/bg.json';
 import enTranslations from '../i18n/en.json';
 
+// Import course data structure
+interface Course {
+  id: number;
+  title: string;
+  slug?: string;
+  status?: string;
+}
+
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const [language] = React.useState('bg'); // You can integrate with your i18n context
   const t = language === 'bg' ? bgTranslations : enTranslations;
+
+  // Get courses with "Записвания отворени" status
+  const getOpenCourses = (): Course[] => {
+    const openCourses: Course[] = [
+      {
+        id: 2,
+        title: 'Scratch Creators (10–12 г.)',
+        slug: 'scratch-creators',
+        status: 'Записвания отворени'
+      },
+      {
+        id: 13,
+        title: 'Digital Essentials – Дигитални компетентности за съвременния офис',
+        slug: 'digital-essentials',
+        status: 'Записвания отворени'
+      },
+      {
+        id: 9,
+        title: 'QA и автоматизирано тестване',
+        slug: 'qa-automated-testing',
+        status: 'Записвания отворени'
+      },
+      {
+        id: 16,
+        title: 'QA - Ръчно тестване',
+        slug: 'qa-manual-testing',
+        status: 'Записвания отворени'
+      },
+      {
+        id: 12,
+        title: 'AI-Driven UI Design: Създаване на потребителски интерфейс с помощта на изкуствен интелект',
+        slug: 'ai-driven-ui-design',
+        status: 'Записвания отворени'
+      }
+    ];
+    return openCourses;
+  };
+
+  const openCourses = getOpenCourses();
 
   const socialLinks = [
     { icon: Facebook, href: 'https://www.facebook.com/AkavaAcademy/', label: 'Facebook' },
@@ -118,38 +165,19 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-lg font-semibold mb-4">{t.footer.coursesTitle}</h3>
+            <h3 className="text-lg font-semibold mb-4">Отворени курсове</h3>
             <ul className="space-y-2">
-              <li>
-                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.robotics}
-                </Link>
-              </li>
-              <li>
-                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.scratch}
-                </Link>
-              </li>
-              <li>
-                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.python}
-                </Link>
-              </li>
-              <li>
-                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.web}
-                </Link>
-              </li>
-              <li>
-                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.ai}
-                </Link>
-              </li>
-              <li>
-                <Link to="/courses" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
-                  {t.footer.courses.design}
-                </Link>
-              </li>
+              {openCourses.map((course) => (
+                <li key={course.id}>
+                  <Link 
+                    to={course.slug ? `/course/${course.slug}` : '/courses'} 
+                    className="text-gray-300 hover:text-primary-400 transition-colors duration-200"
+                    data-discover="true"
+                  >
+                    {course.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </motion.div>
 

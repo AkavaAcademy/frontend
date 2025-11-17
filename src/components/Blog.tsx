@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import { BookOpen, Users, Calendar, TrendingUp, ArrowRight, Clock, Calendar as CalendarIcon, X } from 'lucide-react';
 import { articles, Article } from '../data/articles';
-import { blogsAPI } from '../services/api';
 
 interface NewsCategory {
   icon: React.ElementType;
@@ -16,9 +15,8 @@ interface NewsCategory {
 const BlogComponent: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
-  const [allArticles, setAllArticles] = useState<Article[]>(articles);
+  const [allArticles] = useState<Article[]>(articles);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam);
-  const [loading, setLoading] = useState(false);
 
   const newsCategories: NewsCategory[] = [
     {
@@ -52,29 +50,10 @@ const BlogComponent: React.FC = () => {
   ];
 
   useEffect(() => {
-    fetchArticles();
-  }, []);
-
-  useEffect(() => {
     if (categoryParam) {
       setSelectedCategory(categoryParam);
     }
   }, [categoryParam]);
-
-  const fetchArticles = async () => {
-    try {
-      setLoading(true);
-      const response = await blogsAPI.getAll();
-      if (response.data && response.data.length > 0) {
-        setAllArticles(response.data);
-      }
-    } catch (error) {
-      console.log('Using local articles data');
-      setAllArticles(articles);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getCategoryArticleCount = (slug: string) => {
     return allArticles.filter(article => article.categorySlug === slug).length;
@@ -216,11 +195,7 @@ const BlogComponent: React.FC = () => {
             </motion.div>
           </div>
 
-          {loading ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600">Зареждане на статии...</p>
-            </div>
-          ) : (selectedCategory ? filteredArticles : recentArticles).length === 0 ? (
+          {(selectedCategory ? filteredArticles : recentArticles).length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-600 text-lg">Няма налични статии в тази категория.</p>
               <p className="text-gray-500 text-sm mt-2">

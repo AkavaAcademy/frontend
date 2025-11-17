@@ -10,7 +10,7 @@ const News: React.FC = () => {
     {
       id: 1,
       title: 'Полезни статии',
-      category: 'Образование',
+      category: 'Полезни статии',
       categorySlug: 'useful-articles',
       icon: BookOpen,
       content: 'Материали, които ще ви помогнат да разширите знанията си в света на технологиите и образованието. Научете най-новите техники за ефективно обучение и развитие на дигитални умения.',
@@ -21,7 +21,7 @@ const News: React.FC = () => {
     {
       id: 2,
       title: 'Съвети за родители',
-      category: 'Родителство',
+      category: 'Съвети за родители',
       categorySlug: 'parent-tips',
       icon: Users,
       content: 'Полезни насоки за родители, които искат да подкрепят дигиталното развитие на своите деца. Теми за безопасност, мотивация и ефективно учене в съвременната дигитална среда.',
@@ -32,7 +32,7 @@ const News: React.FC = () => {
     {
       id: 3,
       title: 'Новини от академията',
-      category: 'Академия',
+      category: 'Новини от академията',
       categorySlug: 'academy-news',
       icon: Calendar,
       content: 'Бъдете в крак с всичко ново в Akava Academy — нови курсове, събития, успехи на учениците и актуални инициативи, които развиваме заедно с нашата общност.',
@@ -43,7 +43,7 @@ const News: React.FC = () => {
     {
       id: 4,
       title: 'Дигитални умения и тенденции',
-      category: 'Технологии',
+      category: 'Дигитални умения и тенденции',
       categorySlug: 'digital-skills',
       icon: TrendingUp,
       content: 'Следете най-актуалните тенденции в света на технологиите, програмирането, дизайна и дигиталната безопасност. Научете какви умения са нужни на децата днес, за да успеят утре.',
@@ -53,25 +53,14 @@ const News: React.FC = () => {
     },
     {
       id: 5,
-      title: 'Нови курсове за 2024',
-      category: 'Образование',
+      title: 'Нови курсове за 2026',
+      category: 'Новини от академията',
       categorySlug: 'academy-news',
       icon: BookOpen,
-      content: 'Представяме ви новите курсове за 2024 година! Разширяваме програмата си с курсове по изкуствен интелект, киберсигурност и 3D дизайн за по-голямо разнообразие и възможности за развитие.',
+      content: 'Представяме ви новите курсове за 2026 година! Разширяваме програмата си с курсове по изкуствен интелект, киберсигурност и 3D дизайн за по-голямо разнообразие и възможности за развитие.',
       date: '2024-01-05',
       readTime: '3 мин',
       type: 'Анонс'
-    },
-    {
-      id: 6,
-      title: 'Успехи на учениците',
-      category: 'Академия',
-      categorySlug: 'academy-news',
-      icon: Users,
-      content: 'Гордеем се с постиженията на нашите ученици! Този месец няколко от тях спечелиха награди на национални състезания по програмиране и роботика. Вижте техните проекти и вдъхновете се!',
-      date: '2024-01-03',
-      readTime: '5 мин',
-      type: 'Успех'
     }
   ];
 
@@ -151,14 +140,6 @@ const News: React.FC = () => {
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
                     <span>{newsItems[currentIndex].category}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="w-4 h-4" />
-                    <span>{newsItems[currentIndex].date}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <BookOpen className="w-4 h-4" />
-                    <span>{newsItems[currentIndex].readTime}</span>
                   </div>
                 </div>
               </div>

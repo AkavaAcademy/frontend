@@ -34,6 +34,7 @@ interface CourseCategory {
   bgColor: string;
   textColor: string;
   borderColor: string;
+  ringColor?: string;
   courses: Course[];
   subcategories?: CourseSubcategory[];
   comingSoon?: boolean;
@@ -106,6 +107,7 @@ const Courses: React.FC = () => {
       // Scroll to category after state update and DOM render
       scrollToCategory(category, 400);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   // Handle initial page load with category parameter
@@ -489,6 +491,7 @@ const Courses: React.FC = () => {
       bgColor: 'bg-green-50',
       textColor: 'text-green-800',
       borderColor: 'border-green-200',
+      ringColor: 'ring-green-500/50',
       comingSoon: true,
       specialties: [
         'Полиграфия',
@@ -513,6 +516,7 @@ const Courses: React.FC = () => {
       bgColor: 'bg-purple-50',
       textColor: 'text-purple-800',
       borderColor: 'border-purple-200',
+      ringColor: 'ring-purple-500/50',
       comingSoon: true,
       specialties: [
         'Дигитализация на учебния процес',
@@ -548,7 +552,7 @@ const Courses: React.FC = () => {
 
 
   return (
-    <section id="courses" className="py-20 bg-gray-50 min-h-screen">
+    <section id="courses" className="pt-32 md:pt-40 pb-20 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -585,7 +589,7 @@ const Courses: React.FC = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className={`${category.bgColor} ${category.borderColor} border-2 rounded-2xl overflow-hidden transition-all duration-300 ${
-                  isSelected ? 'shadow-xl ring-4 ring-opacity-50' : 'shadow-lg hover:shadow-xl'
+                  isSelected ? `shadow-xl ring-4 ${category.ringColor || 'ring-primary-500/50'}` : 'shadow-lg hover:shadow-xl'
                 }`}
               >
                 {/* Category Header */}
@@ -768,9 +772,6 @@ const Courses: React.FC = () => {
 
                           return (
                             <>
-                              <h4 className="text-xl font-semibold text-gray-900 mb-6">
-                                Достъпни курсове ({coursesToShow.length})
-                              </h4>
                               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {coursesToShow.map((course, courseIndex) => (
                                   <motion.div
@@ -982,32 +983,6 @@ const Courses: React.FC = () => {
             );
           })}
           </div>
-
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-2xl p-8 lg:p-12 text-white">
-            <h3 className="text-3xl font-bold mb-4">
-              Не сте сигурни кой курс да изберете?
-            </h3>
-            <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Направете нашия безплатен тест, за да намерите перфектния курс според възрастта, интересите и целите.
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate('/course-quiz')}
-              className="bg-white text-primary-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors duration-300"
-            >
-              Направете безплатен тест
-            </motion.button>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

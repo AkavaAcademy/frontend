@@ -8,47 +8,47 @@ const FeaturesPage: React.FC = () => {
   const staffMembers = [
     {
       id: 1,
-      name: 'Име на преподавател',
-      role: 'Старши преподавател по програмиране',
-      specialization: 'Python, JavaScript, Web Development',
-      experience: '10+ години опит',
-      bio: 'Страстен преподавател с богат опит в разработката на софтуер и образованието. Специализиран в модерни програмни езици и методологии.',
-      achievements: ['Сертификат за педагогическа квалификация', 'Участник в национални образователни проекти'],
-      email: 'teacher1@akava.academy',
-      courses: ['Python за начинаещи', 'Уеб разработка', 'JavaScript Advanced']
+      name: 'Станимира Йовчева',
+      role: 'Fullstack Web Developer',
+      specialization: 'HTML, CSS, JavaScript, VueJS, NodeJS, Ruby on Rails, PostgreSQL, GraphQL',
+      experience: '5+ години опит',
+      bio: 'Fullstack разработчик с богат опит в създаването на уеб приложения. Специализирана в модерни технологии като Vue.js, Node.js и Ruby on Rails. Има опит в управление на екипи и ръководство на проекти. Завършила е бакалавър по Софтуерни технологии и дизайн в Пловдивския университет.',
+      achievements: ['Бакалавър по Софтуерни технологии и дизайн - Пловдивски университет (2015-2019)', 'Fullstack Web Developer (2021-настояще)', 'Junior Software Engineer (2019-2021)', 'Опит в управление на екипи и ръководство на проекти'],
+      email: 'syovcheva.yo@gmail.com',
+      courses: ['Уеб разработка', 'JavaScript и Vue.js', 'Backend разработка с Node.js', 'Бази данни и PostgreSQL']
     },
     {
       id: 2,
-      name: 'Име на преподавател',
-      role: 'Преподавател по роботика и AI',
-      specialization: 'Robotics, AI, Machine Learning',
+      name: 'Елеонора Михова',
+      role: 'QA Specialist, UI/UX Designer и Учител по Информатика',
+      specialization: 'QA Testing, UI/UX Design, Manual & Automation Testing, Front-end Development, Digital Marketing',
       experience: '8+ години опит',
-      bio: 'Експерт в областта на роботиката и изкуствения интелект. Преподава с иновативни методи и практически проекти.',
-      achievements: ['Победител в национални състезания по роботика', 'Автор на образователни материали'],
-      email: 'teacher2@akava.academy',
-      courses: ['LEGO роботика', 'Въведение в AI', 'Machine Learning за ученици']
+      bio: 'Магистърска степен по Педагогика на обучението по информатика и информационни технологии. Специализирана в тестване на софтуер, дизайн на потребителски интерфейси и преподаване на компютърни науки.',
+      achievements: ['Магистър по Педагогика на обучението по информатика и информационни технологии - ПУ "Паисий Хилендарски"', 'Бакалавър по Софтуерни технологии и дизайн - ПУ "Паисий Хилендарски"', 'QA Specialist & UI/UX Designer (2023-настояще)', 'Учител по Информатика и ИТ в частна гимназия (2024)', 'Сертификати: Digital Marketing, Automation Testing, Manual Testing, SEO'],
+      email: 'yovcheva.e@gmail.com',
+      courses: ['QA тестване на софтуер', 'UI/UX дизайн с Figma', 'Основи на програмирането', 'Информатика и ИТ']
     },
     {
       id: 3,
-      name: 'Име на преподавател',
-      role: 'Преподавател по дизайн и креативност',
-      specialization: 'UI/UX Design, 3D Modeling, Digital Art',
-      experience: '7+ години опит',
-      bio: 'Креативен професионалист с дълбоки познания в дигиталния дизайн. Помага на учениците да развият своята креативност.',
-      achievements: ['Признат дизайнер на годината', 'Работил с водещи технологични компании'],
-      email: 'teacher3@akava.academy',
-      courses: ['Уеб дизайн', '3D моделиране', 'Дигитално изкуство']
+      name: 'Ивайло Иванов',
+      role: 'Business Analyst, Project Manager и Front-End Developer',
+      specialization: 'Vue.js, AngularJS, HTML, JavaScript, CSS, Bootstrap, jQuery, WordPress, UI/UX Design, Project Management',
+      experience: '8+ години опит',
+      bio: 'Business Analyst и Project Manager с богат опит в софтуерната разработка и дизайн. Специализиран в управление на екипи, внедряване на бизнес решения и ръководство на проекти по различни методологии. Опит във front-end разработка, UX/UI дизайн и графичен дизайн. Работил с глобални корпоративни клиенти и управлявал проекти в Agile и Waterfall методологии.',
+      achievements: ['Business Analyst / Project Manager (2021-настояще)', 'Project Manager / Deploy Manager (2022-2023)', 'Опит в управление на междуфункционални и мултинационални екипи', 'Разработка на JavaScript решения с модерни frameworks и библиотеки', 'Създаване и поддръжка на проектна документация'],
+      email: 'ivaylo@lementrix.com',
+      courses: ['Front-end разработка с Vue.js', 'Управление на проекти', 'UI/UX дизайн', 'JavaScript и модерни frameworks']
     },
     {
       id: 4,
-      name: 'Име на преподавател',
-      role: 'Преподавател по мобилни технологии',
-      specialization: 'Mobile Apps, React Native, Flutter',
+      name: 'Соня Ситнова',
+      role: 'Graphic Designer и Marketing Specialist',
+      specialization: 'Adobe Photoshop, Adobe Illustrator, Adobe InDesign, Graphic Design, Digital Marketing, SEO, Content Marketing',
       experience: '6+ години опит',
-      bio: 'Специалист в разработката на мобилни приложения с фокус върху модерни технологии. Преподава с практически примери и реални проекти.',
-      achievements: ['Публикувани приложения в App Store и Google Play', 'Ментор в стартъп акселератори'],
-      email: 'teacher4@akava.academy',
-      courses: ['Мобилни приложения', 'React Native', 'Flutter Development']
+      bio: 'Професионалист с богат опит в графичния дизайн и знания в маркетинга. Специализирана в дигитална и печатна продукция, дигитална обработка на изображения и създаване на брандирани визии. Опит в работа с клиенти, управление на времето и сътрудничество в екип. Познания в Content marketing, SEO, E-mail marketing, Facebook marketing и Google Ads.',
+      achievements: ['Графичен дизайнер (2019-настояще)', 'Junior графичен дизайнер (2018-2019)', 'Бакалавър по Софтуерни технологии и дизайн - ПУ "Паисий Хилендарски" (2014-2018)', 'Сертификат Marketing Basics', 'Сертификат Front End Course (HTML/CSS/JavaScript)', 'Сертификат Online Marketing и SEO'],
+      email: 'sonya.sitnova54@gmail.com',
+      courses: ['Графичен дизайн', 'Adobe Photoshop и Illustrator', 'Дигитален маркетинг', 'SEO и Content Marketing']
     }
   ];
 
