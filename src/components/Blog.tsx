@@ -56,19 +56,24 @@ const BlogComponent: React.FC = () => {
   }, [categoryParam]);
 
   const getCategoryArticleCount = (slug: string) => {
+    if (!Array.isArray(allArticles)) return 0;
     return allArticles.filter(article => article.categorySlug === slug).length;
   };
 
-  const filteredArticles = selectedCategory
-    ? allArticles.filter(article => article.categorySlug === selectedCategory)
-    : allArticles;
+  const filteredArticles = Array.isArray(allArticles)
+    ? (selectedCategory
+        ? allArticles.filter(article => article.categorySlug === selectedCategory)
+        : allArticles)
+    : [];
 
-  const recentArticles = allArticles
-    .sort((a, b) => {
-      // Simple date sorting - assumes date format like "15 януари 2024"
-      return b.id - a.id; // Fallback to ID sorting if dates are not parseable
-    })
-    .slice(0, 4);
+  const recentArticles = Array.isArray(allArticles)
+    ? [...allArticles]
+        .sort((a, b) => {
+          // Simple date sorting - assumes date format like "15 януари 2024"
+          return b.id - a.id; // Fallback to ID sorting if dates are not parseable
+        })
+        .slice(0, 4)
+    : [];
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
