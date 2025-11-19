@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
 import { 
   Mail, 
   Phone, 
@@ -9,19 +11,28 @@ import {
   CheckCircle,
   Loader
 } from 'lucide-react';
-import { contactsAPI } from '../services/api';
 
 const Contact: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const courseFromUrl = searchParams.get('course');
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
+    course: courseFromUrl || '',
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>('');
+
+  useEffect(() => {
+    if (courseFromUrl) {
+      setFormData(prev => ({ ...prev, course: courseFromUrl }));
+    }
+  }, [courseFromUrl]);
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -37,58 +48,58 @@ const Contact: React.FC = () => {
     setError(null);
     
     try {
-      const contactData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone || undefined,
-        message: formData.message || undefined
-      };
-      
-      console.log('Sending contact data to backend:', contactData); // Debug log
-      
-      const response = await contactsAPI.create(contactData);
-      
-      console.log('Backend response:', response.data); // Debug log
-      
-      // Handle success - check for success field or assume success if status is 200/201
-      if (response.status === 200 || response.status === 201 || response.data.success) {
-        setSuccessMessage(
-          response.data.message || 
-          response.data.contact?.message || 
-          'Благодарим ви! Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.'
-        );
-        setIsSubmitted(true);
-        
-        // Reset form after 5 seconds
-        setTimeout(() => {
-          setIsSubmitted(false);
-          setSuccessMessage('');
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            message: ''
-          });
-        }, 5000);
-      } else {
-        setError(response.data.message || 'Неуспешно изпращане на формата. Моля, опитайте отново.');
+      // Get EmailJS configuration from environment variables
+      const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID || '';
+      const templateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || '';
+      const publicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '';
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('EmailJS не е конфигуриран. Моля, проверете environment variables.');
       }
-    } catch (err: any) {
-      // Handle API errors
-      console.error('API Error:', err.response?.data || err.message); // Debug log
+
+      // Prepare email template parameters
+      const templateParams = {
+        to_email: 'info@akavaacademy.com',
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone || 'Не е предоставен',
+        course: courseFromUrl ? formData.course : (formData.course || 'Не е избран'),
+        message: formData.message || 'Няма допълнителна информация',
+        subject: courseFromUrl 
+          ? `Заявка за записване - ${formData.course}` 
+          : 'Ново запитване от контактна форма'
+      };
+
+      console.log('Sending email via EmailJS:', templateParams); // Debug log
       
-      if (err.response?.status === 404) {
-        setError('Сървърът не е намерен. Моля, проверете дали backend сървърът работи.');
-      } else if (err.response?.status === 500) {
-        setError('Възникна грешка на сървъра. Моля, опитайте отново по-късно.');
-      } else if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else if (err.response?.data?.errors) {
-        // Handle validation errors (array or object)
-        const errors = Array.isArray(err.response.data.errors) 
-          ? err.response.data.errors 
-          : Object.values(err.response.data.errors).flat();
-        setError(errors.join(', '));
+      // Send email using EmailJS
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
+      setSuccessMessage(
+        courseFromUrl
+          ? 'Благодарим ви! Заявката ви за записване е изпратена успешно. Ще се свържем с вас в рамките на 24 часа.'
+          : 'Благодарим ви! Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.'
+      );
+      setIsSubmitted(true);
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setSuccessMessage('');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          course: courseFromUrl || '',
+          message: ''
+        });
+      }, 5000);
+    } catch (err: any) {
+      // Handle EmailJS errors
+      console.error('EmailJS Error:', err); // Debug log
+      
+      if (err.text) {
+        setError(`Грешка при изпращане на имейл: ${err.text}`);
       } else if (err.message) {
         setError(`Грешка: ${err.message}`);
       } else {
@@ -229,6 +240,22 @@ const Contact: React.FC = () => {
                     />
                   </div>
                 </div>
+
+                {courseFromUrl && (
+                  <div>
+                    <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-2">
+                      Избран курс
+                    </label>
+                    <input
+                      type="text"
+                      id="course"
+                      name="course"
+                      value={formData.course}
+                      readOnly
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 cursor-not-allowed"
+                    />
+                  </div>
+                )}
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">

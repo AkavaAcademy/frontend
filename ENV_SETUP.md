@@ -12,6 +12,18 @@ Create React App automatically loads environment files based on the `NODE_ENV` a
 
 **Note**: All `.env*.local` files are gitignored and should NOT be committed.
 
+## Required Environment Variables
+
+### EmailJS Configuration (for Contact Form)
+
+The contact form uses EmailJS to send emails directly to **info@akavaacademy.com**. You need:
+
+- `REACT_APP_EMAILJS_SERVICE_ID` - Your EmailJS service ID
+- `REACT_APP_EMAILJS_TEMPLATE_ID` - Your EmailJS template ID  
+- `REACT_APP_EMAILJS_PUBLIC_KEY` - Your EmailJS public key
+
+**📖 See `EMAILJS_SETUP.md` for detailed setup instructions.**
+
 ## Setup Instructions
 
 ### 1. Local Development
@@ -22,6 +34,11 @@ Create `.env.development.local` in the project root:
 # .env.development.local
 REACT_APP_API_BASE_URL=http://127.0.0.1:3000
 REACT_APP_ENV=development
+
+# EmailJS Configuration
+REACT_APP_EMAILJS_SERVICE_ID=service_xxxxx
+REACT_APP_EMAILJS_TEMPLATE_ID=template_xxxxx
+REACT_APP_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxx
 ```
 
 ### 2. Staging Environment
