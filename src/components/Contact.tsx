@@ -53,7 +53,7 @@ const Contact: React.FC = () => {
       // const templateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || '';
       // const publicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '';
 
-      const serviceId = 'service_xppf6j9';
+      const serviceId = 'service_uvsy7f8';
       const templateId = 'template_97a7iuq';
       const publicKey = 'zrhS3MxvxWIAlTO25';
       if (!serviceId || !templateId || !publicKey) {
