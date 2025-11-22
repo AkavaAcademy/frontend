@@ -49,9 +49,9 @@ const Contact: React.FC = () => {
     
     try {
       // Get EmailJS configuration from environment variables
-      const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID || '';
-      const templateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || '';
-      const publicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '';
+      const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID || 'service_ocpao0o';
+      const templateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || 'template_97a7iuq';
+      const publicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || 'zrhS3MxvxWIAlTO25';
 
       if (!serviceId || !templateId || !publicKey) {
         throw new Error('EmailJS не е конфигуриран. Моля, проверете environment variables.');
