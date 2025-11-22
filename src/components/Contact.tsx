@@ -49,7 +49,7 @@ const Contact: React.FC = () => {
     
     try {
       // Get EmailJS configuration from environment variables
-      const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID || 'service_ocpao0o';
+      const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID || 'service_xppf6j9';
       const templateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || 'template_97a7iuq';
       const publicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || 'zrhS3MxvxWIAlTO25';
 
