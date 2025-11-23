@@ -137,6 +137,13 @@ const BlogComponent: React.FC = () => {
                     } else {
                       setSearchParams({});
                     }
+                    // Scroll to articles section
+                    setTimeout(() => {
+                      const articlesSection = document.getElementById('articles-section');
+                      if (articlesSection) {
+                        articlesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }, 100);
                   }}
                   className={`bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group ${
                     isSelected ? 'ring-2 ring-primary-500' : ''
@@ -169,7 +176,7 @@ const BlogComponent: React.FC = () => {
       </section>
 
       {/* Articles Section */}
-      <section className="py-20 bg-white">
+      <section id="articles-section" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-16">
             <motion.div
@@ -190,6 +197,13 @@ const BlogComponent: React.FC = () => {
                   onClick={() => {
                     setSelectedCategory(null);
                     setSearchParams({});
+                    // Scroll to articles section
+                    setTimeout(() => {
+                      const articlesSection = document.getElementById('articles-section');
+                      if (articlesSection) {
+                        articlesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }, 100);
                   }}
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium flex items-center"
                 >

@@ -20,13 +20,49 @@ const Contact: React.FC = () => {
     name: '',
     email: '',
     phone: '',
-    course: courseFromUrl || '',
-    message: ''
+    message: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>('');
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const serviceId = (process.env.REACT_APP_EMAILJS_SERVICE_ID || '').trim();
+  const templateId = (process.env.REACT_APP_EMAILJS_TEMPLATE_ID || '').trim();
+  const publicKey = (process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '').trim();
+
+  // Email validation function
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Phone validation function (Bulgarian format: 0XXXXXXXX or +359XXXXXXXXX)
+  const validatePhone = (phone: string): boolean => {
+    if (!phone) return true; // Phone is optional
+    // Remove spaces, dashes, and parentheses
+    const cleaned = phone.replace(/[\s\-()]/g, '');
+    // Check for Bulgarian format: starts with 0 and 9 digits, or +359 and 9 digits
+    const phoneRegex = /^(\+359|0)[0-9]{9}$/;
+    return phoneRegex.test(cleaned);
+  };
+
+  const handleEmailBlur = () => {
+    if (formData.email && !validateEmail(formData.email)) {
+      setEmailError('Моля, въведете валиден имейл адрес');
+    } else {
+      setEmailError(null);
+    }
+  };
+
+  const handlePhoneBlur = () => {
+    if (formData.phone && !validatePhone(formData.phone)) {
+      setPhoneError('Моля, въведете валиден телефонен номер (напр. 0895123456 или +359895123456)');
+    } else {
+      setPhoneError(null);
+    }
+  };
 
   useEffect(() => {
     if (courseFromUrl) {
@@ -40,12 +76,41 @@ const Contact: React.FC = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    // Clear errors when user starts typing
+    if (e.target.name === 'email' && emailError) {
+      setEmailError(null);
+    }
+    if (e.target.name === 'phone' && phoneError) {
+      setPhoneError(null);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+    setEmailError(null);
+    setPhoneError(null);
+    
+    // Validate email before submitting
+    if (!formData.email) {
+      setEmailError('Имейл адресът е задължителен');
+      setIsSubmitting(false);
+      return;
+    }
+    
+    if (!validateEmail(formData.email)) {
+      setEmailError('Моля, въведете валиден имейл адрес');
+      setIsSubmitting(false);
+      return;
+    }
+    
+    // Validate phone if provided
+    if (formData.phone && !validatePhone(formData.phone)) {
+      setPhoneError('Моля, въведете валиден телефонен номер (напр. 0895123456 или +359895123456)');
+      setIsSubmitting(false);
+      return;
+    }
     
     try {
       // Get EmailJS configuration from environment variables
@@ -66,22 +131,14 @@ const Contact: React.FC = () => {
         from_name: formData.name,
         from_email: formData.email,
         phone: formData.phone || 'Не е предоставен',
-        course: courseFromUrl ? formData.course : (formData.course || 'Не е избран'),
         message: formData.message || 'Няма допълнителна информация',
-        subject: courseFromUrl 
-          ? `Заявка за записване - ${formData.course}` 
-          : 'Ново запитване от контактна форма'
+        subject: 'Ново запитване от контактна форма'
       };
-
-      console.log('Sending email via EmailJS:', templateParams); // Debug log
       
-      // Send email using EmailJS
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
-      
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);      
+      // Handle success - check for success field or assume success if status is 200/201
       setSuccessMessage(
-        courseFromUrl
-          ? 'Благодарим ви! Заявката ви за записване е изпратена успешно. Ще се свържем с вас в рамките на 24 часа.'
-          : 'Благодарим ви! Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.'
+        'Благодарим ви! Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.'
       );
       setIsSubmitted(true);
       
@@ -93,14 +150,11 @@ const Contact: React.FC = () => {
           name: '',
           email: '',
           phone: '',
-          course: courseFromUrl || '',
           message: ''
         });
       }, 5000);
     } catch (err: any) {
-      // Handle EmailJS errors
-      console.error('EmailJS Error:', err); // Debug log
-      
+      // Handle API errors
       if (err.text) {
         setError(`Грешка при изпращане на имейл: ${err.text}`);
       } else if (err.message) {
@@ -139,7 +193,6 @@ const Contact: React.FC = () => {
       description: '9:00 - 18:00'
     }
   ];
-
 
   return (
     <section id="contact" className="py-20 bg-gray-50">
@@ -195,71 +248,81 @@ const Contact: React.FC = () => {
                     </div>
                   )}
                   
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Име *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                    placeholder="Вашето име"
-                  />
-                </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                        Име на родителя *
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                        placeholder="Вашето пълно име"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                        Имейл адрес *
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        onBlur={handleEmailBlur}
+                        required
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
+                          emailError ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="ваш@имейл.com"
+                      />
+                      {emailError && (
+                        <p className="mt-1 text-sm text-red-600">{emailError}</p>
+                      )}
+                    </div>
+                  </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                        Телефонен номер
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        onBlur={handlePhoneBlur}
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
+                          phoneError ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="0895 30 20 74"
+                      />
+                      {phoneError && (
+                        <p className="mt-1 text-sm text-red-600">{phoneError}</p>
+                      )}
+                    </div>
+                  </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Имейл адрес *
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                      Съобщение
                     </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
                       onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                      placeholder="your@email.com"
+                      rows={4}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
+                      placeholder="Разкажете ни за интересите на вашето дете и въпросите, които имате..."
                     />
                   </div>
-
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Телефонен номер
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                      placeholder="+359 888 123 456"
-                    />
-                  </div>
-                </div>
-
-                {courseFromUrl && (
-                  <div>
-                    <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-2">
-                      Избран курс
-                    </label>
-                    <input
-                      type="text"
-                      id="course"
-                      name="course"
-                      value={formData.course}
-                      readOnly
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 cursor-not-allowed"
-                    />
-                  </div>
-                )}
-
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                     Допълнителна информация

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, User, LogOut, ChevronDown, BookOpen, Briefcase, GraduationCap, BadgeCheck } from 'lucide-react';
+import { Menu, X, User, LogOut, ChevronDown, BookOpen, GraduationCap, BadgeCheck } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 import akavaLogo from '../assets/akava-logo-small.png';
 import { Link, useLocation } from 'react-router-dom';
@@ -70,7 +69,7 @@ const Header: React.FC = () => {
               <img
                 src={akavaLogo}
                 alt="Akava IT Academy Logo"
-                className="h-20 md:h-28 object-contain drop-shadow-md"
+                className="h-16 md:h-20 object-contain drop-shadow-md"
               />
             </Link>
           </motion.div>
@@ -157,9 +156,8 @@ const Header: React.FC = () => {
           </nav>
 
           {/* Language Switcher + User Menu / CTA Button */}
-          <div className="hidden md:flex items-center space-x-4">
-            <LanguageSwitcher />
-            {isAuthenticated ? (
+          {/* <div className="hidden md:flex items-center space-x-4">
+            {isAuthenticated && (
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1">
                   <User className="w-4 h-4 text-gray-600" />
@@ -177,16 +175,8 @@ const Header: React.FC = () => {
                   <span className="text-sm font-medium">{t('nav.logout')}</span>
                 </motion.button>
               </div>
-            ) : (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary"
-              >
-                {t('nav.getStarted')}
-              </motion.button>
             )}
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <button
@@ -228,10 +218,7 @@ const Header: React.FC = () => {
                   </Link>
                 </motion.div>
               ))}
-              <div className="flex items-center justify-between mt-2">
-                <LanguageSwitcher />
-              </div>
-              {isAuthenticated ? (
+              {isAuthenticated && (
                 <div className="pt-2 border-t border-gray-200">
                   <div className="flex items-center space-x-2 mb-4">
                     <User className="w-4 h-4 text-gray-600" />
@@ -247,10 +234,6 @@ const Header: React.FC = () => {
                     <span className="text-sm font-medium">{t('nav.logout')}</span>
                   </button>
                 </div>
-              ) : (
-                <button className="btn-primary w-full mt-2">
-                  {t('nav.getStarted')}
-                </button>
               )}
             </nav>
           </motion.div>

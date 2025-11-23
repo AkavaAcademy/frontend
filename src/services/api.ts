@@ -80,13 +80,13 @@ export const coursesAPI = {
 
 export const contactsAPI = {
   create: (contactData: {
-    name: string;
-    email: string;
+    to_email: string;
+    from_name: string;
+    from_email?: string;
     phone?: string;
-    child_name?: string;
-    child_age?: number;
-    message?: string;
     course?: string;
+    message?: string;
+    subject?: string;
   }) => api.post('/api/contacts', { contact: contactData }),
   
   getAll: () => api.get('/api/contacts'),

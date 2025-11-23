@@ -143,18 +143,23 @@ const Footer: React.FC = () => {
               viewport={{ once: true }}
               className="flex space-x-4 mt-6"
             >
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors duration-300"
-                  aria-label={social.label}
-                >
-                  {/* <social.icon className="w-5 h-5" /> */}
-                </motion.a>
-              ))}
+              {socialLinks.map((social, index) => {
+                const IconComponent = social.icon as React.ComponentType<{ className?: string }>;
+                // Render component to get its HTML
+                const iconHtml = React.createElement(IconComponent, { className: 'w-5 h-5' });
+                return (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors duration-300"
+                    aria-label={social.label}
+                  >
+                    {iconHtml}
+                  </motion.a>
+                );
+              })}
             </motion.div>
           </div>
 

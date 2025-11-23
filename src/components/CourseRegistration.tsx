@@ -11,7 +11,7 @@ import {
   Users,
   Calendar
 } from 'lucide-react';
-import { contactsAPI } from '../services/api';
+import emailjs from '@emailjs/browser';
 
 // Course data structure - in a real app, this would come from an API
 const allCourses = [
@@ -363,6 +363,43 @@ const CourseRegistration: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const serviceId = (process.env.REACT_APP_EMAILJS_SERVICE_ID || '').trim();
+  const templateId = (process.env.REACT_APP_EMAILJS_TEMPLATE_ID || '').trim();
+  const publicKey = (process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '').trim();
+
+  // Email validation function
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Phone validation function (Bulgarian format: 0XXXXXXXX or +359XXXXXXXXX)
+  const validatePhone = (phone: string): boolean => {
+    if (!phone) return true; // Phone is optional
+    // Remove spaces, dashes, and parentheses
+    const cleaned = phone.replace(/[\s\-()]/g, '');
+    // Check for Bulgarian format: starts with 0 and 9 digits, or +359 and 9 digits
+    const phoneRegex = /^(\+359|0)[0-9]{9}$/;
+    return phoneRegex.test(cleaned);
+  };
+
+  const handleEmailBlur = () => {
+    if (formData.email && !validateEmail(formData.email)) {
+      setEmailError('Моля, въведете валиден имейл адрес');
+    } else {
+      setEmailError(null);
+    }
+  };
+
+  const handlePhoneBlur = () => {
+    if (formData.phone && !validatePhone(formData.phone)) {
+      setPhoneError('Моля, въведете валиден телефонен номер (напр. 0895123456 или +359895123456)');
+    } else {
+      setPhoneError(null);
+    }
+  };
 
   useEffect(() => {
     if (slug) {
@@ -378,27 +415,81 @@ const CourseRegistration: React.FC = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    // Clear errors when user starts typing
+    if (e.target.name === 'email' && emailError) {
+      setEmailError(null);
+    }
+    if (e.target.name === 'phone' && phoneError) {
+      setPhoneError(null);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+    setEmailError(null);
+    setPhoneError(null);
+    
+    // Validate email before submitting
+    if (!formData.email) {
+      setEmailError('Имейл адресът е задължителен');
+      setIsSubmitting(false);
+      return;
+    }
+    
+    if (!validateEmail(formData.email)) {
+      setEmailError('Моля, въведете валиден имейл адрес');
+      setIsSubmitting(false);
+      return;
+    }
+    
+    // Validate phone if provided
+    if (formData.phone && !validatePhone(formData.phone)) {
+      setPhoneError('Моля, въведете валиден телефонен номер (напр. 0895123456 или +359895123456)');
+      setIsSubmitting(false);
+      return;
+    }
     
     try {
-      const contactData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone || undefined,
-        message: formData.message || undefined,
-        course: course?.title || undefined
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('EmailJS не е конфигуриран. Моля, проверете environment variables.');
+      }
+
+      const templateParams = {
+        to_email: 'info@akavaacademy.com',
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone || 'Не е предоставен',
+        course: course?.title || 'Не е избран',
+        message: formData.message || 'Няма допълнителна информация',
+        subject: course?.title 
+          ? `Заявка за записване - ${course?.title}` 
+          : 'Ново запитване от контактна форма'
       };
 
-      await contactsAPI.create(contactData);
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);      
+
       setIsSubmitted(true);
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+      }, 5000);
     } catch (err: any) {
-      console.error('Registration error:', err);
-      setError(err.response?.data?.message || 'Възникна грешка при изпращане на заявката. Моля, опитайте отново.');
+      if (err.text) {
+        setError(`Грешка при изпращане на имейл: ${err.text}`);
+      } else if (err.message) {
+        setError(`Грешка: ${err.message}`);
+      } else {
+        setError('Неуспешно изпращане на формата. Моля, опитайте отново.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -639,10 +730,16 @@ const CourseRegistration: React.FC = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
+                      onBlur={handleEmailBlur}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
+                        emailError ? 'border-red-500' : 'border-gray-300'
+                      }`}
                       placeholder="your@email.com"
                     />
+                    {emailError && (
+                      <p className="mt-1 text-sm text-red-600">{emailError}</p>
+                    )}
                   </div>
 
                   <div>
@@ -655,9 +752,15 @@ const CourseRegistration: React.FC = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                      onBlur={handlePhoneBlur}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
+                        phoneError ? 'border-red-500' : 'border-gray-300'
+                      }`}
                       placeholder="+359 888 123 456"
                     />
+                    {phoneError && (
+                      <p className="mt-1 text-sm text-red-600">{phoneError}</p>
+                    )}
                   </div>
                 </div>
 
