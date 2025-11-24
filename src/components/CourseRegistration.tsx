@@ -445,6 +445,12 @@ const CourseRegistration: React.FC = () => {
     }
     
     // Validate phone if provided
+    if (!formData.phone) {
+      setEmailError('Телефонен номер е задължителен');
+      setIsSubmitting(false);
+      return;
+    }
+    
     if (formData.phone && !validatePhone(formData.phone)) {
       setPhoneError('Моля, въведете валиден телефонен номер (напр. 0895123456 или +359895123456)');
       setIsSubmitting(false);
@@ -744,12 +750,13 @@ const CourseRegistration: React.FC = () => {
 
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Телефонен номер
+                      Телефонен номер *
                     </label>
                     <input
                       type="tel"
                       id="phone"
                       name="phone"
+                      required
                       value={formData.phone}
                       onChange={handleInputChange}
                       onBlur={handlePhoneBlur}

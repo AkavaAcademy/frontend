@@ -104,6 +104,13 @@ const Contact: React.FC = () => {
       setIsSubmitting(false);
       return;
     }
+
+      // Validate phone if provided
+      if (!formData.phone) {
+        setPhoneError('Телефонен номер е задължителен');
+        setIsSubmitting(false);
+        return;
+      }
     
     // Validate phone if provided
     if (formData.phone && !validatePhone(formData.phone)) {
@@ -118,9 +125,6 @@ const Contact: React.FC = () => {
       // const templateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || '';
       // const publicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '';
 
-      const serviceId = 'service_uvsy7f8';
-      const templateId = 'template_97a7iuq';
-      const publicKey = 'zrhS3MxvxWIAlTO25';
       if (!serviceId || !templateId || !publicKey) {
         throw new Error('EmailJS не е конфигуриран. Моля, проверете environment variables.');
       }
@@ -251,7 +255,7 @@ const Contact: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                        Име на родителя *
+                        Име *
                       </label>
                       <input
                         type="text"
@@ -261,7 +265,7 @@ const Contact: React.FC = () => {
                         onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="Вашето пълно име"
+                        placeholder="Вашето име"
                       />
                     </div>
                     <div>
@@ -279,7 +283,7 @@ const Contact: React.FC = () => {
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
                           emailError ? 'border-red-500' : 'border-gray-300'
                         }`}
-                        placeholder="ваш@имейл.com"
+                        placeholder="Вашият имейл адрес"
                       />
                       {emailError && (
                         <p className="mt-1 text-sm text-red-600">{emailError}</p>
@@ -290,12 +294,13 @@ const Contact: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                        Телефонен номер
+                        Телефонен номер *
                       </label>
                       <input
                         type="tel"
                         id="phone"
                         name="phone"
+                        required
                         value={formData.phone}
                         onChange={handleInputChange}
                         onBlur={handlePhoneBlur}
@@ -320,24 +325,9 @@ const Contact: React.FC = () => {
                       onChange={handleInputChange}
                       rows={4}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
-                      placeholder="Разкажете ни за интересите на вашето дете и въпросите, които имате..."
+                      placeholder="Имате ли въпроси или специални изисквания?"
                     />
                   </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Допълнителна информация
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
-                    placeholder="Имате ли въпроси или специални изисквания?"
-                  />
-                </div>
-
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}

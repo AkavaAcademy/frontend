@@ -212,7 +212,7 @@ const Footer: React.FC = () => {
                     {t.footer.support.terms}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/student-portal" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                     {t.footer.support.studentPortal}
                   </Link>
@@ -221,11 +221,11 @@ const Footer: React.FC = () => {
                   <Link to="/parent-portal" className="text-gray-300 hover:text-primary-400 transition-colors duration-200">
                     {t.footer.support.parentDashboard}
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
 
-            <div>
+            {/* <div>
               <h3 className="text-lg font-semibold mb-4">{t.footer.resourcesTitle}</h3>
               <ul className="space-y-2">
                 <li>
@@ -254,13 +254,13 @@ const Footer: React.FC = () => {
                   </Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </div>
 
       {/* Newsletter Section */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
@@ -291,7 +291,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-800 py-6">
@@ -299,14 +299,6 @@ const Footer: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
               © {currentYear} {t.footer.copyright}
-            </div>
-            <div className="flex space-x-6 text-sm">
-              <Link to="/privacy-policy" className="text-gray-400 hover:text-primary-400 transition-colors">
-                Политика за поверителност
-              </Link>
-              <Link to="/terms-of-service" className="text-gray-400 hover:text-primary-400 transition-colors">
-                Общи условия
-              </Link>
             </div>
           </div>
         </div>
