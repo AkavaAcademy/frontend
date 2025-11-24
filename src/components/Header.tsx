@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, User, LogOut, ChevronDown, BookOpen, Briefcase, GraduationCap, BadgeCheck } from 'lucide-react';
+import { Menu, X, User, LogOut, ChevronDown, BookOpen, GraduationCap, BadgeCheck } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 import akavaLogo from '../assets/akava-logo-small.png';
 import { Link, useLocation } from 'react-router-dom';
@@ -10,6 +9,7 @@ import { Link, useLocation } from 'react-router-dom';
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredNavItem, setHoveredNavItem] = useState<string | null>(null);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
   const { user, isAuthenticated, logout } = useAuth();
   const { t } = useTranslation();
   const location = useLocation();
@@ -70,7 +70,7 @@ const Header: React.FC = () => {
               <img
                 src={akavaLogo}
                 alt="Akava IT Academy Logo"
-                className="h-20 md:h-28 object-contain drop-shadow-md"
+                className="h-16 md:h-20 object-contain drop-shadow-md"
               />
             </Link>
           </motion.div>
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50"
+                        className="absolute top-full mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50 right-1"
                         onMouseEnter={() => setHoveredNavItem(item.name)}
                         onMouseLeave={() => setHoveredNavItem(null)}
                       >
@@ -157,9 +157,8 @@ const Header: React.FC = () => {
           </nav>
 
           {/* Language Switcher + User Menu / CTA Button */}
-          <div className="hidden md:flex items-center space-x-4">
-            <LanguageSwitcher />
-            {isAuthenticated ? (
+          {/* <div className="hidden md:flex items-center space-x-4">
+            {isAuthenticated && (
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1">
                   <User className="w-4 h-4 text-gray-600" />
@@ -177,16 +176,8 @@ const Header: React.FC = () => {
                   <span className="text-sm font-medium">{t('nav.logout')}</span>
                 </motion.button>
               </div>
-            ) : (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary"
-              >
-                {t('nav.getStarted')}
-              </motion.button>
             )}
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <button
@@ -209,29 +200,86 @@ const Header: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="md:hidden py-2 border-t border-gray-200"
           >
-            <nav className="flex flex-col space-y-2">
+            <nav className="flex flex-col space-y-2 max-h-[calc(100vh-120px)] overflow-y-auto">
               {navItems.map((item) => (
                 <motion.div
                   key={item.name}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Link
-                    to={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
-                      location.pathname === item.href
-                        ? 'bg-primary-50 text-primary-600 border-l-4 border-primary-600'
-                        : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
+                  {item.hasDropdown ? (
+                    <div>
+                      <button
+                        onClick={() => setMobileDropdownOpen(mobileDropdownOpen === item.name ? null : item.name)}
+                        className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                          location.pathname === item.href
+                            ? 'bg-primary-50 text-primary-600 border-l-4 border-primary-600'
+                            : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        <span>{item.name}</span>
+                        <ChevronDown 
+                          className={`w-4 h-4 transition-transform duration-200 ${
+                            mobileDropdownOpen === item.name ? 'rotate-180' : ''
+                          }`} 
+                        />
+                      </button>
+                      <AnimatePresence>
+                        {mobileDropdownOpen === item.name && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-4 py-2 space-y-1 bg-gray-50">
+                              {courseCategories.map((category) => {
+                                const IconComponent = category.icon;
+                                return (
+                                  <Link
+                                    key={category.id}
+                                    to={category.href}
+                                    onClick={() => {
+                                      setIsMobileMenuOpen(false);
+                                      setMobileDropdownOpen(null);
+                                    }}
+                                    className="flex items-start space-x-3 p-3 rounded-lg hover:bg-primary-50 transition-colors group"
+                                  >
+                                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                      <IconComponent className="w-4 h-4 text-white" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <p className="font-semibold text-sm text-gray-900 group-hover:text-primary-600 transition-colors">
+                                        {category.name}
+                                      </p>
+                                      <p className="text-xs text-gray-500 mt-0.5">
+                                        {category.description}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <Link
+                      to={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                        location.pathname === item.href
+                          ? 'bg-primary-50 text-primary-600 border-l-4 border-primary-600'
+                          : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
-              <div className="flex items-center justify-between mt-2">
-                <LanguageSwitcher />
-              </div>
-              {isAuthenticated ? (
+              {isAuthenticated && (
                 <div className="pt-2 border-t border-gray-200">
                   <div className="flex items-center space-x-2 mb-4">
                     <User className="w-4 h-4 text-gray-600" />
@@ -247,10 +295,6 @@ const Header: React.FC = () => {
                     <span className="text-sm font-medium">{t('nav.logout')}</span>
                   </button>
                 </div>
-              ) : (
-                <button className="btn-primary w-full mt-2">
-                  {t('nav.getStarted')}
-                </button>
               )}
             </nav>
           </motion.div>

@@ -763,6 +763,9 @@ const Courses: React.FC = () => {
 
                           return (
                             <>
+                              <h4 className="text-xl font-semibold text-gray-900 mb-6">
+                                Достъпни курсове ({coursesToShow.length})
+                              </h4>
                               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {coursesToShow.map((course, courseIndex) => (
                                   <motion.div
@@ -852,7 +855,7 @@ const Courses: React.FC = () => {
                                     <motion.button
                                       whileHover={{ scale: 1.02 }}
                                       whileTap={{ scale: 0.98 }}
-                                      onClick={() => navigate(`/contact?course=${encodeURIComponent(course.title)}`)}
+                                      onClick={() => navigate(`/course/${course.slug}`)}
                                       className={`w-full py-2 px-4 rounded-lg font-medium text-white bg-gradient-to-r ${category.color} hover:shadow-md transition-all duration-300`}
                                     >
                                       Запиши се
