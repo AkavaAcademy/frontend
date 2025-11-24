@@ -114,7 +114,7 @@ const Header: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50 right-0 md:right-auto"
+                        className="absolute top-full mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50 right-1"
                         onMouseEnter={() => setHoveredNavItem(item.name)}
                         onMouseLeave={() => setHoveredNavItem(null)}
                       >
