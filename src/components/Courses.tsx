@@ -129,22 +129,22 @@ const Courses: React.FC = () => {
           description: 'Специализирани курсове, адаптирани към възрастта и интересите на младите ученици. Идеални за развитие на дигитални умения, подготовка за бъдеща кариера и възможности за стажове в IT компании.',
           icon: Users,
           courses: [
-        {
-          id: 2,
-          title: 'Scratch Creators (10–12 г.)',
-          slug: 'scratch-creators',
-          description: 'Създаване на анимации, игри и интерактивни истории чрез визуално програмиране.',
-          duration: '8 седмици / 8 занятия',
-          price: 320,
-          difficulty: 'beginner',
-          features: [
-            'Създаване на анимации',
-            'Разработване на игри',
-            'Интерактивни истории',
-            'Основи на логическо мислене',
-            'Творчески проекти'
-          ],
-          formatted_price: '320 лв.',
+            {
+              id: 2,
+              title: 'Scratch Creators (10–12 г.)',
+              slug: 'scratch-creators',
+              description: 'Създаване на анимации, игри и интерактивни истории чрез визуално програмиране.',
+              duration: '8 седмици / 8 занятия',
+              price: 320,
+              difficulty: 'beginner',
+              features: [
+                'Създаване на анимации',
+                'Разработване на игри',
+                'Интерактивни истории',
+                'Основи на логическо мислене',
+                'Творчески проекти'
+              ],
+              formatted_price: '320 лв.',
               formatted_price_eur: '164 €',
               startDate: '29 ноември 2025',
               status: 'Записвания отворени',
@@ -170,23 +170,23 @@ const Courses: React.FC = () => {
               startDate: '10 януари 2026',
               status: 'Предстоящ',
               format: 'Присъствен'
-        },
-        {
-          id: 3,
-          title: 'Python Start Lab (12–14 г.)',
-          slug: 'python-start-lab',
-          description: 'Първи стъпки в програмирането с Python чрез забавни проекти и практически приложения.',
-          duration: '8 седмици / 8 занятия',
-          price: 380,
-          difficulty: 'beginner',
-          features: [
-            'Програмиране на мини игри',
-            'Създаване на чатботове',
-            'Базови алгоритми',
-            'Python синтаксис',
-            'Практически проекти'
-          ],
-          formatted_price: '380 лв.',
+            },
+            {
+              id: 3,
+              title: 'Python Start Lab (12–14 г.)',
+              slug: 'python-start-lab',
+              description: 'Първи стъпки в програмирането с Python чрез забавни проекти и практически приложения.',
+              duration: '8 седмици / 8 занятия',
+              price: 380,
+              difficulty: 'beginner',
+              features: [
+                'Програмиране на мини игри',
+                'Създаване на чатботове',
+                'Базови алгоритми',
+                'Python синтаксис',
+                'Практически проекти'
+              ],
+              formatted_price: '380 лв.',
               formatted_price_eur: '195 €',
               startDate: '20 януари 2026',
               status: 'Предстоящ',
@@ -199,8 +199,8 @@ const Courses: React.FC = () => {
               description: 'Разбиране на изкуствения интелект, неговите приложения и възможности.',
               duration: '10 седмици / 10 занятия',
               price: 480,
-          difficulty: 'advanced',
-          features: [
+              difficulty: 'advanced',
+              features: [
                 'Как работи AI',
                 'ChatGPT и текстови модели',
                 'Машинно обучение',
@@ -212,23 +212,23 @@ const Courses: React.FC = () => {
               startDate: '10 февруари 2026',
               status: 'Предстоящ',
               format: 'Присъствен'
-        },
-        {
-          id: 5,
-          title: 'UX Discovery (16–18 г.)',
-          slug: 'ux-discovery',
-          description: 'Разглеждане на основите на потребителското изживяване и дизайн на интерфейси.',
-          duration: '8 седмици / 8 занятия',
-          price: 360,
-          difficulty: 'advanced',
-          features: [
-            'Основи на UX/UI',
-            'Wireframes',
-            'Потребителско изживяване',
-            'Прототипиране',
-            'Тестване на дизайн'
-          ],
-          formatted_price: '360 лв.',
+            },
+            {
+              id: 5,
+              title: 'UX Discovery (16–18 г.)',
+              slug: 'ux-discovery',
+              description: 'Разглеждане на основите на потребителското изживяване и дизайн на интерфейси.',
+              duration: '8 седмици / 8 занятия',
+              price: 360,
+              difficulty: 'advanced',
+              features: [
+                'Основи на UX/UI',
+                'Wireframes',
+                'Потребителско изживяване',
+                'Прототипиране',
+                'Тестване на дизайн'
+              ],
+              formatted_price: '360 лв.',
               formatted_price_eur: '185 €',
               startDate: '15 март 2026',
               status: 'Предстоящ',
@@ -239,40 +239,40 @@ const Courses: React.FC = () => {
               title: 'Digital Design Studio (15–18 г.)',
               slug: 'digital-design-studio',
               description: 'Освояване на дигитален дизайн с модерни инструменти за създаване на визуални решения.',
-          duration: '8 седмици / 8 занятия',
-          price: 340,
-          difficulty: 'advanced',
-          features: [
+              duration: '8 седмици / 8 занятия',
+              price: 340,
+              difficulty: 'advanced',
+              features: [
                 'Canva, Adobe Express, Figma',
                 'Графика и композиция',
                 'Лого дизайн',
                 'Визуален сторителинг',
                 'Портфолио проекти'
-          ],
-          formatted_price: '340 лв.',
+              ],
+              formatted_price: '340 лв.',
               formatted_price_eur: '174 €',
               startDate: '20 март 2026',
               status: 'Предстоящ',
               format: 'Присъствен'
-        },
-        {
-          id: 8,
-          title: 'Career & Confidence Lab (16–18 г.)',
-          slug: 'career-confidence-lab',
-          description: 'Подготовка за кариера и развитие на лични умения за успех в професионалния свят.',
-          duration: '5 седмици / 5 занятия',
-          price: 280,
-          difficulty: 'advanced',
-          features: [
-            'Подготовка за интервю',
-            'Soft skills развитие',
-            'Комуникация',
-            'CV създаване',
-            'Интервю симулации',
-            'Критическо мислене',
-            'Лидерство'
-          ],
-          formatted_price: '280 лв.',
+            },
+            {
+              id: 8,
+              title: 'Career & Confidence Lab (16–18 г.)',
+              slug: 'career-confidence-lab',
+              description: 'Подготовка за кариера и развитие на лични умения за успех в професионалния свят.',
+              duration: '5 седмици / 5 занятия',
+              price: 280,
+              difficulty: 'advanced',
+              features: [
+                'Подготовка за интервю',
+                'Soft skills развитие',
+                'Комуникация',
+                'CV създаване',
+                'Интервю симулации',
+                'Критическо мислене',
+                'Лидерство'
+              ],
+              formatted_price: '280 лв.',
               formatted_price_eur: '144 €',
               startDate: '1 април 2026',
               status: 'Предстоящ',
@@ -541,7 +541,6 @@ const Courses: React.FC = () => {
     setExpandedCategories(newExpanded);
   };
 
-
   return (
     <section id="courses" className="pt-32 md:pt-40 pb-20 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -594,11 +593,11 @@ const Courses: React.FC = () => {
                         isSelected ? 'bg-white/20' : ''
                       }`}>
                         <IconComponent className={`w-8 h-8 ${isSelected ? 'text-white' : 'text-white'}`} />
-                  </div>
+                      </div>
                       <div className="flex-1">
                         <h3 className={`text-2xl font-bold mb-3 ${isSelected ? 'text-white' : category.textColor}`}>
                           {category.title}
-                  </h3>
+                        </h3>
                         <p className={`text-base leading-relaxed ${isSelected ? 'text-white/90' : 'text-gray-700'}`}>
                           {isExpanded ? category.fullDescription : category.description}
                         </p>
@@ -818,8 +817,8 @@ const Courses: React.FC = () => {
                                             course.status === 'Записвания отворени' 
                                               ? 'bg-green-100 text-green-700' 
                                               : course.status === 'Предстоящ'
-                                              ? 'bg-blue-100 text-blue-700'
-                                              : 'bg-gray-100 text-gray-700'
+                                                ? 'bg-blue-100 text-blue-700'
+                                                : 'bg-gray-100 text-gray-700'
                                           }`}>
                                             {course.status}
                                           </span>
@@ -924,8 +923,8 @@ const Courses: React.FC = () => {
                                       course.status === 'Записвания отворени' 
                                         ? 'bg-green-100 text-green-700' 
                                         : course.status === 'Предстоящ'
-                                        ? 'bg-blue-100 text-blue-700'
-                                        : 'bg-gray-100 text-gray-700'
+                                          ? 'bg-blue-100 text-blue-700'
+                                          : 'bg-gray-100 text-gray-700'
                                     }`}>
                                       {course.status}
                                     </span>
@@ -976,7 +975,7 @@ const Courses: React.FC = () => {
               </motion.div>
             );
           })}
-          </div>
+        </div>
       </div>
     </section>
   );

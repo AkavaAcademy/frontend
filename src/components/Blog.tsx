@@ -62,17 +62,17 @@ const BlogComponent: React.FC = () => {
 
   const filteredArticles = Array.isArray(allArticles)
     ? (selectedCategory
-        ? allArticles.filter(article => article.categorySlug === selectedCategory)
-        : allArticles)
+      ? allArticles.filter(article => article.categorySlug === selectedCategory)
+      : allArticles)
     : [];
 
   const recentArticles = Array.isArray(allArticles)
     ? [...allArticles]
-        .sort((a, b) => {
-          // Simple date sorting - assumes date format like "15 януари 2024"
-          return b.id - a.id; // Fallback to ID sorting if dates are not parseable
-        })
-        .slice(0, 4)
+      .sort((a, b) => {
+        // Simple date sorting - assumes date format like "15 януари 2024"
+        return b.id - a.id; // Fallback to ID sorting if dates are not parseable
+      })
+      .slice(0, 4)
     : [];
 
   return (
@@ -237,44 +237,44 @@ const BlogComponent: React.FC = () => {
                       viewport={{ once: true }}
                       className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer h-full"
                     >
-                    <div className="relative h-48 overflow-hidden bg-gray-200">
-                      <img
-                        src={article.image}
-                        alt={article.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=500&fit=crop';
-                        }}
-                        loading="lazy"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className={`bg-gradient-to-r ${category?.color || 'from-gray-500 to-gray-600'} text-white px-3 py-1 rounded-full text-sm font-medium`}>
-                          {article.category}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors line-clamp-2 min-h-[3.5rem]">
-                        {article.title}
-                      </h3>
-                      <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
-                        {article.excerpt}
-                      </p>
-                      <div className="flex items-center justify-between text-sm text-gray-500">
-                        <div className="flex items-center space-x-4 flex-wrap gap-2">
-                          <div className="flex items-center">
-                            <CalendarIcon className="w-4 h-4 mr-1 flex-shrink-0" />
-                            <span className="whitespace-nowrap">{article.date}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1 flex-shrink-0" />
-                            <span className="whitespace-nowrap">{article.readTime}</span>
-                          </div>
+                      <div className="relative h-48 overflow-hidden bg-gray-200">
+                        <img
+                          src={article.image}
+                          alt={article.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=500&fit=crop';
+                          }}
+                          loading="lazy"
+                        />
+                        <div className="absolute top-4 left-4">
+                          <span className={`bg-gradient-to-r ${category?.color || 'from-gray-500 to-gray-600'} text-white px-3 py-1 rounded-full text-sm font-medium`}>
+                            {article.category}
+                          </span>
                         </div>
-                        <ArrowRight className="w-5 h-5 text-primary-600 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                       </div>
-                    </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors line-clamp-2 min-h-[3.5rem]">
+                          {article.title}
+                        </h3>
+                        <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                          {article.excerpt}
+                        </p>
+                        <div className="flex items-center justify-between text-sm text-gray-500">
+                          <div className="flex items-center space-x-4 flex-wrap gap-2">
+                            <div className="flex items-center">
+                              <CalendarIcon className="w-4 h-4 mr-1 flex-shrink-0" />
+                              <span className="whitespace-nowrap">{article.date}</span>
+                            </div>
+                            <div className="flex items-center">
+                              <Clock className="w-4 h-4 mr-1 flex-shrink-0" />
+                              <span className="whitespace-nowrap">{article.readTime}</span>
+                            </div>
+                          </div>
+                          <ArrowRight className="w-5 h-5 text-primary-600 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                        </div>
+                      </div>
                     </motion.article>
                   </Link>
                 );

@@ -524,8 +524,8 @@ const LearningPaths: React.FC = () => {
                           step.isCompleted 
                             ? 'bg-green-500' 
                             : step.isLocked 
-                            ? 'bg-gray-400'
-                            : selectedPathData.gradient
+                              ? 'bg-gray-400'
+                              : selectedPathData.gradient
                         }`}>
                           {step.isCompleted ? (
                             <CheckCircle className="w-6 h-6" />

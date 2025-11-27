@@ -457,10 +457,10 @@ const CodingChallenges: React.FC = () => {
                       entry.rank === 1
                         ? 'bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-400'
                         : entry.rank === 2
-                        ? 'bg-gradient-to-r from-gray-100 to-gray-200 border-2 border-gray-400'
-                        : entry.rank === 3
-                        ? 'bg-gradient-to-r from-orange-100 to-red-100 border-2 border-orange-400'
-                        : 'bg-gray-50 border-2 border-gray-200'
+                          ? 'bg-gradient-to-r from-gray-100 to-gray-200 border-2 border-gray-400'
+                          : entry.rank === 3
+                            ? 'bg-gradient-to-r from-orange-100 to-red-100 border-2 border-orange-400'
+                            : 'bg-gray-50 border-2 border-gray-200'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">

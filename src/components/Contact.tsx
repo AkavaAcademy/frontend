@@ -70,7 +70,6 @@ const Contact: React.FC = () => {
     }
   }, [courseFromUrl]);
 
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
@@ -105,12 +104,12 @@ const Contact: React.FC = () => {
       return;
     }
 
-      // Validate phone if provided
-      if (!formData.phone) {
-        setPhoneError('Телефонен номер е задължителен');
-        setIsSubmitting(false);
-        return;
-      }
+    // Validate phone if provided
+    if (!formData.phone) {
+      setPhoneError('Телефонен номер е задължителен');
+      setIsSubmitting(false);
+      return;
+    }
     
     // Validate phone if provided
     if (formData.phone && !validatePhone(formData.phone)) {

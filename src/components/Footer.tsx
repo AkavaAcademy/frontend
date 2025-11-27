@@ -143,7 +143,7 @@ const Footer: React.FC = () => {
               viewport={{ once: true }}
               className="flex space-x-4 mt-6"
             >
-              {socialLinks.map((social, index) => {
+              {socialLinks.map((social, _index) => {
                 const IconComponent = social.icon as React.ComponentType<{ className?: string }>;
                 // Render component to get its HTML
                 const iconHtml = React.createElement(IconComponent, { className: 'w-5 h-5' });
