@@ -104,5 +104,13 @@
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "cookiePolicy": "Cookie Policy"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "Oops! The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go to Home",
+    "goBack": "Go Back",
+    "browseCourses": "Browse Courses",
+    "popularLinks": "Popular Links:"
   }
 } 
