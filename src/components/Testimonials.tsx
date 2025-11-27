@@ -115,34 +115,34 @@ const News: React.FC = () => {
                 className="block"
               >
                 <div className="card p-8 lg:p-12 hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-                {/* News Icon */}
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  {React.createElement(newsItems[currentIndex].icon, { className: "w-8 h-8 text-white" })}
-                </div>
+                  {/* News Icon */}
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    {React.createElement(newsItems[currentIndex].icon, { className: "w-8 h-8 text-white" })}
+                  </div>
 
-                {/* Type Badge */}
-                <div className="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
-                  {newsItems[currentIndex].type}
-                </div>
+                  {/* Type Badge */}
+                  <div className="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                    {newsItems[currentIndex].type}
+                  </div>
 
-                {/* Title */}
-                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  {newsItems[currentIndex].title}
-                </h3>
+                  {/* Title */}
+                  <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+                    {newsItems[currentIndex].title}
+                  </h3>
 
-                {/* Content */}
-                <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-                  {newsItems[currentIndex].content}
-                </p>
+                  {/* Content */}
+                  <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                    {newsItems[currentIndex].content}
+                  </p>
 
-                {/* Category and Meta Info */}
-                <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                    <span>{newsItems[currentIndex].category}</span>
+                  {/* Category and Meta Info */}
+                  <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                      <span>{newsItems[currentIndex].category}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
               </Link>
             </motion.div>
           </AnimatePresence>

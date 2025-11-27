@@ -8,7 +8,6 @@ import {
   CheckCircle,
   Loader,
   BookOpen,
-  Users,
   Calendar
 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
