@@ -24,6 +24,7 @@ import CodingChallenges from './components/CodingChallenges';
 import ProjectIdeas from './components/ProjectIdeas';
 import LearningPaths from './components/LearningPaths';
 import ScrollToTop from './components/ScrollToTop';
+import NotFound from './components/NotFound';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
             <Route path="/coding-challenges" element={<CodingChallenges />} />
             <Route path="/project-ideas" element={<ProjectIdeas />} />
             <Route path="/learning-paths" element={<LearningPaths />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
         </div>
