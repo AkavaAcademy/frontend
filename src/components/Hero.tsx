@@ -4,7 +4,10 @@ import { ArrowRight, BookOpen, BadgeCheck, GraduationCap } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
-    <section id="home" className="hero relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-32">
+    <section
+      id="home"
+      className="hero relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden pt-20 md:pt-28 pb-10"
+    >
       {/* Static Background */}
       <div className="absolute inset-0 opacity-90">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20" />
@@ -16,7 +19,7 @@ const Hero: React.FC = () => {
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Centered Hero Content */}
-        <div className="flex flex-col items-center justify-center min-h-screen text-center">
+        <div className="flex flex-col items-center justify-center text-center">
           {/* Main Title */}
           <motion.div 
             className="mb-8 relative z-20"
@@ -46,7 +49,7 @@ const Hero: React.FC = () => {
 
           {/* Subheading - Glass Panels Layout */}
           <motion.div 
-            className="mb-12 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4"
+            className="mb-4 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -125,7 +128,7 @@ const Hero: React.FC = () => {
           >
             <motion.a
               href="/courses"
-              className="flex items-center justify-center px-6 py-3 text-lg font-bold rounded-xl bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300 shadow-2xl hover:shadow-blue-500/60 relative overflow-hidden"
+              className="flex items-center justify-center px-6 py-3 text-lg font-bold rounded-xl bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300 shadow-2xl hover:shadow-blue-500/60 relative overflow-hidden mb-4"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -135,12 +138,6 @@ const Hero: React.FC = () => {
               </span>
             </motion.a>
           </motion.div>
-        </div>
-      </div>
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="w-6 h-10 border-2 border-white/80 rounded-full flex justify-center bg-white/10">
-          <div className="w-1 h-3 bg-white rounded-full mt-2" />
         </div>
       </div>
     </section>
