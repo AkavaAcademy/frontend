@@ -5,6 +5,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
   }
   
   body {
@@ -13,6 +15,9 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
   }
 }
 
@@ -40,6 +45,8 @@ section.hero {
   background-size: cover;
   background-position: center center;
   position: relative;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 section.hero::before {
@@ -61,14 +68,19 @@ section.hero::before {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    height: 100vh;
-    max-height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
   }
   
-  /* Prevent body scroll on mobile when hero is visible */
-  body {
+  /* Ensure no horizontal overflow on mobile for media elements */
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Prevent horizontal scroll from any container */
+  .App {
     overflow-x: hidden;
+    width: 100%;
   }
 }
 
