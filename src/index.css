@@ -36,7 +36,6 @@
 
 section.hero {
   background-image: url('../src/assets/akava-header.jpg');
-  background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -55,9 +54,22 @@ section.hero::before {
   z-index: 1;
 }
 
-@media (min-width: 1024px) {
+/* Mobile-specific styles for better background image handling */
+@media (max-width: 768px) {
   section.hero {
+    background-attachment: scroll;
     background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+}
+
+/* Tablet and desktop - use fixed attachment for parallax effect */
+@media (min-width: 769px) {
+  section.hero {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
   }
 }
 
