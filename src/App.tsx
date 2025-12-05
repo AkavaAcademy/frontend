@@ -32,7 +32,7 @@ function App() {
     <AuthProvider>
       <Router>
         <ScrollToTop />
-        <div className="App min-h-screen bg-gray-50">
+        <div className="App min-h-screen bg-gray-50 overflow-x-hidden w-full">
           <Header />
           <Routes>
             <Route path="/" element={

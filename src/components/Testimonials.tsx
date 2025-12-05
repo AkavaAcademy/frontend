@@ -100,7 +100,7 @@ const News: React.FC = () => {
         </motion.div>
 
         {/* News Carousel */}
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative max-w-4xl mx-auto px-12 sm:px-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -114,7 +114,7 @@ const News: React.FC = () => {
                 to={`/blog?category=${newsItems[currentIndex].categorySlug}`}
                 className="block"
               >
-                <div className="card p-8 lg:p-12 hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                <div className="card p-6 sm:p-8 lg:p-12 hover:shadow-xl transition-shadow duration-300 cursor-pointer">
                   {/* News Icon */}
                   <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
                     {React.createElement(newsItems[currentIndex].icon, { className: "w-8 h-8 text-white" })}
@@ -126,12 +126,12 @@ const News: React.FC = () => {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
                     {newsItems[currentIndex].title}
                   </h3>
 
                   {/* Content */}
-                  <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                  <p className="text-base sm:text-lg text-gray-700 mb-8 leading-relaxed">
                     {newsItems[currentIndex].content}
                   </p>
 
@@ -150,16 +150,18 @@ const News: React.FC = () => {
           {/* Navigation Buttons */}
           <button
             onClick={prevNews}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200"
+            className="absolute left-0 md:left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 z-10"
+            aria-label="Previous news"
           >
-            <ChevronLeft className="w-6 h-6 text-gray-600" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
           </button>
           
           <button
             onClick={nextNews}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200"
+            className="absolute right-0 md:right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 z-10"
+            aria-label="Next news"
           >
-            <ChevronRight className="w-6 h-6 text-gray-600" />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
           </button>
         </div>
 
