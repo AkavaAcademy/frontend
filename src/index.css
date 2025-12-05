@@ -61,6 +61,14 @@ section.hero::before {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* Prevent body scroll on mobile when hero is visible */
+  body {
+    overflow-x: hidden;
   }
 }
 

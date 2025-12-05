@@ -6,7 +6,7 @@ const Hero: React.FC = () => {
   return (
     <section
       id="home"
-      className="hero relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden pt-20 md:pt-28 pb-10"
+      className="hero relative h-screen max-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-28 pb-4 md:pb-10"
     >
       {/* Static Background */}
       <div className="absolute inset-0 opacity-90">
@@ -22,14 +22,14 @@ const Hero: React.FC = () => {
         <div className="flex flex-col items-center justify-center text-center">
           {/* Main Title */}
           <motion.div 
-            className="mb-8 relative z-20"
+            className="mb-4 md:mb-8 relative z-20"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h1 className="mb-6 leading-tight">
+            <h1 className="mb-3 md:mb-6 leading-tight">
               <motion.span 
-                className="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 relative z-20 text-white"
+                className="block text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black mb-2 md:mb-4 relative z-20 text-white"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -37,7 +37,7 @@ const Hero: React.FC = () => {
                 АКАВА АКАДЕМИ
               </motion.span>
               <motion.span 
-                className="block text-white text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold relative z-20"
+                className="block text-white text-lg sm:text-3xl lg:text-4xl xl:text-5xl font-bold relative z-20"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
@@ -49,70 +49,70 @@ const Hero: React.FC = () => {
 
           {/* Subheading - Glass Panels Layout */}
           <motion.div 
-            className="mb-4 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4"
+            className="mb-2 md:mb-4 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             <motion.div 
-              className="group text-base sm:text-lg text-white font-medium px-6 py-5 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/30 shadow-2xl hover:bg-white/15 transition-all duration-300 flex flex-col relative"
+              className="group text-base sm:text-lg text-white font-medium px-4 md:px-6 py-3 md:py-5 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/30 shadow-2xl hover:bg-white/15 transition-all duration-300 flex flex-col relative"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               whileHover={{ y: -5 }}
             >
               <div className="absolute top-0 left-0 right-0 h-px bg-white/20"></div>
-              <div className="flex justify-center mb-3">
-                <BookOpen className="w-8 h-8 transition-all duration-300 group-hover:scale-125 group-hover:text-yellow-300" />
+              <div className="flex justify-center mb-2 md:mb-3">
+                <BookOpen className="w-6 h-6 md:w-8 md:h-8 transition-all duration-300 group-hover:scale-125 group-hover:text-yellow-300" />
               </div>
-              <h3 className="text-white font-extrabold text-lg sm:text-xl mb-3 transition-colors duration-200 group-hover:text-yellow-300 text-center">
+              <h3 className="text-white font-extrabold text-base sm:text-xl mb-2 md:mb-3 transition-colors duration-200 group-hover:text-yellow-300 text-center">
                 Краткосрочни обучения
               </h3>
-              <p className="flex-grow text-white/90 text-sm sm:text-base">Програми за ученици и възрастни, които искат да развият нови дигитални и технологични умения.</p>
-              <div className="mt-4 flex justify-end">
-                <a href="/courses?category=short" className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
+              <p className="flex-grow text-white/90 text-xs sm:text-base">Програми за ученици и възрастни, които искат да развият нови дигитални и технологични умения.</p>
+              <div className="mt-2 md:mt-4 flex justify-end">
+                <a href="/courses?category=short" className="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
                   Научи повече
                 </a>
               </div>
             </motion.div>
             <motion.div 
-              className="group text-base sm:text-lg text-white font-medium px-6 py-5 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/30 shadow-2xl hover:bg-white/15 transition-all duration-300 flex flex-col relative"
+              className="group text-base sm:text-lg text-white font-medium px-4 md:px-6 py-3 md:py-5 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/30 shadow-2xl hover:bg-white/15 transition-all duration-300 flex flex-col relative"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7 }}
               whileHover={{ y: -5 }}
             >
               <div className="absolute top-0 left-0 right-0 h-px bg-white/20"></div>
-              <div className="flex justify-center mb-3">
-                <BadgeCheck className="w-8 h-8 transition-all duration-300 group-hover:scale-125 group-hover:text-yellow-300" />
+              <div className="flex justify-center mb-2 md:mb-3">
+                <BadgeCheck className="w-6 h-6 md:w-8 md:h-8 transition-all duration-300 group-hover:scale-125 group-hover:text-yellow-300" />
               </div>
-              <h3 className="text-white font-extrabold text-lg sm:text-xl mb-3 transition-colors duration-200 group-hover:text-yellow-300 text-center">
+              <h3 className="text-white font-extrabold text-base sm:text-xl mb-2 md:mb-3 transition-colors duration-200 group-hover:text-yellow-300 text-center">
                 Лицензирани професионални обучения
               </h3>
-              <p className="flex-grow text-white/90 text-sm sm:text-base">Придобиване на квалификация и издаване на свидетелство или удостоверение.</p>
-              <div className="mt-4 flex justify-end">
-                <a href="/courses?category=licensed" className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
+              <p className="flex-grow text-white/90 text-xs sm:text-base">Придобиване на квалификация и издаване на свидетелство или удостоверение.</p>
+              <div className="mt-2 md:mt-4 flex justify-end">
+                <a href="/courses?category=licensed" className="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
                   Научи повече
                 </a>
               </div>
             </motion.div>
             <motion.div 
-              className="group text-base sm:text-lg text-white font-medium px-6 py-5 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/30 shadow-2xl hover:bg-white/15 transition-all duration-300 flex flex-col relative"
+              className="group text-base sm:text-lg text-white font-medium px-4 md:px-6 py-3 md:py-5 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/30 shadow-2xl hover:bg-white/15 transition-all duration-300 flex flex-col relative"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
               whileHover={{ y: -5 }}
             >
               <div className="absolute top-0 left-0 right-0 h-px bg-white/20"></div>
-              <div className="flex justify-center mb-3">
-                <GraduationCap className="w-8 h-8 transition-all duration-300 group-hover:scale-125 group-hover:text-yellow-300" />
+              <div className="flex justify-center mb-2 md:mb-3">
+                <GraduationCap className="w-6 h-6 md:w-8 md:h-8 transition-all duration-300 group-hover:scale-125 group-hover:text-yellow-300" />
               </div>
-              <h3 className="text-white font-extrabold text-lg sm:text-xl mb-3 transition-colors duration-200 group-hover:text-yellow-300 text-center">
+              <h3 className="text-white font-extrabold text-base sm:text-xl mb-2 md:mb-3 transition-colors duration-200 group-hover:text-yellow-300 text-center">
                 Квалификация за преподаватели
               </h3>
-              <p className="flex-grow text-white/90 text-sm sm:text-base">Програми за надграждане на педагогически и дигитални компетентности.</p>
-              <div className="mt-4 flex justify-end">
-                <a href="/courses?category=teachers" className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
+              <p className="flex-grow text-white/90 text-xs sm:text-base">Програми за надграждане на педагогически и дигитални компетентности.</p>
+              <div className="mt-2 md:mt-4 flex justify-end">
+                <a href="/courses?category=teachers" className="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
                   Научи повече
                 </a>
               </div>
@@ -128,13 +128,13 @@ const Hero: React.FC = () => {
           >
             <motion.a
               href="/courses"
-              className="flex items-center justify-center px-6 py-3 text-lg font-bold rounded-xl bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300 shadow-2xl hover:shadow-blue-500/60 relative overflow-hidden mb-4"
+              className="flex items-center justify-center px-4 md:px-6 py-2 md:py-3 text-base md:text-lg font-bold rounded-xl bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300 shadow-2xl hover:shadow-blue-500/60 relative overflow-hidden mb-0 md:mb-4"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="relative z-10 flex items-center">
                   Виж всички курсове
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
               </span>
             </motion.a>
           </motion.div>
