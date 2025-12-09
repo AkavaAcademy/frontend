@@ -237,23 +237,32 @@ const BlogComponent: React.FC = () => {
                       viewport={{ once: true }}
                       className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer h-full"
                     >
-                      <div className="relative h-48 overflow-hidden bg-gray-200">
-                        <img
-                          src={article.image}
-                          alt={article.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=500&fit=crop';
-                          }}
-                          loading="lazy"
-                        />
-                        <div className="absolute top-4 left-4">
-                          <span className={`bg-gradient-to-r ${category?.color || 'from-gray-500 to-gray-600'} text-white px-3 py-1 rounded-full text-sm font-medium`}>
+                      {article.categorySlug !== 'parent-tips' && (
+                        <div className="relative h-48 overflow-hidden bg-gray-200">
+                          <img
+                            src={article.image}
+                            alt={article.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=500&fit=crop';
+                            }}
+                            loading="lazy"
+                          />
+                          <div className="absolute top-4 left-4">
+                            <span className={`bg-gradient-to-r ${category?.color || 'from-gray-500 to-gray-600'} text-white px-3 py-1 rounded-full text-sm font-medium`}>
+                              {article.category}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                      {article.categorySlug === 'parent-tips' && (
+                        <div className="p-6 pb-0">
+                          <span className={`bg-gradient-to-r ${category?.color || 'from-gray-500 to-gray-600'} text-white px-3 py-1 rounded-full text-sm font-medium inline-block`}>
                             {article.category}
                           </span>
                         </div>
-                      </div>
+                      )}
                       <div className="p-6">
                         <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors line-clamp-2 min-h-[3.5rem]">
                           {article.title}
