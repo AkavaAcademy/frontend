@@ -20,9 +20,9 @@ const allCourses = [
     slug: 'tech-explorers-lego-robotics-coding',
     description: 'Въвеждане в света на роботиката и програмирането чрез LEGO, развиване на логическо мислене и STEM умения.',
     duration: '8 седмици / 8 занятия',
-    price: 380,
-    formatted_price: '380 лв.',
-    formatted_price_eur: '195 €',
+    price: 360,
+    formatted_price: '360 лв.',
+    formatted_price_eur: '185 €',
     features: [
       'Основи на роботиката',
       'Сензори и двигатели',
@@ -31,7 +31,7 @@ const allCourses = [
       'Сертификат за завършване'
     ],
     startDate: '10 януари 2026',
-    status: 'Предстоящ',
+    status: 'Записвания отворени',
     format: 'Присъствен'
   },
   {
@@ -50,7 +50,7 @@ const allCourses = [
       'Основи на логическо мислене',
       'Творчески проекти'
     ],
-    startDate: '29 ноември 2025',
+    startDate: '10 януари 2026',
     status: 'Записвания отворени',
     format: 'Присъствен'
   },
@@ -70,15 +70,15 @@ const allCourses = [
       'Python синтаксис',
       'Практически проекти'
     ],
-    startDate: '20 януари 2026',
-    status: 'Предстоящ',
+    startDate: '12 януари 2026',
+    status: 'Записвания отворени',
     format: 'Присъствен'
   },
   {
     id: 4,
     title: 'Digital Design Studio (15–18 г.)',
     slug: 'digital-design-studio',
-    description: 'Освояване на дигитален дизайн с модерни инструменти за създаване на визуални решения.',
+    description: 'Дигитален дизайн с модерни инструменти за създаване на визуални решения.',
     duration: '8 седмици / 8 занятия',
     price: 340,
     formatted_price: '340 лв.',
@@ -90,7 +90,7 @@ const allCourses = [
       'Визуален сторителинг',
       'Портфолио проекти'
     ],
-    startDate: '20 март 2026',
+    startDate: '22 март 2026',
     status: 'Предстоящ',
     format: 'Присъствен'
   },
@@ -147,8 +147,8 @@ const allCourses = [
       'Визуални модели',
       'Практически AI проекти'
     ],
-    startDate: '10 февруари 2026',
-    status: 'Предстоящ',
+    startDate: '16 февруари 2026',
+    status: 'Записвания отворени',
     format: 'Присъствен'
   },
   {
@@ -169,28 +169,31 @@ const allCourses = [
       'Критическо мислене',
       'Лидерство'
     ],
-    startDate: '1 април 2026',
+    startDate: '12 април 2026',
     status: 'Предстоящ',
     format: 'Присъствен'
   },
   {
     id: 9,
-    title: 'QA и автоматизирано тестване',
+    title: 'QA – Автоматизирано тестване с помощта на AI',
     slug: 'qa-automated-testing',
-    description: 'Комплексен курс за основи на QA, автоматизирани тестове, работа с инструменти като Selenium и CI/CD интеграция. Подготовка за кариера като QA инженер или Test Automation Engineer.',
+    description: 'Интензивен курс по автоматизирано тестване за начинаещи, които вече имат основи по Manual QA. Обхваща автоматизация със съвременни инструменти, програмиране, CI/CD и интеграция на AI технологии в тестовия процес.',
     duration: '8 седмици',
     price: 700,
     formatted_price: '700 лв.',
     formatted_price_eur: '359 €',
     features: [
-      'Основи на QA',
-      'Автоматизирани тестове',
-      'Работа с Selenium',
-      'CI/CD интеграция',
-      'Практически проекти',
-      'Подготовка за кариера като QA инженер'
+      'Въведение в тестовата автоматизация',
+      'Основи на програмирането (JavaScript или Python)',
+      'ООП концепции за QA инженери',
+      'UI тестова автоматизация (Playwright / Selenium)',
+      'Page Object Model и структура на automation проект',
+      'API тестова автоматизация',
+      'AI инструменти за автоматизирано тестване (Testim, Mabl, Copilot)',
+      'CI/CD интеграции и автоматично изпълнение на тестове',
+      'Финален automation проект'
     ],
-    startDate: '27 ноември 2025',
+    startDate: '24 февруари 2026',
     status: 'Записвания отворени',
     format: 'Онлайн'
   },
@@ -198,21 +201,21 @@ const allCourses = [
     id: 16,
     title: 'QA - Ръчно тестване',
     slug: 'qa-manual-testing',
-    description: 'Комплексен курс за ръчно тестване на софтуер, тестови сценарии, баг репортиране и QA процеси. Подготовка за кариера като Manual QA Engineer или Software Tester.',
+    description: 'Комплексен практически курс по ръчно тестване на софтуер. Подходящ за напълно начинаещи и желаещи да започнат кариера като Manual QA Engineer.',
     duration: '6 седмици',
     price: 550,
     formatted_price: '550 лв.',
     formatted_price_eur: '282 €',
     features: [
-      'Основи на ръчно тестване',
+      'Основи на софтуерното тестване',
+      'Типове тестове и техники за тест-дизайн',
       'Тестови сценарии и тестови случаи',
-      'Баг репортиране и проследяване',
-      'Тестване на функционалност',
-      'Тестване на UI/UX',
-      'Тестова документация',
-      'Подготовка за кариера като Manual QA Engineer'
+      'Изготвяне на бъг репорт',
+      'Работа с инструменти като Jira',
+      'QA процеси и документация',
+      'Практически мини проект'
     ],
-    startDate: '30 ноември 2025',
+    startDate: '21 април 2026',
     status: 'Записвания отворени',
     format: 'Онлайн'
   },
@@ -234,8 +237,8 @@ const allCourses = [
       'Комуникация и лидерство',
       'Подготовка за IT Project Manager'
     ],
-    startDate: '15 януари 2026',
-    status: 'Предстоящ',
+    startDate: '21 януари 2026',
+    status: 'Записвания отворени',
     format: 'Онлайн'
   },
   {
@@ -256,7 +259,7 @@ const allCourses = [
       'Портфолио проекти',
       'Подготовка за Junior Full-Stack Developer'
     ],
-    startDate: '5 февруари 2026',
+    startDate: '20 януари 2026',
     status: 'Предстоящ',
     format: 'Онлайн'
   },
@@ -277,8 +280,8 @@ const allCourses = [
       'Практически AI дизайн проекти',
       'Портфолио от AI-генерирани дизайни'
     ],
-    startDate: '5 декември 2025',
-    status: 'Записвания отворени',
+    startDate: '15 септември 2026',
+    status: 'Предстоящ',
     format: 'Онлайн'
   },
   {
@@ -298,7 +301,7 @@ const allCourses = [
       'Дигитална етика',
       'Практически офис умения'
     ],
-    startDate: '25 ноември 2025',
+    startDate: '25 февруари 2026',
     status: 'Записвания отворени',
     format: 'Онлайн'
   },
@@ -320,7 +323,7 @@ const allCourses = [
       'AI code асистенти',
       'Креативни програмни проекти'
     ],
-    startDate: '25 март 2026',
+    startDate: '27 април 2026',
     status: 'Предстоящ',
     format: 'Онлайн'
   },
@@ -342,7 +345,7 @@ const allCourses = [
       'AI-генерирано визуално съдържание',
       'Портфолио от AI дизайн проекти'
     ],
-    startDate: '25 януари 2026',
+    startDate: '16 юни 2026',
     status: 'Предстоящ',
     format: 'Онлайн'
   }
@@ -351,6 +354,22 @@ const allCourses = [
 const CourseRegistration: React.FC = () => {
   const navigate = useNavigate();
   const { slug } = useParams<{ slug: string }>();
+  
+  // Get stored category and subcategory for back navigation
+  const storedCategory = sessionStorage.getItem('courseCategory');
+  const storedSubcategory = sessionStorage.getItem('courseSubcategory');
+  
+  // Build back URL with category and subcategory if available
+  const getBackUrl = () => {
+    if (storedCategory) {
+      let url = `/courses?category=${storedCategory}`;
+      if (storedSubcategory) {
+        url += `&subcategory=${storedSubcategory}`;
+      }
+      return url;
+    }
+    return '/courses';
+  };
   
   const [course, setCourse] = useState(allCourses.find(c => c.slug === slug) || null);
   const [formData, setFormData] = useState({
@@ -579,7 +598,7 @@ const CourseRegistration: React.FC = () => {
           className="mb-6"
         >
           <Link
-            to="/courses"
+            to={getBackUrl()}
             className="inline-flex items-center text-gray-600 hover:text-primary-600 transition-colors"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
