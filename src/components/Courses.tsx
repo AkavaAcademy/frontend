@@ -67,7 +67,9 @@ const Courses: React.FC = () => {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(searchParams.get('category') ? [searchParams.get('category')!] : [])
   );
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string>('students');
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string>(
+    searchParams.get('subcategory') || 'students'
+  );
 
   const scrollToCategory = (categoryId: string, delay: number = 300) => {
     setTimeout(() => {
@@ -87,13 +89,18 @@ const Courses: React.FC = () => {
 
   useEffect(() => {
     const category = searchParams.get('category');
+    const subcategory = searchParams.get('subcategory');
     if (category) {
       setSelectedCategory(category);
       setExpandedCategories(new Set([category]));
-      // Set default subcategory if category has subcategories
+      // Set subcategory from URL or default if category has subcategories
       const categoryData = courseCategories.find(c => c.id === category);
       if (categoryData?.subcategories && categoryData.subcategories.length > 0) {
-        setSelectedSubcategory(categoryData.subcategories[0].id);
+        if (subcategory && categoryData.subcategories.find(sc => sc.id === subcategory)) {
+          setSelectedSubcategory(subcategory);
+        } else {
+          setSelectedSubcategory(categoryData.subcategories[0].id);
+        }
       }
       // Scroll to category after state update and DOM render
       scrollToCategory(category, 400);
@@ -146,7 +153,7 @@ const Courses: React.FC = () => {
               ],
               formatted_price: '320 лв.',
               formatted_price_eur: '164 €',
-              startDate: '29 ноември 2025',
+              startDate: '10 януари 2026',
               status: 'Записвания отворени',
               format: 'Присъствен'
             },
@@ -156,7 +163,7 @@ const Courses: React.FC = () => {
               slug: 'tech-explorers-lego-robotics-coding',
               description: 'Въвеждане в света на роботиката и програмирането чрез LEGO, развиване на логическо мислене и STEM умения.',
               duration: '8 седмици / 8 занятия',
-              price: 380,
+              price: 360,
               difficulty: 'beginner',
               features: [
                 'Основи на роботиката',
@@ -165,10 +172,10 @@ const Courses: React.FC = () => {
                 'STEM игри',
                 'Сертификат за завършване'
               ],
-              formatted_price: '380 лв.',
-              formatted_price_eur: '195 €',
+              formatted_price: '360 лв.',
+              formatted_price_eur: '185 €',
               startDate: '10 януари 2026',
-              status: 'Предстоящ',
+              status: 'Записвания отворени',
               format: 'Присъствен'
             },
             {
@@ -188,8 +195,8 @@ const Courses: React.FC = () => {
               ],
               formatted_price: '380 лв.',
               formatted_price_eur: '195 €',
-              startDate: '20 януари 2026',
-              status: 'Предстоящ',
+              startDate: '12 януари 2026',
+              status: 'Записвания отворени',
               format: 'Присъствен'
             },
             {
@@ -209,8 +216,8 @@ const Courses: React.FC = () => {
               ],
               formatted_price: '480 лв.',
               formatted_price_eur: '246 €',
-              startDate: '10 февруари 2026',
-              status: 'Предстоящ',
+              startDate: '16 февруари 2026',
+              status: 'Записвания отворени',
               format: 'Присъствен'
             },
             {
@@ -238,7 +245,7 @@ const Courses: React.FC = () => {
               id: 4,
               title: 'Digital Design Studio (15–18 г.)',
               slug: 'digital-design-studio',
-              description: 'Освояване на дигитален дизайн с модерни инструменти за създаване на визуални решения.',
+              description: 'Дигитален дизайн с модерни инструменти за създаване на визуални решения.',
               duration: '8 седмици / 8 занятия',
               price: 340,
               difficulty: 'advanced',
@@ -251,7 +258,7 @@ const Courses: React.FC = () => {
               ],
               formatted_price: '340 лв.',
               formatted_price_eur: '174 €',
-              startDate: '20 март 2026',
+              startDate: '22 март 2026',
               status: 'Предстоящ',
               format: 'Присъствен'
             },
@@ -274,7 +281,7 @@ const Courses: React.FC = () => {
               ],
               formatted_price: '280 лв.',
               formatted_price_eur: '144 €',
-              startDate: '1 април 2026',
+              startDate: '12 април 2026',
               status: 'Предстоящ',
               format: 'Присъствен'
             }
@@ -287,91 +294,25 @@ const Courses: React.FC = () => {
           icon: Briefcase,
           courses: [
             {
-              id: 13,
-              title: 'Digital Essentials – Дигитални компетентности за съвременния офис',
-              slug: 'digital-essentials',
-              description: 'Практически курс за развитие на дигитални компетентности за съвременна офис среда. Подходящ за възрастни и служители, които искат да развият своите практически дигитални умения.',
-              duration: '6 седмици / 6 занятия',
-              price: 420,
+              id: 11,
+              title: 'Софтуерно инженерство – Full Stack старт',
+              slug: 'full-stack-start',
+              description: 'Интензивен курс за пълноценна Full Stack разработка: HTML/CSS, JavaScript, backend (Node.js/Java/Python), REST API, работа с база данни и deployment. Подготовка за кариера като Junior Full-Stack Developer.',
+              duration: '12 седмици',
+              price: 1300,
               difficulty: 'beginner',
               features: [
-                'Microsoft Office (Word, Excel, PowerPoint, Outlook)',
-                'Организация и управление на файлове (OneDrive, Google Drive)',
-                'Онлайн комуникация (Teams, Zoom, Slack)',
-                'Основи на киберсигурността',
-                'Дигитална етика',
-                'Практически офис умения'
+                'HTML/CSS и JavaScript',
+                'Backend разработка (Node.js/Java/Python)',
+                'REST API',
+                'Работа с база данни',
+                'Deployment и DevOps основи',
+                'Портфолио проекти',
+                'Подготовка за Junior Full-Stack Developer'
               ],
-              formatted_price: '420 лв.',
-              formatted_price_eur: '215 €',
-              startDate: '25 ноември 2025',
-              status: 'Записвания отворени',
-              format: 'Онлайн'
-            },
-            {
-              id: 9,
-              title: 'QA и автоматизирано тестване',
-              slug: 'qa-automated-testing',
-              description: 'Комплексен курс за основи на QA, автоматизирани тестове, работа с инструменти като Selenium и CI/CD интеграция. Подготовка за кариера като QA инженер или Test Automation Engineer.',
-              duration: '8 седмици',
-              price: 700,
-              difficulty: 'beginner',
-              features: [
-                'Основи на QA',
-                'Автоматизирани тестове',
-                'Работа с Selenium',
-                'CI/CD интеграция',
-                'Практически проекти',
-                'Подготовка за кариера като QA инженер'
-              ],
-              formatted_price: '700 лв.',
-              formatted_price_eur: '359 €',
-              startDate: '27 ноември 2025',
-              status: 'Записвания отворени',
-              format: 'Онлайн'
-            },
-            {
-              id: 16,
-              title: 'QA - Ръчно тестване',
-              slug: 'qa-manual-testing',
-              description: 'Комплексен курс за ръчно тестване на софтуер, тестови сценарии, баг репортиране и QA процеси. Подготовка за кариера като Manual QA Engineer или Software Tester.',
-              duration: '6 седмици',
-              price: 550,
-              difficulty: 'beginner',
-              features: [
-                'Основи на ръчно тестване',
-                'Тестови сценарии и тестови случаи',
-                'Баг репортиране и проследяване',
-                'Тестване на функционалност',
-                'Тестване на UI/UX',
-                'Тестова документация',
-                'Подготовка за кариера като Manual QA Engineer'
-              ],
-              formatted_price: '550 лв.',
-              formatted_price_eur: '282 €',
-              startDate: '30 ноември 2025',
-              status: 'Записвания отворени',
-              format: 'Онлайн'
-            },
-            {
-              id: 12,
-              title: 'AI-Driven UI Design: Създаване на потребителски интерфейс с помощта на изкуствен интелект',
-              slug: 'ai-driven-ui-design',
-              description: 'Курс за създаване на потребителски интерфейси с помощта на изкуствен интелект. Подходящ за начинаещи и напреднали в UX/UI, графичен дизайн или фронтенд разработка, които искат да използват AI за ускорено прототипиране и дизайн.',
-              duration: '8 седмици / 8 занятия',
-              price: 750,
-              difficulty: 'advanced',
-              features: [
-                'AI-задвижвано прототипиране',
-                'Ускорен дизайн процес',
-                'UX/UI с AI инструменти',
-                'Визуален дизайн и композиция',
-                'Практически AI дизайн проекти',
-                'Портфолио от AI-генерирани дизайни'
-              ],
-              formatted_price: '750 лв.',
-              formatted_price_eur: '385 €',
-              startDate: '5 декември 2025',
+              formatted_price: '1300 лв.',
+              formatted_price_eur: '667 €',
+              startDate: '20 януари 2026',
               status: 'Записвания отворени',
               format: 'Онлайн'
             },
@@ -394,53 +335,77 @@ const Courses: React.FC = () => {
               ],
               formatted_price: '650 лв.',
               formatted_price_eur: '333 €',
-              startDate: '15 януари 2026',
-              status: 'Предстоящ',
+              startDate: '21 януари 2026',
+              status: 'Записвания отворени',
               format: 'Онлайн'
             },
             {
-              id: 15,
-              title: 'AI Design Lab – Дизайн с изкуствен интелект',
-              slug: 'ai-design-lab',
-              description: 'Курс за създаване на впечатляващи визуални проекти с помощта на AI. Подходящ за дизайнери, маркетолози, предприемачи и творци, които искат да автоматизират творчески процеси и да създават бранд идентичност чрез AI.',
+              id: 9,
+              title: 'QA – Автоматизирано тестване с помощта на AI',
+              slug: 'qa-automated-testing',
+              description: 'Интензивен курс по автоматизирано тестване за начинаещи, които вече имат основи по Manual QA. Обхваща автоматизация със съвременни инструменти, програмиране, CI/CD и интеграция на AI технологии в тестовия процес.',
+              duration: '8 седмици',
+              price: 700,
+              difficulty: 'beginner',
+              features: [
+                'Въведение в тестовата автоматизация',
+                'Основи на програмирането (JavaScript или Python)',
+                'ООП концепции за QA инженери',
+                'UI тестова автоматизация (Playwright / Selenium)',
+                'Page Object Model и структура на automation проект',
+                'API тестова автоматизация',
+                'AI инструменти за автоматизирано тестване (Testim, Mabl, Copilot)',
+                'CI/CD интеграции и автоматично изпълнение на тестове',
+                'Финален automation проект'
+              ],
+              formatted_price: '700 лв.',
+              formatted_price_eur: '359 €',
+              startDate: '24 февруари 2026',
+              status: 'Записвания отворени',
+              format: 'Онлайн'
+            },
+            {
+              id: 13,
+              title: 'Digital Essentials – Дигитални компетентности за съвременния офис',
+              slug: 'digital-essentials',
+              description: 'Практически курс за развитие на дигитални компетентности за съвременна офис среда. Подходящ за възрастни и служители, които искат да развият своите практически дигитални умения.',
               duration: '6 седмици / 6 занятия',
-              price: 750,
+              price: 420,
               difficulty: 'beginner',
               features: [
-                'Въведение в генеративния дизайн',
-                'Работа с Adobe Firefly, Midjourney, Runway ML',
-                'Canva Magic Studio',
-                'Автоматизация на творчески процеси',
-                'Бранд идентичност и визуално разказване',
-                'AI-генерирано визуално съдържание',
-                'Портфолио от AI дизайн проекти'
+                'Microsoft Office (Word, Excel, PowerPoint, Outlook)',
+                'Организация и управление на файлове (OneDrive, Google Drive)',
+                'Онлайн комуникация (Teams, Zoom, Slack)',
+                'Основи на киберсигурността',
+                'Дигитална етика',
+                'Практически офис умения'
               ],
-              formatted_price: '750 лв.',
-              formatted_price_eur: '385 €',
-              startDate: '25 януари 2026',
-              status: 'Предстоящ',
+              formatted_price: '420 лв.',
+              formatted_price_eur: '215 €',
+              startDate: '25 февруари 2026',
+              status: 'Записвания отворени',
               format: 'Онлайн'
             },
             {
-              id: 11,
-              title: 'Софтуерно инженерство – Full Stack старт',
-              slug: 'full-stack-start',
-              description: 'Интензивен курс за пълноценна Full Stack разработка: HTML/CSS, JavaScript, backend (Node.js/Java/Python), REST API, работа с база данни и deployment. Подготовка за кариера като Junior Full-Stack Developer.',
-              duration: '12 седмици',
-              price: 1300,
+              id: 16,
+              title: 'QA - Ръчно тестване',
+              slug: 'qa-manual-testing',
+              description: 'Комплексен практически курс по ръчно тестване на софтуер. Подходящ за напълно начинаещи и желаещи да започнат кариера като Manual QA Engineer.',
+              duration: '6 седмици',
+              price: 550,
               difficulty: 'beginner',
               features: [
-                'HTML/CSS и JavaScript',
-                'Backend разработка (Node.js/Java/Python)',
-                'REST API',
-                'Работа с база данни',
-                'Deployment и DevOps основи',
-                'Портфолио проекти',
-                'Подготовка за Junior Full-Stack Developer'
+                'Основи на софтуерното тестване',
+                'Типове тестове и техники за тест-дизайн',
+                'Тестови сценарии и тестови случаи',
+                'Изготвяне на бъг репорт',
+                'Работа с инструменти като Jira',
+                'QA процеси и документация',
+                'Практически мини проект'
               ],
-              formatted_price: '1300 лв.',
-              formatted_price_eur: '667 €',
-              startDate: '5 февруари 2026',
+              formatted_price: '550 лв.',
+              formatted_price_eur: '282 €',
+              startDate: '21 април 2026',
               status: 'Предстоящ',
               format: 'Онлайн'
             },
@@ -463,7 +428,52 @@ const Courses: React.FC = () => {
               ],
               formatted_price: '550 лв.',
               formatted_price_eur: '282 €',
-              startDate: '25 март 2026',
+              startDate: '27 април 2026',
+              status: 'Предстоящ',
+              format: 'Онлайн'
+            },
+            {
+              id: 15,
+              title: 'AI Design Lab – Дизайн с изкуствен интелект',
+              slug: 'ai-design-lab',
+              description: 'Курс за създаване на впечатляващи визуални проекти с помощта на AI. Подходящ за дизайнери, маркетолози, предприемачи и творци, които искат да автоматизират творчески процеси и да създават бранд идентичност чрез AI.',
+              duration: '6 седмици / 6 занятия',
+              price: 750,
+              difficulty: 'beginner',
+              features: [
+                'Въведение в генеративния дизайн',
+                'Работа с Adobe Firefly, Midjourney, Runway ML',
+                'Canva Magic Studio',
+                'Автоматизация на творчески процеси',
+                'Бранд идентичност и визуално разказване',
+                'AI-генерирано визуално съдържание',
+                'Портфолио от AI дизайн проекти'
+              ],
+              formatted_price: '750 лв.',
+              formatted_price_eur: '385 €',
+              startDate: '16 юни 2026',
+              status: 'Предстоящ',
+              format: 'Онлайн'
+            },
+            {
+              id: 12,
+              title: 'AI-Driven UI Design: Създаване на потребителски интерфейс с помощта на изкуствен интелект',
+              slug: 'ai-driven-ui-design',
+              description: 'Курс за създаване на потребителски интерфейси с помощта на изкуствен интелект. Подходящ за начинаещи и напреднали в UX/UI, графичен дизайн или фронтенд разработка, които искат да използват AI за ускорено прототипиране и дизайн.',
+              duration: '8 седмици / 8 занятия',
+              price: 750,
+              difficulty: 'advanced',
+              features: [
+                'AI-задвижвано прототипиране',
+                'Ускорен дизайн процес',
+                'UX/UI с AI инструменти',
+                'Визуален дизайн и композиция',
+                'Практически AI дизайн проекти',
+                'Портфолио от AI-генерирани дизайни'
+              ],
+              formatted_price: '750 лв.',
+              formatted_price_eur: '385 €',
+              startDate: '15 септември 2026',
               status: 'Предстоящ',
               format: 'Онлайн'
             }
@@ -699,7 +709,13 @@ const Courses: React.FC = () => {
                               return (
                                 <button
                                   key={subcat.id}
-                                  onClick={() => setSelectedSubcategory(subcat.id)}
+                                  onClick={() => {
+                                    setSelectedSubcategory(subcat.id);
+                                    // Update URL with subcategory parameter
+                                    const newParams = new URLSearchParams(searchParams);
+                                    newParams.set('subcategory', subcat.id);
+                                    setSearchParams(newParams);
+                                  }}
                                   className={`flex items-center gap-3 px-6 py-4 rounded-t-lg font-semibold transition-all duration-300 ${
                                     isActive
                                       ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
@@ -854,7 +870,14 @@ const Courses: React.FC = () => {
                                     <motion.button
                                       whileHover={{ scale: 1.02 }}
                                       whileTap={{ scale: 0.98 }}
-                                      onClick={() => navigate(`/course/${course.slug}`)}
+                                      onClick={() => {
+                                        // Store category and subcategory for back navigation
+                                        sessionStorage.setItem('courseCategory', category.id);
+                                        if (category.subcategories && selectedSubcategory) {
+                                          sessionStorage.setItem('courseSubcategory', selectedSubcategory);
+                                        }
+                                        navigate(`/course/${course.slug}`);
+                                      }}
                                       className={`w-full py-2 px-4 rounded-lg font-medium text-white bg-gradient-to-r ${category.color} hover:shadow-md transition-all duration-300`}
                                     >
                                       Запиши се
