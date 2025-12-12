@@ -93,19 +93,19 @@ const FeaturesPage: React.FC = () => {
           {/* Staff Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {staffMembers.map((member, index) => (
-              <div key={member.id} className="md:col-span-1 lg:col-span-1 flex flex-col">
+              <div key={member.id} className="md:col-span-1 lg:col-span-1 flex flex-col lg:flex-col">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
                   onClick={() => setSelectedMember(selectedMember === member.id ? null : member.id)}
-                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-blue-400 relative overflow-hidden group flex flex-col h-full"
+                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-blue-400 relative overflow-visible lg:overflow-hidden group flex flex-col lg:h-full"
                 >
                   {/* Decorative gradient background */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
-                  <div className="relative z-10 flex flex-col flex-grow">
+                  <div className="relative z-10 flex flex-col lg:flex-grow">
                     {/* Avatar placeholder */}
                     <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-3xl font-bold shadow-lg group-hover:scale-110 transition-transform duration-300">
                       {member.name.charAt(0)}
@@ -130,8 +130,8 @@ const FeaturesPage: React.FC = () => {
                       ))}
                     </div>
                     
-                    <div className="text-center flex-grow flex flex-col justify-end">
-                      <p className="text-sm text-gray-600 mb-3 line-clamp-2 min-h-[2.5rem]">
+                    <div className="text-center lg:flex-grow lg:flex lg:flex-col lg:justify-end">
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2 lg:min-h-[2.5rem]">
                         {member.specialization}
                       </p>
                       
@@ -155,14 +155,15 @@ const FeaturesPage: React.FC = () => {
                       animate={{ opacity: 1, height: 'auto', marginTop: 24 }}
                       exit={{ opacity: 0, height: 0, marginTop: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="overflow-hidden lg:hidden"
+                      className="overflow-visible lg:hidden w-full"
+                      style={{ minHeight: 0 }}
                     >
                       <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3, delay: 0.1 }}
-                        className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 shadow-xl border-2 border-blue-200"
+                        className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 shadow-xl border-2 border-blue-200 w-full"
                       >
                         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
                           {/* Left Column */}
