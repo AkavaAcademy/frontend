@@ -30,33 +30,51 @@ const Footer: React.FC = () => {
   const getOpenCourses = (): Course[] => {
     const openCourses: Course[] = [
       {
+        id: 1,
+        title: 'Tech Explorers: LEGO Robotics & Coding (6–10 г.)',
+        slug: 'tech-explorers-lego-robotics-coding',
+        status: 'Записвания отворени'
+      },
+      {
         id: 2,
         title: 'Scratch Creators (10–12 г.)',
         slug: 'scratch-creators',
         status: 'Записвания отворени'
       },
       {
-        id: 13,
-        title: 'Digital Essentials – Дигитални компетентности за съвременния офис',
-        slug: 'digital-essentials',
+        id: 3,
+        title: 'Python Start Lab (12–14 г.)',
+        slug: 'python-start-lab',
+        status: 'Записвания отворени'
+      },
+      {
+        id: 7,
+        title: 'AI for Teens (15–18 г.)',
+        slug: 'ai-for-teens',
+        status: 'Записвания отворени'
+      },
+      {
+        id: 11,
+        title: 'Софтуерно инженерство – Full Stack старт',
+        slug: 'full-stack-start',
+        status: 'Записвания отворени'
+      },
+      {
+        id: 10,
+        title: 'Project Management в ИТ',
+        slug: 'project-management-it',
         status: 'Записвания отворени'
       },
       {
         id: 9,
-        title: 'QA и автоматизирано тестване',
+        title: 'QA – Автоматизирано тестване с помощта на AI',
         slug: 'qa-automated-testing',
         status: 'Записвания отворени'
       },
       {
-        id: 16,
-        title: 'QA - Ръчно тестване',
-        slug: 'qa-manual-testing',
-        status: 'Записвания отворени'
-      },
-      {
-        id: 12,
-        title: 'AI-Driven UI Design: Създаване на потребителски интерфейс с помощта на изкуствен интелект',
-        slug: 'ai-driven-ui-design',
+        id: 13,
+        title: 'Digital Essentials – Дигитални компетентности за съвременния офис',
+        slug: 'digital-essentials',
         status: 'Записвания отворени'
       }
     ];
