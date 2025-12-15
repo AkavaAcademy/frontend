@@ -293,38 +293,40 @@ const BlogComponent: React.FC = () => {
         </div>
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="py-20 bg-gradient-to-r from-primary-600 to-secondary-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Получавайте най-новите блогове директно в пощенската си кутия
-            </h2>
-            <p className="text-xl text-white/90 mb-8">
-              Абонирайте се за нашия бюлетин и получавайте най-новите статии директно в пощенската си кутия.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Вашият имейл адрес"
-                className="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-white/50 text-gray-900"
-              />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-white text-primary-600 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors duration-300"
-              >
-                Абонирай се
-              </motion.button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Newsletter Signup - Temporarily hidden until functionality is fixed */}
+      {false && (
+        <section className="py-20 bg-gradient-to-r from-primary-600 to-secondary-600">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+                Получавайте най-новите блогове директно в пощенската си кутия
+              </h2>
+              <p className="text-xl text-white/90 mb-8">
+                Абонирайте се за нашия бюлетин и получавайте най-новите статии директно в пощенската си кутия.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="Вашият имейл адрес"
+                  className="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-white/50 text-gray-900"
+                />
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-white text-primary-600 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+                >
+                  Абонирай се
+                </motion.button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
     </div>
   );
 };
