@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { 
   BookOpen,
   BadgeCheck,
@@ -60,15 +60,19 @@ interface Course {
 // Function to generate URL-friendly slug from course title
 const Courses: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { category: categoryParam, subcategory: subcategoryParam } = useParams<{
+    category?: string;
+    subcategory?: string;
+  }>();
+  
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    searchParams.get('category') || null
+    categoryParam || null
   );
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
-    new Set(searchParams.get('category') ? [searchParams.get('category')!] : [])
+    new Set(categoryParam ? [categoryParam] : [])
   );
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>(
-    searchParams.get('subcategory') || 'students'
+    subcategoryParam || 'students'
   );
 
   const scrollToCategory = (categoryId: string, delay: number = 300) => {
@@ -88,32 +92,38 @@ const Courses: React.FC = () => {
   };
 
   useEffect(() => {
-    const category = searchParams.get('category');
-    const subcategory = searchParams.get('subcategory');
-    if (category) {
-      setSelectedCategory(category);
-      setExpandedCategories(new Set([category]));
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+      setExpandedCategories(new Set([categoryParam]));
       // Set subcategory from URL or default if category has subcategories
-      const categoryData = courseCategories.find(c => c.id === category);
+      const categoryData = courseCategories.find(c => c.id === categoryParam);
       if (categoryData?.subcategories && categoryData.subcategories.length > 0) {
-        if (subcategory && categoryData.subcategories.find(sc => sc.id === subcategory)) {
-          setSelectedSubcategory(subcategory);
+        if (subcategoryParam && categoryData.subcategories.find(sc => sc.id === subcategoryParam)) {
+          setSelectedSubcategory(subcategoryParam);
         } else {
+          // If no subcategory in URL but category has subcategories, redirect to first subcategory
+          if (!subcategoryParam && categoryData.subcategories.length > 0) {
+            navigate(`/courses/${categoryParam}/${categoryData.subcategories[0].id}`, { replace: true });
+            return;
+          }
           setSelectedSubcategory(categoryData.subcategories[0].id);
         }
       }
       // Scroll to category after state update and DOM render
-      scrollToCategory(category, 400);
+      scrollToCategory(categoryParam, 400);
+    } else {
+      // Reset state when no category in URL
+      setSelectedCategory(null);
+      setExpandedCategories(new Set());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  }, [categoryParam, subcategoryParam]);
 
   // Handle initial page load with category parameter
   useEffect(() => {
-    const category = searchParams.get('category');
-    if (category) {
+    if (categoryParam) {
       // Wait for component to fully mount, render, and ScrollToTop to finish
-      scrollToCategory(category, 700);
+      scrollToCategory(categoryParam, 700);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run only on mount
@@ -594,22 +604,72 @@ const Courses: React.FC = () => {
       newExpanded.delete(categoryId);
       if (selectedCategory === categoryId) {
         setSelectedCategory(null);
-        setSearchParams({});
+        navigate('/courses', { replace: true });
       }
     } else {
       newExpanded.add(categoryId);
       setSelectedCategory(categoryId);
-      setSearchParams({ category: categoryId });
       // Reset subcategory selection when switching categories
       const category = courseCategories.find(c => c.id === categoryId);
       if (category?.subcategories && category.subcategories.length > 0) {
-        setSelectedSubcategory(category.subcategories[0].id);
+        const firstSubcategory = category.subcategories[0].id;
+        setSelectedSubcategory(firstSubcategory);
+        navigate(`/courses/${categoryId}/${firstSubcategory}`, { replace: true });
+      } else {
+        navigate(`/courses/${categoryId}`, { replace: true });
       }
       // Scroll to category after expanding
       scrollToCategory(categoryId);
     }
     setExpandedCategories(newExpanded);
   };
+
+  // Set canonical URL and page title
+  useEffect(() => {
+    const baseUrl = 'https://www.akavaacademy.com';
+    let canonicalUrl = `${baseUrl}/courses`;
+    let pageTitle = 'Курсове | Akava Academy';
+    let metaDescription = 'Разгледайте нашите курсове по програмиране, роботика и технологии за деца и ученици.';
+
+    if (categoryParam) {
+      const category = courseCategories.find(c => c.id === categoryParam);
+      if (category) {
+        canonicalUrl = `${baseUrl}/courses/${categoryParam}`;
+        pageTitle = `${category.title} | Akava Academy`;
+        metaDescription = category.description;
+
+        if (subcategoryParam) {
+          const subcategory = category.subcategories?.find(sc => sc.id === subcategoryParam);
+          if (subcategory) {
+            canonicalUrl = `${baseUrl}/courses/${categoryParam}/${subcategoryParam}`;
+            pageTitle = `${subcategory.title} - ${category.title} | Akava Academy`;
+            metaDescription = subcategory.description;
+          }
+        }
+      }
+    }
+
+    // Update document title
+    document.title = pageTitle;
+
+    // Update or create canonical link
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', canonicalUrl);
+
+    // Update meta description
+    let metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.setAttribute('name', 'description');
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute('content', metaDescription);
+  }, [categoryParam, subcategoryParam]);
 
   return (
     <section id="courses" className="pt-32 md:pt-40 pb-20 bg-gray-50 min-h-screen">
@@ -771,10 +831,8 @@ const Courses: React.FC = () => {
                                   key={subcat.id}
                                   onClick={() => {
                                     setSelectedSubcategory(subcat.id);
-                                    // Update URL with subcategory parameter
-                                    const newParams = new URLSearchParams(searchParams);
-                                    newParams.set('subcategory', subcat.id);
-                                    setSearchParams(newParams);
+                                    // Update URL with clean path
+                                    navigate(`/courses/${category.id}/${subcat.id}`, { replace: true });
                                   }}
                                   className={`flex items-center gap-3 px-6 py-4 rounded-t-lg font-semibold transition-all duration-300 ${
                                     isActive

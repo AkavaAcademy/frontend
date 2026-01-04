@@ -125,7 +125,7 @@ export const FeaturesCategories: React.FC = () => {
       ],
       color: 'from-blue-500 to-cyan-500',
       bgColor: 'bg-blue-50',
-      link: '/courses?category=short'
+      link: '/courses/short'
     },
     {
       icon: BadgeCheck,
@@ -139,7 +139,7 @@ export const FeaturesCategories: React.FC = () => {
       ],
       color: 'from-green-500 to-emerald-500',
       bgColor: 'bg-green-50',
-      link: '/courses?category=licensed',
+      link: '/courses/licensed',
       comingSoon: true
     },
     {
@@ -154,7 +154,7 @@ export const FeaturesCategories: React.FC = () => {
       ],
       color: 'from-purple-500 to-pink-500',
       bgColor: 'bg-purple-50',
-      link: '/courses?category=teachers',
+      link: '/courses/teachers',
       comingSoon: true
     }
   ];

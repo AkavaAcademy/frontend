@@ -420,9 +420,9 @@ const CourseRegistration: React.FC = () => {
   // Build back URL with category and subcategory if available
   const getBackUrl = () => {
     if (storedCategory) {
-      let url = `/courses?category=${storedCategory}`;
+      let url = `/courses/${storedCategory}`;
       if (storedSubcategory) {
-        url += `&subcategory=${storedSubcategory}`;
+        url += `/${storedSubcategory}`;
       }
       return url;
     }

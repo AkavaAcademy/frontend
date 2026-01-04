@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { BookOpen, Users, Calendar, TrendingUp, ArrowRight, Clock, Calendar as CalendarIcon, X } from 'lucide-react';
 import { articles, Article } from '../data/articles';
 
@@ -13,10 +13,10 @@ interface NewsCategory {
 }
 
 const BlogComponent: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const categoryParam = searchParams.get('category');
+  const { category: categoryParam } = useParams<{ category?: string }>();
+  const navigate = useNavigate();
   const [allArticles] = useState<Article[]>(articles);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam || null);
 
   const newsCategories: NewsCategory[] = [
     {
@@ -52,7 +52,47 @@ const BlogComponent: React.FC = () => {
   useEffect(() => {
     if (categoryParam) {
       setSelectedCategory(categoryParam);
+    } else {
+      setSelectedCategory(null);
     }
+  }, [categoryParam]);
+
+  // Set canonical URL and page title
+  useEffect(() => {
+    const baseUrl = 'https://www.akavaacademy.com';
+    let canonicalUrl = `${baseUrl}/blog`;
+    let pageTitle = 'Новини и Статии | Akava Academy';
+    let metaDescription = 'В страницата „Новини" ще намерите полезни статии за ученици и родители, актуални събития от академия АКАВА и интересни тенденции в света на технологиите и образованието.';
+
+    if (categoryParam) {
+      const category = newsCategories.find(c => c.slug === categoryParam);
+      if (category) {
+        canonicalUrl = `${baseUrl}/blog/${categoryParam}`;
+        pageTitle = `${category.title} | Akava Academy`;
+        metaDescription = category.description;
+      }
+    }
+
+    // Update document title
+    document.title = pageTitle;
+
+    // Update or create canonical link
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', canonicalUrl);
+
+    // Update meta description
+    let metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.setAttribute('name', 'description');
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute('content', metaDescription);
   }, [categoryParam]);
 
   const getCategoryArticleCount = (slug: string) => {
@@ -133,9 +173,9 @@ const BlogComponent: React.FC = () => {
                     const newCategory = isSelected ? null : category.slug;
                     setSelectedCategory(newCategory);
                     if (newCategory) {
-                      setSearchParams({ category: newCategory });
+                      navigate(`/blog/${newCategory}`, { replace: true });
                     } else {
-                      setSearchParams({});
+                      navigate('/blog', { replace: true });
                     }
                     // Scroll to articles section
                     setTimeout(() => {
@@ -196,7 +236,7 @@ const BlogComponent: React.FC = () => {
                 <button
                   onClick={() => {
                     setSelectedCategory(null);
-                    setSearchParams({});
+                    navigate('/blog', { replace: true });
                     // Scroll to articles section
                     setTimeout(() => {
                       const articlesSection = document.getElementById('articles-section');
