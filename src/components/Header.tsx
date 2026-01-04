@@ -18,21 +18,21 @@ const Header: React.FC = () => {
     { 
       id: 'short', 
       name: 'Краткосрочни обучения', 
-      href: '/courses?category=short',
+      href: '/courses/short',
       icon: BookOpen,
       description: 'Програми за ученици и възрастни'
     },
     { 
       id: 'licensed', 
       name: 'Лицензирани обучения', 
-      href: '/courses?category=licensed',
+      href: '/courses/licensed',
       icon: BadgeCheck,
       description: 'Професионална квалификация'
     },
     { 
       id: 'teachers', 
       name: 'За преподаватели', 
-      href: '/courses?category=teachers',
+      href: '/courses/teachers',
       icon: GraduationCap,
       description: 'Повишаване на квалификацията'
     },

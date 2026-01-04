@@ -111,7 +111,7 @@ const News: React.FC = () => {
               className="text-center"
             >
               <Link
-                to={`/blog?category=${newsItems[currentIndex].categorySlug}`}
+                to={`/blog/${newsItems[currentIndex].categorySlug}`}
                 className="block"
               >
                 <div className="card p-6 sm:p-8 lg:p-12 hover:shadow-xl transition-shadow duration-300 cursor-pointer">

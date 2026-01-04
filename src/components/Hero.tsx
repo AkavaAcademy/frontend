@@ -70,7 +70,7 @@ const Hero: React.FC = () => {
               </h3>
               <p className="flex-grow text-white/90 text-xs sm:text-base">Програми за ученици и възрастни, които искат да развият нови дигитални и технологични умения.</p>
               <div className="mt-2 md:mt-4 flex justify-end">
-                <a href="/courses?category=short" className="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
+                <a href="/courses/short" className="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
                   Научи повече
                 </a>
               </div>
@@ -91,7 +91,7 @@ const Hero: React.FC = () => {
               </h3>
               <p className="flex-grow text-white/90 text-xs sm:text-base">Придобиване на квалификация и издаване на свидетелство или удостоверение.</p>
               <div className="mt-2 md:mt-4 flex justify-end">
-                <a href="/courses?category=licensed" className="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
+                <a href="/courses/licensed" className="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
                   Научи повече
                 </a>
               </div>
@@ -112,7 +112,7 @@ const Hero: React.FC = () => {
               </h3>
               <p className="flex-grow text-white/90 text-xs sm:text-base">Програми за надграждане на педагогически и дигитални компетентности.</p>
               <div className="mt-2 md:mt-4 flex justify-end">
-                <a href="/courses?category=teachers" className="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
+                <a href="/courses/teachers" className="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold text-yellow-200 border border-yellow-400/60 hover:text-yellow-100 hover:border-yellow-300 bg-transparent hover:bg-yellow-500/30 transition shadow-md hover:shadow-yellow-400/40">
                   Научи повече
                 </a>
               </div>

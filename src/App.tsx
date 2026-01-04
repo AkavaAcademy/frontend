@@ -24,6 +24,7 @@ import CodingChallenges from './components/CodingChallenges';
 import ProjectIdeas from './components/ProjectIdeas';
 import LearningPaths from './components/LearningPaths';
 import ScrollToTop from './components/ScrollToTop';
+import QueryParamRedirect from './components/QueryParamRedirect';
 import NotFound from './components/NotFound';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -32,6 +33,7 @@ function App() {
     <AuthProvider>
       <Router>
         <ScrollToTop />
+        <QueryParamRedirect />
         <div className="App min-h-screen bg-gray-50 overflow-x-hidden w-full">
           <Header />
           <Routes>
@@ -45,10 +47,13 @@ function App() {
             } />
             <Route path="/aboutUs" element={<FeaturesPage />} />
             <Route path="/courses" element={<Courses />} />
+            <Route path="/courses/:category" element={<Courses />} />
+            <Route path="/courses/:category/:subcategory" element={<Courses />} />
             <Route path="/course-quiz" element={<CourseQuiz />} />
             <Route path="/course/:slug" element={<CourseRegistration />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:category" element={<Blog />} />
             <Route path="/blog/article/:id" element={<ArticleDetail />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
