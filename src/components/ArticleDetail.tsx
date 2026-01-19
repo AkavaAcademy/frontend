@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Clock, Calendar, User, Tag, Share2, BookOpen } from 'lucide-react';
@@ -23,6 +23,87 @@ const ArticleDetail: React.FC = () => {
          a.tags?.some(tag => article.tags?.includes(tag)))
       )
       .slice(0, 3);
+  }, [article]);
+
+  useEffect(() => {
+    if (!article) return;
+
+    const baseUrl = 'https://www.akavaacademy.com';
+    const canonicalUrl = `${baseUrl}/blog/article/${article.id}`;
+
+    document.title = `${article.title} | Akava Academy`;
+
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', canonicalUrl);
+
+    let metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.setAttribute('name', 'description');
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute('content', article.excerpt);
+
+    let robotsMeta = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+    if (!robotsMeta) {
+      robotsMeta = document.createElement('meta');
+      robotsMeta.setAttribute('name', 'robots');
+      document.head.appendChild(robotsMeta);
+    }
+    robotsMeta.setAttribute('content', 'index, follow');
+
+    const ensureOg = (property: string, value: string) => {
+      let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement | null;
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('property', property);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute('content', value);
+    };
+
+    ensureOg('og:title', article.title);
+    ensureOg('og:description', article.excerpt);
+    ensureOg('og:url', canonicalUrl);
+    ensureOg('og:type', 'article');
+    ensureOg('og:image', article.image);
+
+    const schemaId = 'akava-article-schema';
+    let schemaScript = document.getElementById(schemaId) as HTMLScriptElement | null;
+    if (!schemaScript) {
+      schemaScript = document.createElement('script');
+      schemaScript.id = schemaId;
+      schemaScript.type = 'application/ld+json';
+      document.head.appendChild(schemaScript);
+    }
+
+    const articleSchema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.title,
+      description: article.excerpt,
+      inLanguage: 'bg',
+      mainEntityOfPage: canonicalUrl,
+      author: article.author
+        ? {
+          '@type': 'Person',
+          name: article.author,
+        }
+        : undefined,
+      publisher: {
+        '@type': 'EducationalOrganization',
+        name: 'Акава Академи',
+        url: 'https://www.akavaacademy.com/',
+      },
+      image: article.image,
+    };
+
+    schemaScript.text = JSON.stringify(articleSchema);
   }, [article]);
 
   const handleShare = () => {
