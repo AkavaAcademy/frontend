@@ -91,43 +91,6 @@ const Courses: React.FC = () => {
     }, delay);
   };
 
-  useEffect(() => {
-    if (categoryParam) {
-      setSelectedCategory(categoryParam);
-      setExpandedCategories(new Set([categoryParam]));
-      // Set subcategory from URL or default if category has subcategories
-      const categoryData = courseCategories.find(c => c.id === categoryParam);
-      if (categoryData?.subcategories && categoryData.subcategories.length > 0) {
-        if (subcategoryParam && categoryData.subcategories.find(sc => sc.id === subcategoryParam)) {
-          setSelectedSubcategory(subcategoryParam);
-        } else {
-          // If no subcategory in URL but category has subcategories, redirect to first subcategory
-          if (!subcategoryParam && categoryData.subcategories.length > 0) {
-            navigate(`/courses/${categoryParam}/${categoryData.subcategories[0].id}`, { replace: true });
-            return;
-          }
-          setSelectedSubcategory(categoryData.subcategories[0].id);
-        }
-      }
-      // Scroll to category after state update and DOM render
-      scrollToCategory(categoryParam, 400);
-    } else {
-      // Reset state when no category in URL
-      setSelectedCategory(null);
-      setExpandedCategories(new Set());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoryParam, subcategoryParam]);
-
-  // Handle initial page load with category parameter
-  useEffect(() => {
-    if (categoryParam) {
-      // Wait for component to fully mount, render, and ScrollToTop to finish
-      scrollToCategory(categoryParam, 700);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Run only on mount
-
   const courseCategories: CourseCategory[] = [
     {
       id: 'short',
@@ -598,6 +561,43 @@ const Courses: React.FC = () => {
     }
   ];
 
+  useEffect(() => {
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+      setExpandedCategories(new Set([categoryParam]));
+      // Set subcategory from URL or default if category has subcategories
+      const categoryData = courseCategories.find(c => c.id === categoryParam);
+      if (categoryData?.subcategories && categoryData.subcategories.length > 0) {
+        if (subcategoryParam && categoryData.subcategories.find(sc => sc.id === subcategoryParam)) {
+          setSelectedSubcategory(subcategoryParam);
+        } else {
+          // If no subcategory in URL but category has subcategories, redirect to first subcategory
+          if (!subcategoryParam && categoryData.subcategories.length > 0) {
+            navigate(`/courses/${categoryParam}/${categoryData.subcategories[0].id}`, { replace: true });
+            return;
+          }
+          setSelectedSubcategory(categoryData.subcategories[0].id);
+        }
+      }
+      // Scroll to category after state update and DOM render
+      scrollToCategory(categoryParam, 400);
+    } else {
+      // Reset state when no category in URL
+      setSelectedCategory(null);
+      setExpandedCategories(new Set());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryParam, subcategoryParam]);
+
+  // Handle initial page load with category parameter
+  useEffect(() => {
+    if (categoryParam) {
+      // Wait for component to fully mount, render, and ScrollToTop to finish
+      scrollToCategory(categoryParam, 700);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only on mount
+
   const toggleCategory = (categoryId: string) => {
     const newExpanded = new Set(expandedCategories);
     if (newExpanded.has(categoryId)) {
@@ -669,6 +669,7 @@ const Courses: React.FC = () => {
       document.head.appendChild(metaDesc);
     }
     metaDesc.setAttribute('content', metaDescription);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryParam, subcategoryParam]);
 
   return (
