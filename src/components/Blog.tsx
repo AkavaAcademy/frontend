@@ -93,6 +93,29 @@ const BlogComponent: React.FC = () => {
       document.head.appendChild(metaDesc);
     }
     metaDesc.setAttribute('content', metaDescription);
+
+    let robotsMeta = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+    if (!robotsMeta) {
+      robotsMeta = document.createElement('meta');
+      robotsMeta.setAttribute('name', 'robots');
+      document.head.appendChild(robotsMeta);
+    }
+    robotsMeta.setAttribute('content', 'index, follow');
+
+    const ensureOg = (property: string, value: string) => {
+      let tag = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement | null;
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('property', property);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute('content', value);
+    };
+
+    ensureOg('og:title', pageTitle);
+    ensureOg('og:description', metaDescription);
+    ensureOg('og:url', canonicalUrl);
+    ensureOg('og:type', 'website');
   }, [categoryParam]);
 
   const getCategoryArticleCount = (slug: string) => {

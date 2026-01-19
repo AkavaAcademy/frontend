@@ -25,14 +25,18 @@ import ProjectIdeas from './components/ProjectIdeas';
 import LearningPaths from './components/LearningPaths';
 import ScrollToTop from './components/ScrollToTop';
 import QueryParamRedirect from './components/QueryParamRedirect';
+import HomePageSEO from './components/HomePageSEO';
 import NotFound from './components/NotFound';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import GlobalSEO from './components/GlobalSEO';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <GlobalSEO />
         <ScrollToTop />
+        <HomePageSEO />
         <QueryParamRedirect />
         <div className="App min-h-screen bg-gray-50 overflow-x-hidden w-full">
           <Header />

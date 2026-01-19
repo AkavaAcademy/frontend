@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                Център за професионално и дигитално обучение
+                ИТ академия за професионално обучение
               </motion.span>
             </h1>
           </motion.div>
@@ -128,6 +128,7 @@ const Hero: React.FC = () => {
           >
             <motion.a
               href="/courses"
+              data-cta="hero_view_all_courses"
               className="flex items-center justify-center px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base md:text-lg font-bold rounded-xl bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300 shadow-2xl hover:shadow-blue-500/60 relative overflow-hidden"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

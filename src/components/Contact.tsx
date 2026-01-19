@@ -144,6 +144,14 @@ const Contact: React.FC = () => {
         'Благодарим ви! Получихме вашето съобщение и ще се свържем с вас в рамките на 24 часа.'
       );
       setIsSubmitted(true);
+      (window as any).gtag?.('event', 'form_submit', {
+        event_category: 'engagement',
+        event_label: 'contact_form',
+      });
+      (window as any).fbq?.('track', 'Lead', {
+        content_name: 'Contact form',
+        content_category: 'Lead',
+      });
       
       // Reset form after 5 seconds
       setTimeout(() => {
