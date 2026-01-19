@@ -625,7 +625,6 @@ const Courses: React.FC = () => {
   };
 
   // Set canonical URL and page title
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const baseUrl = 'https://www.akavaacademy.com';
     let canonicalUrl = `${baseUrl}/courses`;
@@ -670,6 +669,7 @@ const Courses: React.FC = () => {
       document.head.appendChild(metaDesc);
     }
     metaDesc.setAttribute('content', metaDescription);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryParam, subcategoryParam]);
 
   return (
