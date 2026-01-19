@@ -74,6 +74,176 @@ const Courses: React.FC = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>(
     subcategoryParam || 'students'
   );
+              {
+                id: 13,
+                title: 'Digital Essentials – Дигитални компетентности за съвременния офис',
+                slug: 'digital-essentials',
+                description: 'Практически курс за развитие на дигитални компетентности за съвременна офис среда. Подходящ за възрастни и служители, които искат да развият своите практически дигитални умения.',
+                duration: '6 седмици / 6 занятия',
+                price: 420,
+                difficulty: 'beginner',
+                features: [
+                  'Microsoft Office (Word, Excel, PowerPoint, Outlook)',
+                  'Организация и управление на файлове (OneDrive, Google Drive)',
+                  'Онлайн комуникация (Teams, Zoom, Slack)',
+                  'Основи на киберсигурността',
+                  'Дигитална етика',
+                  'Практически офис умения'
+                ],
+                formatted_price: '420 лв.',
+                formatted_price_eur: '215 €',
+                startDate: '25 февруари 2026',
+                status: 'Записвания отворени',
+                format: 'Онлайн'
+              },
+              {
+                id: 16,
+                title: 'QA - Ръчно тестване',
+                slug: 'qa-manual-testing',
+                description: 'Комплексен практически курс по ръчно тестване на софтуер. Подходящ за напълно начинаещи и желаещи да започнат кариера като Manual QA Engineer.',
+                duration: '6 седмици',
+                price: 550,
+                difficulty: 'beginner',
+                features: [
+                  'Основи на софтуерното тестване',
+                  'Типове тестове и техники за тест-дизайн',
+                  'Тестови сценарии и тестови случаи',
+                  'Изготвяне на бъг репорт',
+                  'Работа с инструменти като Jira',
+                  'QA процеси и документация',
+                  'Практически мини проект'
+                ],
+                formatted_price: '550 лв.',
+                formatted_price_eur: '282 €',
+                startDate: '21 април 2026',
+                status: 'Предстоящ',
+                format: 'Онлайн'
+              },
+              {
+                id: 14,
+                title: 'Vibe Coding - Програмиране с AI',
+                slug: 'vibe-coding',
+                description: 'Уникален курс по програмиране чрез с помощта на инструменти с изкуствен интелект. Подходящ за хора без опит, които искат да навлязат в IT сферата по нестандартен и вдъхновяващ начин.',
+                duration: '8 седмици / 8 занятия',
+                price: 550,
+                difficulty: 'beginner',
+                features: [
+                  'Основи на програмирането чрез визуално и звуково възприятие',
+                  'Креативно мислене и структуриране на код',
+                  'Програмиране на интерактивни приложения',
+                  'Визуализации и творчески проекти',
+                  'Работа с Processing и p5.js',
+                  'AI code асистенти',
+                  'Креативни програмни проекти'
+                ],
+                formatted_price: '550 лв.',
+                formatted_price_eur: '282 €',
+                startDate: '27 април 2026',
+                status: 'Предстоящ',
+                format: 'Онлайн'
+              },
+              {
+                id: 19,
+                title: 'Графичен дизайн – Професионална подготовка',
+                slug: 'graphic-design-professional-adobe',
+                description: 'Професионален курс по графичен дизайн с фокус върху реални умения, търсени на пазара на труда. Подходящ за възрастни, които искат да се преквалифицират или да надградят своите дизайнерски умения.',
+                duration: '12 седмици / 12 занятия',
+                price: 980,
+                difficulty: 'beginner',
+                features: [
+                  'Основи на графичния дизайн и визуалната комуникация',
+                  'Цветове, композиция и визуална йерархия',
+                  'Adobe Photoshop – растерна графика и обработка на изображения',
+                  'Adobe Illustrator – векторни графики, лога и илюстрации',
+                  'Типография и визуална идентичност',
+                  'Практически задания по реални казуси',
+                  'Подготовка на дизайнерски проекти',
+                  'Работа с AI инструменти в графичния дизайн (Adobe Firefly, Canva AI)',
+                  'Генериране на идеи и ускоряване на дизайнерския процес',
+                  'Добри практики и етика при използване на AI'
+                ],
+                formatted_price: '980 лв.',
+                formatted_price_eur: '501 €',
+                startDate: '5 април 2026',
+                status: 'Предстоящ',
+                format: 'Онлайн'
+              },
+              {
+                id: 20,
+                title: 'Графичен дизайн - Предпечат и бранд материали с Adobe InDesign',
+                slug: 'graphic-design-prepress-brand-materials',
+                description: 'Надграждащ курс за предпечатна подготовка и създаване на бранд материали. Подходящ за курсисти с основни познания по графичен дизайн.',
+                duration: '6 седмици / 6 занятия',
+                price: 520,
+                difficulty: 'advanced',
+                features: [
+                  'Работа с Adobe InDesign',
+                  'Подготовка на файлове за печат',
+                  'Цветови режими, резолюции и формати',
+                  'Създаване на брошури, каталози и рекламни материали',
+                  'Многостранични документи и layout',
+                  'Основи на предпечатната подготовка',
+                  'AI инструменти за автоматизация на дизайн и предпечат',
+                  'Оптимизация на работния процес'
+                ],
+                formatted_price: '520 лв.',
+                formatted_price_eur: '266 €',
+                startDate: '10 юли 2026',
+                status: 'Предстоящ',
+                format: 'Онлайн'
+              }
+            ]
+          }
+        ],
+        courses: [] // Keep empty as courses are now in субcategories
+      },
+      {
+        id: 'licensed',
+        title: 'Лицензирани професионални обучения',
+        description: 'Курсове, които водят до придобиване на професионална квалификация по утвърдени програми, лицензирани от НАПОО.',
+        fullDescription: 'Акава Академи в момента е в процес на получаване на лиценз от Националната агенция за професионално образование и обучение (НАПОО) за провеждане на професионални обучения, водещи до издаване на свидетелство или удостоверение за професионална квалификация. След одобрение ще предлагаме сертифицирани програми в различни специалности.',
+        icon: BadgeCheck,
+        color: 'from-green-500 to-emerald-500',
+        bgColor: 'bg-green-50',
+        textColor: 'text-green-800',
+        borderColor: 'border-green-200',
+        ringColor: 'ring-green-500/50',
+        comingSoon: true,
+        specialties: [
+          'Полиграфия',
+          'Компютърна графика',
+          'Графичен дизайн',
+          'Бизнес администрация',
+          'Програмно осигуряване',
+          'Системно програмиране',
+          'Приложно програмиране',
+          'Текстообработване',
+          'Електронна търговия'
+        ],
+        courses: []
+      },
+      {
+        id: 'teachers',
+        title: 'Квалификация за преподаватели',
+        description: 'Програми за педагогически специалисти, които искат да повишат своята квалификация.',
+        fullDescription: 'Акава Академи подготвя лицензирани програми за повишаване на квалификацията на педагогически специалисти, които ще бъдат одобрени от Министерството на образованието и науката (МОН). Програмите са в процес на одобрение и скоро ще бъдат достъпни за всички учители, желаещи да надградят своите компетентности.',
+        icon: GraduationCap,
+        color: 'from-purple-500 to-pink-500',
+        bgColor: 'bg-purple-50',
+        textColor: 'text-purple-800',
+        borderColor: 'border-purple-200',
+        ringColor: 'ring-purple-500/50',
+        comingSoon: true,
+        specialties: [
+          'Дигитализация на учебния процес',
+          'Съвременни методи на преподаване',
+          'Използване на AI и интерактивни технологии в класната стая'
+        ],
+        courses: []
+      }
+    ],
+    []
+  );
 
   const scrollToCategory = (categoryId: string, delay: number = 300) => {
     setTimeout(() => {
@@ -120,14 +290,6 @@ const Courses: React.FC = () => {
   }, [categoryParam, subcategoryParam]);
 
   // Handle initial page load with category parameter
-  useEffect(() => {
-    if (categoryParam) {
-      // Wait for component to fully mount, render, and ScrollToTop to finish
-      scrollToCategory(categoryParam, 700);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Run only on mount
-
   const courseCategories: CourseCategory[] = [
     {
       id: 'short',
@@ -598,6 +760,22 @@ const Courses: React.FC = () => {
     }
   ];
 
+  const scrollToCategory = (categoryId: string, delay: number = 300) => {
+    setTimeout(() => {
+      const element = document.getElementById(`category-${categoryId}`);
+      if (element) {
+        const headerOffset = 100;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, delay);
+  };
+
   const toggleCategory = (categoryId: string) => {
     const newExpanded = new Set(expandedCategories);
     if (newExpanded.has(categoryId)) {
@@ -625,6 +803,7 @@ const Courses: React.FC = () => {
   };
 
   // Set canonical URL and page title
+  // eslint-disable-next-line react-hooks-exhaustive-deps
   useEffect(() => {
     const baseUrl = 'https://www.akavaacademy.com';
     let canonicalUrl = `${baseUrl}/courses`;

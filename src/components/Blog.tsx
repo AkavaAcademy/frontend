@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { BookOpen, Users, Calendar, TrendingUp, ArrowRight, Clock, Calendar as CalendarIcon, X } from 'lucide-react';
@@ -18,36 +18,39 @@ const BlogComponent: React.FC = () => {
   const [allArticles] = useState<Article[]>(articles);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam || null);
 
-  const newsCategories: NewsCategory[] = [
-    {
-      icon: BookOpen,
-      title: 'Полезни статии',
-      slug: 'useful-articles',
-      description: 'Материали, които ще ви помогнат да разширите знанията си в света на технологиите и образованието.',
-      color: 'from-blue-500 to-cyan-500'
-    },
-    {
-      icon: Users,
-      title: 'Съвети за родители',
-      slug: 'parent-tips',
-      description: 'Полезни насоки за родители, които искат да подкрепят дигиталното развитие на своите деца. Теми за безопасност, мотивация и ефективно учене в съвременната дигитална среда.',
-      color: 'from-green-500 to-emerald-500'
-    },
-    {
-      icon: Calendar,
-      title: 'Новини от академията',
-      slug: 'academy-news',
-      description: 'Бъдете в крак с всичко ново в Акава Академи — нови курсове, събития, успехи на учениците и актуални инициативи, които развиваме заедно.',
-      color: 'from-purple-500 to-pink-500'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Дигитални умения и тенденции',
-      slug: 'digital-skills',
-      description: 'Следете най-актуалните тенденции в света на технологиите, програмирането, дизайна и дигиталната безопасност. Научете какви умения са нужни на децата днес, за да успеят утре.',
-      color: 'from-orange-500 to-red-500'
-    }
-  ];
+  const newsCategories: NewsCategory[] = useMemo(
+    () => [
+      {
+        icon: BookOpen,
+        title: 'Полезни статии',
+        slug: 'useful-articles',
+        description: 'Материали, които ще ви помогнат да разширите знанията си в света на технологиите и образованието.',
+        color: 'from-blue-500 to-cyan-500'
+      },
+      {
+        icon: Users,
+        title: 'Съвети за родители',
+        slug: 'parent-tips',
+        description: 'Полезни насоки за родители, които искат да подкрепят дигиталното развитие на своите деца. Теми за безопасност, мотивация и ефективно учене в съвременната дигитална среда.',
+        color: 'from-green-500 to-emerald-500'
+      },
+      {
+        icon: Calendar,
+        title: 'Новини от академията',
+        slug: 'academy-news',
+        description: 'Бъдете в крак с всичко ново в Акава Академи — нови курсове, събития, успехи на учениците и актуални инициативи, които развиваме заедно.',
+        color: 'from-purple-500 to-pink-500'
+      },
+      {
+        icon: TrendingUp,
+        title: 'Дигитални умения и тенденции',
+        slug: 'digital-skills',
+        description: 'Следете най-актуалните тенденции в света на технологиите, програмирането, дизайна и дигиталната безопасност. Научете какви умения са нужни на децата днес, за да успеят утре.',
+        color: 'from-orange-500 to-red-500'
+      }
+    ],
+    []
+  );
 
   useEffect(() => {
     if (categoryParam) {
@@ -116,7 +119,7 @@ const BlogComponent: React.FC = () => {
     ensureOg('og:description', metaDescription);
     ensureOg('og:url', canonicalUrl);
     ensureOg('og:type', 'website');
-  }, [categoryParam]);
+  }, [categoryParam, newsCategories]);
 
   const getCategoryArticleCount = (slug: string) => {
     if (!Array.isArray(allArticles)) return 0;
