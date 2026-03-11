@@ -211,7 +211,7 @@ const Courses: React.FC = () => {
               formatted_price: '360 лв.',
               formatted_price_eur: '185 €',
               startDate: '15 март 2026',
-              status: 'Предстоящ',
+              status: 'Записвания отворени',
               format: 'Присъствен'
             },
             {
@@ -951,7 +951,7 @@ const Courses: React.FC = () => {
                                           <span className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
                                             course.status === 'Записвания отворени' 
                                               ? 'bg-green-100 text-green-700' 
-                                              : course.status === 'Предстоящ'
+                                              : course.status === 'Предстоящ' || course.status?.startsWith('Следваща група') || course.status?.startsWith('Нова сесия')
                                                 ? 'bg-blue-100 text-blue-700'
                                                 : 'bg-gray-100 text-gray-700'
                                           }`}>
@@ -1064,7 +1064,7 @@ const Courses: React.FC = () => {
                                     <span className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
                                       course.status === 'Записвания отворени' 
                                         ? 'bg-green-100 text-green-700' 
-                                        : course.status === 'Предстоящ'
+                                        : course.status === 'Предстоящ' || course.status?.startsWith('Следваща група') || course.status?.startsWith('Нова сесия')
                                           ? 'bg-blue-100 text-blue-700'
                                           : 'bg-gray-100 text-gray-700'
                                     }`}>

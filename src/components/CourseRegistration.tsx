@@ -294,7 +294,7 @@ const allCourses = [
       }
     ],
     startDate: '15 март 2026',
-    status: 'Предстоящ',
+    status: 'Записвания отворени',
     format: 'Присъствен'
   },
   {
@@ -1963,14 +1963,18 @@ const CourseRegistration: React.FC = () => {
                         <CheckCircle className={`w-5 h-5 mr-2 mt-0.5 flex-shrink-0 ${
                           course.status === 'Записвания отворени' 
                             ? 'text-green-600' 
-                            : 'text-blue-600'
+                            : course.status === 'Предстоящ' || course.status?.startsWith('Следваща група') || course.status?.startsWith('Нова сесия')
+                              ? 'text-blue-600'
+                              : 'text-gray-600'
                         }`} />
                         <div>
                           <p className="text-sm font-medium text-gray-500 mb-1">Статус</p>
                           <p className={`text-base font-semibold ${
                             course.status === 'Записвания отворени' 
                               ? 'text-green-600' 
-                              : 'text-blue-600'
+                              : course.status === 'Предстоящ' || course.status?.startsWith('Следваща група') || course.status?.startsWith('Нова сесия')
+                                ? 'text-blue-600'
+                                : 'text-gray-600'
                           }`}>
                             {course.status}
                           </p>
